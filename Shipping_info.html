@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Automatic Order Tracking</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+<style>
+    .slider {
+        max-width: 80%;
+        margin: 20px auto;
+        overflow: hidden;
+    }
+
+    .slides {
+        display: flex;
+        transition: transform 0.5s ease-in-out;
+    }
+
+    .slide {
+        min-width: 100%;
+    }
+
+    img {
+        max-width: 100%;
+        height: auto;
+        }
+        
+        .fab {
+          color:#000000;
+          background:#9199EC;
+          
+        }
+                
+
+.container {
+    font-family: Arial, sans-serif;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+}
+
+h1 {
+    font-size: 24px;
+    color: #333;
+}
+
+button {
+    padding: 10px 20px;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius:
+}
+    footer {
+      margin-top: 10px;
+      text-align: center;
+    }
+.black {
+      color :#000000;
+    }
+    
+    </style>
+</head>
+<body> 
+<div class="container">
+    <h1><a href="A.html"><i class="fas fa-arrow-left black"></i></a>&nbsp;<i class="fas fa-shipping-fast"></i> Track My package</h1>
+    <input type="text" id="trackingNumber" placeholder="Enter your order tracking number" onkeydown="if(event.keyCode==13) trackOrder()">
+    <button onclick="trackOrder()">Track <i class="fas fa-chevron-right"></i></button>
+
+    <div>
+        <h2>Shipping information</h2>
+        <p>Your order will be shipped within 1-2 business days. For tracking information, please enter your tracking number above.</p>
+    </div>
+
+    <h2>Delivery</h2>
+    <div class="slider">
+        <div class="slides">
+            <div class="slide"><img src="img/Delivery_package3.jpg" alt="Delivery Truck Icon" class="delivery-image"></div>
+            <div class="slide"><img src="img/Delivery_package1.jpg" alt="Image 3"></div>
+              <div class="slide"><img src="img/Delivery_package2.jpg" alt="Image 3"></div>
+        </div>
+    </div>
+
+    <p>We offer safe delivery to all cities across South Africa. All our prints are securely packaged with love and care.</p>
+
+    <div>
+        <a href="My-address.html"><button>Submit Address <i class="fas fa-chevron-right"></i></button></a>
+        <h2>Returns</h2>
+        <p>Returns and exchanges are not supported. Personalized items are made just for you. Prior to shipping, you may request pictures from an agent for verification purposes. Thank you for your understanding.</p>
+    </div>
+
+
+
+    <script>
+document.addEventListener("DOMContentLoaded", function() {
+    // Retrieve the tracking number from localStorage when the page loads
+    var savedTrackingNumber = localStorage.getItem("trackingNumber");
+    if (savedTrackingNumber) {
+        document.getElementById("trackingNumber").value = savedTrackingNumber;
+    }
+});
+
+function trackOrder() {
+    var trackingNumber = document.getElementById("trackingNumber").value;
+    if (trackingNumber) {
+        // Store the tracking number in localStorage
+        localStorage.setItem("trackingNumber", trackingNumber);
+
+        var url = 'https://mydsv.com/new/tracking/track-shipment?query=' + trackingNumber;
+        window.location.href = url;
+    }
+}
+
+function slideImages() {
+    const slides = document.querySelector('.slides');
+    const firstSlide = slides.firstElementChild;
+    slides.appendChild(firstSlide);
+}
+setInterval(slideImages, 3000);
+</script>
+</body>
+</html>

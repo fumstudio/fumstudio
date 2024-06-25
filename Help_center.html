@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>CodePen - Interactive Modern Search Filter Page</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/style2.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<style>
+
+@media only screen and (max-width: 768px) {
+  .search-container {
+    padding:  20px; /* Add padding to create space on the left and right */
+    
+    text-align: center;
+    margin-right: 20px;
+  }
+}
+
+          .whatsapp-button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 1000;
+}
+
+.whatsapp-button a {
+    text-decoration: none; /* Remove underline from the link */
+}
+
+.whatsapp-icon {
+    background-color: #25D366; /* WhatsApp green color */
+    color: #fff; /* Text color */
+    padding: 10px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+}
+
+.fab {
+    margin-right: 10px;
+    text-decoration: none; /* Remove underline from the icon */
+}
+
+.whatsapp-icon span {
+    text-decoration: none; /* Remove underline from the text */
+}
+     i{
+       color: white ;
+     } 
+  
+</style>
+<body>
+<!-- partial:index.partial.html -->
+<header class="search-filter-header">
+
+  <div class="search-filter-overlay"></div>
+  <h1 class="search-filter-title"><a href="A.html"><i class="fas fa-arrow-left black"></i></a>&nbsp;Help Center</h1>
+  <p>If you encounter any other issues, feel free to start a chat with us now, thank you for your understanding.</p>
+</header>
+
+
+
+<div class="search-container">
+  <input type="text" id="searchInput" placeholder="Search...">
+</div>
+
+<main>
+  <section id="How to order">
+    <h2>How to order ?</h2>
+    <p>
+      Click on the product you wish to customize. If you do not find the desired product among our listed items, please feel free to ask one of our agents for assistance.Send us your chosen photo & details through WhatsApp.
+    </p>
+  </section>
+
+
+
+  <section id="How to pay">
+    <h2>How to pay ?</h2>
+       <p>To pay for your order, you need to finalize it with one of our agents to make sure everything is correct. You can pay using a bank transfer or an e-wallet. The agent will give you the details. After you pay, please send us proof of payment.</p>
+</section>
+  <section id="How to track my package">
+    <h2>How to track my package ?</h2>
+       <p>To track your package, once your order is verified, the agent will send you the tracking number via WhatsApp. Copy the tracking number and navigate to the website menu. Select 'Shipping,' paste your tracking number, and click 'Track.' Remember to stay updated with your tracking number, as a new one will be provided every time you place an order.</p>
+</section>
+
+  <section id="What is the estimated delivery time for orders"><h2>What is the estimated delivery time for orders?</h2>
+       <p>For free delivery, the shipping time is typically 8-12 business days. If you opt for paid delivery, the shipping time is usually 4-6 business days. Your item will be shipped once your order is verified. The agent will then send you the order number so you can track your package.</p>
+</section>
+  <section id="My package haven't arrived "><h2>Has your package not arrived within the estimated delivery time?</h2>
+       <p>Don't worry, we're here to assist you in locating your package. Please verify that your address is correct and up to date. If you made a mistake, kindly update it. Ensure that your phone is nearby to receive any delivery calls.</p>
+</section>
+  <section id="Returns and exchanges are not supported. "><h2>Why Returns and exchanges are not supported ?</h2>
+       <p>Personalized items are made just for you. Prior to shipping, you may request pictures from an agent for verification purposes.</p>
+</section>
+<section id="Returns and exchanges are not supported. "><h2>Is my package safe ?</h2>
+       <p>We offer safe delivery to all cities across South Africa. All our prints are securely packaged with love and care.</p>
+</section>
+<section id="Where are we located"><h2>Where are we located?</h2>
+       <p>    <h3>Contact</h3>
+    <p>
+      <strong>Address:</strong><br>South Africa, Kwa-Zulu Natal, Empangeni 3880
+    </p>
+    <p>
+      <strong>Phone:</strong><br><a href="tel: 07728662309">+27 72 866 2309</a>
+    </p>
+    <p>
+      <strong>Hours:</strong><br>08:00 -17:00 Mon-Sat
+      </p>
+    </div>
+</p>
+</section>
+</main>
+    <div class="whatsapp-button">
+        <a href="https://wa.me/0659860276" target="_blank"> <!-- Replace the link with your WhatsApp chat link -->
+            <div class="whatsapp-icon">
+                <i class="fab fa-whatsapp"></i> <!-- Font Awesome WhatsApp icon -->
+                <span>Chat Now</span> <!-- Text next to the icon -->
+            </div>
+<!-- partial -->
+  <script  src="/script.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loading Page</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+            margin: 0;
+        }
+
+        .loader {
+            font-size: 50px;
+            color: #000; /* Black */
+            animation: spin 2s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .fas {
+          font-size: 30px;
+        }
+     </style>
+</head>
+
+<body>
+  <i class="fas fa-question-circle"></i>
+   
+ <script>
+        setTimeout(function(){
+            window.location.href = "Help_center.html";
+        }, 1000); // 2 seconds
+    </script>
+</body>
+
+</html>
