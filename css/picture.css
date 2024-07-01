@@ -21,6 +21,20 @@
   width: 100%;
   display: block;
 }
+
+@media (min-width: 768px) {
+   .image5 {
+       text-align: center; /* Center the content horizontally */
+   }
+
+   .image5 img {
+       display: block; /* Make the image a block element */
+       margin: 0 auto; /* Center the image horizontally within its container */
+       max-width: 100%; /* Ensure images don't exceed their container */
+       height: auto; /* Maintain aspect ratio */
+       max-width: 400px; /* Set a maximum width for the images on desktop */
+   }
+}
 .counter {
   position: absolute;
   top: 360px;
@@ -31,9 +45,11 @@
 }
 @media (min-width: 768px) {
    .counter{
-     top: 950px;
+     top: 450px;
    }
 }
+
+
 .arrow {
  position: absolute;
   top: 50%;
