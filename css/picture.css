@@ -28,7 +28,11 @@
   transform: translateX(-50%);
   font-size: 16px;
     z-index: 2;
-
+}
+@media (min-width: 768px) {
+   .counter{
+     top: 950px;
+   }
 }
 .arrow {
  position: absolute;
