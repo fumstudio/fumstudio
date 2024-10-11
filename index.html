@@ -1,112 +1,63 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
- <meta charset="UTF-8">
- <meta http-equiv="X-UA-Compatible" content="IE=edge">
- <meta name="viewport" content="width=device-width, initial-scale=1.0">
- <link rel= "Shortcut icon" type="x-icon" href= "https://i.postimg.cc/XqrhcVpD/20240702-095704.png ">
-<meta name="description" content="Experience high-quality personalized products that reflect your unique style. Start personalizing your items today with fum.studio!
-">
-<meta name="keywords"  content="Fumstudio, fum.studio, fumstudio.shop">
- <title>Fum.studio9</title>
-  <link rel= "Shortcut icon" type="x-icon" href= "https://i.postimg.cc/XqrhcVpD/20240702-095704.png ">
- <link rel="stylesheet" el="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
- <style>
- @keyframes fadein {
- 0% {
- opacity: 0;
- }
- 100% {
- opacity: 1;
- }
- }
-
- @keyframes connect {
- 0% {
- transform: translateY(-50px);
- }
- 100% {
- transform: translateY(0);
- }
- }
-
- .content {
- text-align: center;
- display: none;
- }
-
- .content.show {
- display: block;
- animation: fadein 1s forwards;
- }
-
- .gift {
- font-size: 50px;
- opacity: 0;
- transition: opacity 1s, transform 1s;
- }
-
- 
-
- .content.show {
- display: block;
- animation: fadein 1s forwards;
- }
-
- .gift {
- font-size: 50px;
- opacity: 0;
- transition: opacity 1s, transform 1s;
- }
-
-
- h1 {
- font-family: Arial, sans-serif;
- font-size: 28px;
- margin-top: -7px;
- opacity: 0;
- transition: opacity 1s, transform 1s;
- }
-
- .content.show .gift {
- opacity: 1;
- animation: connect 1s forwards;
- }
-
- .content.show h1 {
- opacity: 1;
- animation: connect 1s forwards;
- }
-
- body {
- background-color: #f5f5f5;
- display: flex;
- flex-direction: column;
- justify-content: center;
- align-items: center;
- height: 100vh;
- margin: 0;
- }
- </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Index Page</title>
+    <!-- Other head elements -->
 </head>
-
 <body>
- <div class="content">
-    <i class="gift fas fa-gift"></i>
- <h1>Fum.studio</h1>
+    <h1>Welcome to the Index Page</h1>
+    <!-- Your content here -->
 
- </div>
+    <!-- Firebase Script -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-app.js";
+        import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-database.js";
+        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-auth.js";
 
- <script>
- setTimeout(function(){
- document.querySelector('.content').classList.add('show');
- }, 1000); // Show content after 1 second
+        const firebaseConfig = {
+            apiKey: "AIzaSyBDrzrgLslaJvnXbo1e90irCEtdcm9ZsCU",
+            authDomain: "logins-13661.firebaseapp.com",
+            databaseURL: "https://logins-13661-default-rtdb.firebaseio.com",
+            projectId: "logins-13661",
+            storageBucket: "logins-13661.appspot.com",
+            messagingSenderId: "451535349483",
+            appId: "1:451535349483:web:d3c9867fd2bffbbdca40ae",
+            measurementId: "G-DWP16WX2H7"
+        };
 
- setTimeout(function(){
- window.location.href = "catalog.html";
- }, 3000); // Redirect after 3 seconds
- </script>
+        const app = initializeApp(firebaseConfig);
+        const database = getDatabase(app);
+        const auth = getAuth(app);
+
+        async function saveCartToFirebase() {
+            const user = auth.currentUser;
+            if (!user) {
+                console.log('User not logged in.');
+                return;
+            }
+
+            const cartItems = JSON.parse(localStorage.getItem('cart')) || [];
+            const storedCurrency = localStorage.getItem('selectedCurrency') || 'ZAR';
+
+            try {
+                await set(ref(database, 'carts/' + user.uid + '/currentCart'), {
+                    cart: cartItems,
+                    currency: storedCurrency
+                });
+                console.log('Cart saved successfully.');
+            } catch (error) {
+                console.error('Error saving cart to Realtime Database:', error);
+            }
+        }
+
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                // Automatically save the cart when the user is logged in
+                saveCartToFirebase();
+            }
+        });
+    </script>
 </body>
-
 </html>

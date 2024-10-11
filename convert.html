@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Currency Selection</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+        select {
+            padding: 10px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Select Your Currency</h1>
+    <select id="currencySelect">
+        <option value="USD">USD</option>
+        <option value="EUR">EUR</option>
+        <option value="ZAR" selected>ZAR</option>
+    </select>
+    <button id="goToCart">Go to Cart</button>
+
+    <script>
+        const currencySelect = document.getElementById('currencySelect');
+        let storedCurrency = localStorage.getItem('selectedCurrency');
+
+        if (storedCurrency) {
+            currencySelect.value = storedCurrency;
+        }
+
+        currencySelect.addEventListener('change', function() {
+            storedCurrency = currencySelect.value;
+            localStorage.setItem('selectedCurrency', storedCurrency);
+        });
+
+        document.getElementById('goToCart').addEventListener('click', function() {
+            window.location.href = 'cart.html'; // Navigate to the cart page
+        });
+
+        window.addEventListener('beforeunload', function() {
+            localStorage.setItem('selectedCurrency', currencySelect.value);
+        });
+    </script>
+</body>
+</html>
