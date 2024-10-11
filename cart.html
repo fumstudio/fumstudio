@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Uploaded Page</title>
+    <title>Upload Page</title>
     <style>
         /* Your existing styles */
     </style>
@@ -34,7 +34,6 @@
             measurementId: "G-DWP16WX2H7"
         };
 
-
         const app = initializeApp(firebaseConfig);
         const database = getDatabase(app);
         const auth = getAuth();
@@ -45,6 +44,7 @@
             if (user) {
                 userEmail = user.email.replace('.', ','); // Format email for Firebase
             } else {
+                alert("You are not logged in. Please log in to upload items.");
                 window.location.href = "login.html"; // Redirect to login if not authenticated
             }
         });
@@ -81,98 +81,14 @@
         }
 
         function viewCart() {
+            if (!userEmail) {
+                alert("You need to be logged in to view your cart.");
+                return;
+            }
             window.location.href = "cart.html";
         }
 
         document.getElementById('addToCartButton').addEventListener('click', handleAddToCart);
-    </script>
-</body>
-</html>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your Cart</title>
-    <style>
-        /* Your existing styles */
-    </style>
-</head>
-<body>
-    <div class="container">
-        <h2>Your Cart</h2>
-        <div id="cartItems"></div>
-        <button id="submitCartButton">Send Cart Link to WhatsApp</button>
-    </div>
-
-    <script type="module">
-        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.13.1/firebase-app.js';
-        import { getDatabase, ref, onValue } from 'https://www.gstatic.com/firebasejs/10.13.1/firebase-database.js';
-        import { getAuth } from 'https://www.gstatic.com/firebasejs/10.13.1/firebase-auth.js';
-
-        const firebaseConfig = {
-            apiKey: "AIzaSyBDrzrgLslaJvnXbo1e90irCEtdcm9ZsCU",
-            authDomain: "logins-13661.firebaseapp.com",
-            databaseURL: "https://logins-13661-default-rtdb.firebaseio.com",
-            projectId: "logins-13661",
-            storageBucket: "logins-13661.appspot.com",
-            messagingSenderId: "451535349483",
-            appId: "1:451535349483:web:d3c9867fd2bffbbdca40ae",
-            measurementId: "G-DWP16WX2H7"
-        };
-
-
-        const app = initializeApp(firebaseConfig);
-        const database = getDatabase(app);
-        const auth = getAuth();
-
-        let userEmail;
-
-        auth.onAuthStateChanged(user => {
-            if (user) {
-                userEmail = user.email.replace('.', ',');
-                displayCartItems();
-            } else {
-                window.location.href = "login.html"; // Redirect to login if not authenticated
-            }
-        });
-
-        function displayCartItems() {
-            const cartRef = ref(database, carts/${userEmail});
-            onValue(cartRef, (snapshot) => {
-                const data = snapshot.val();
-                const cartDiv = document.getElementById('cartItems');
-                cartDiv.innerHTML = '';
-
-                if (!data) {
-                    cartDiv.innerHTML = '<p>No items in the cart.</p>';
-                    return;
-                }
-
-                const itemDiv = document.createElement('div');
-                itemDiv.className = 'cart-item';
-                const img = document.createElement('img');
-                img.src = data.image;
-                img.style.width = '100%';
-                itemDiv.appendChild(img);
-                const textDiv = document.createElement('div');
-                textDiv.innerText = data.text;
-                itemDiv.appendChild(textDiv);
-                cartDiv.appendChild(itemDiv);
-            });
-        }
-
-        // Define submitCart function
-        function submitCart() {
-            const cartLink = https://your-app-url/cart.html?user=${userEmail}; // Replace with your app URL
-            const whatsappNumber = '0659860276';
-            const whatsappMessage = Check out my cart: ${cartLink};
-            const whatsappLink = https://api.whatsapp.com/send?phone=${whatsappNumber}&text=${encodeURIComponent(whatsappMessage)};
-            window.open(whatsappLink);
-        }
-
-        // Add event listener to submitCart button
-        document.getElementById('submitCartButton').addEventListener('click', submitCart);
     </script>
 </body>
 </html>
