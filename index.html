@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Upload Page</title>
+    <title>Uploaded Page</title>
     <style>
         /* Your existing styles */
     </style>
 </head>
 <body>
     <div class="container">
-        <h2>Uploading</h2>
+        <h2>Upload</h2>
         <input type="file" id="photo" accept="image/*" required>
         <input type="text" id="text" placeholder="Write something" required>
         <button id="addToCartButton">Add to Cart</button>
@@ -23,7 +23,7 @@
         import { getDatabase, ref, set } from 'https://www.gstatic.com/firebasejs/10.13.1/firebase-database.js';
         import { getAuth, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.13.1/firebase-auth.js';
 
-       const firebaseConfig = {
+        const firebaseConfig = {
             apiKey: "AIzaSyBDrzrgLslaJvnXbo1e90irCEtdcm9ZsCU",
             authDomain: "logins-13661.firebaseapp.com",
             databaseURL: "https://logins-13661-default-rtdb.firebaseio.com",
@@ -33,6 +33,7 @@
             appId: "1:451535349483:web:d3c9867fd2bffbbdca40ae",
             measurementId: "G-DWP16WX2H7"
         };
+
 
         const app = initializeApp(firebaseConfig);
         const database = getDatabase(app);
@@ -99,7 +100,7 @@
 </head>
 <body>
     <div class="container">
-        <h2>Your Carter</h2>
+        <h2>Your Cart</h2>
         <div id="cartItems"></div>
         <button id="submitCartButton">Send Cart Link to WhatsApp</button>
     </div>
@@ -109,7 +110,7 @@
         import { getDatabase, ref, onValue } from 'https://www.gstatic.com/firebasejs/10.13.1/firebase-database.js';
         import { getAuth } from 'https://www.gstatic.com/firebasejs/10.13.1/firebase-auth.js';
 
-       const firebaseConfig = {
+        const firebaseConfig = {
             apiKey: "AIzaSyBDrzrgLslaJvnXbo1e90irCEtdcm9ZsCU",
             authDomain: "logins-13661.firebaseapp.com",
             databaseURL: "https://logins-13661-default-rtdb.firebaseio.com",
@@ -119,6 +120,7 @@
             appId: "1:451535349483:web:d3c9867fd2bffbbdca40ae",
             measurementId: "G-DWP16WX2H7"
         };
+
 
         const app = initializeApp(firebaseConfig);
         const database = getDatabase(app);
