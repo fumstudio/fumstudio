@@ -7,7 +7,7 @@
 </head>
 <body>
     <div class="container">
-        <h2>Uploadd</h2>
+        <h2>Upload</h2>
         <input type="file" id="photo" accept="image/*" required>
         <input type="text" id="text" placeholder="Write something" required>
         <button id="addToCartButton">Add to Cart</button>
@@ -42,23 +42,42 @@
                 userEmail = user.email.replace('.', ',');
             } else {
                 alert("You are not logged in. Please log in to upload items.");
-                window.location.href = "login.html";
+                window.location.href = "login.html"; // Redirect to login if not authenticated
             }
         });
 
         async function addToCart(imageData, text) {
-            const cartId = Date.now().toString(); // Create a unique cart ID
-            const cartRef = ref(database, `carts/${cartId}`);
-
+            const cartRef = ref(database, `carts/${userEmail}`);
+            const cartItemId = Date.now().toString();
             const cartItem = {
-                email: userEmail,
+                id: cartItemId,
                 image: imageData,
                 text: text
             };
 
-            // Save the item to the cart
-            await set(cartRef, cartItem);
-            alert("Item added to cart!");
+            onValue(cartRef, async (snapshot) => {
+                const existingData = snapshot.val() || [];
+                const itemExists = existingData.some(item => item.id === cartItemId);
+
+                if (!itemExists) {
+                    existingData.push(cartItem);
+                    await set(cartRef, existingData);
+                    alert("Item added to cart!");
+                } else {
+                    alert("Item is already in the cart.");
+                }
+            });
+        }
+
+        async function createCartSnapshot() {
+            const cartRef = ref(database, `carts/${userEmail}`);
+            const snapshotRef = ref(database, `cartSnapshots/${userEmail}/${Date.now()}`);
+
+            onValue(cartRef, async (snapshot) => {
+                const existingData = snapshot.val() || [];
+                await set(snapshotRef, existingData);
+                alert("Cart snapshot created! You can now share this link.");
+            });
         }
 
         async function handleAddToCart() {
@@ -87,14 +106,14 @@
                 alert("You need to be logged in to view your cart.");
                 return;
             }
-            window.location.href = `cart.html?email=${userEmail}`;
+            createCartSnapshot(); // Create snapshot before viewing
+            window.location.href = `cart.html?email=${userEmail}`; // Redirect to the cart page
         }
 
         document.getElementById('addToCartButton').addEventListener('click', handleAddToCart);
     </script>
 </body>
 </html>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -110,7 +129,7 @@
             align-items: center;
         }
         .cart-item img {
-            max-width: 100px; /* Adjust size as needed */
+            max-width: 100px; 
             margin-right: 10px;
         }
     </style>
@@ -127,7 +146,7 @@
         import { getDatabase, ref, onValue } from 'https://www.gstatic.com/firebasejs/10.13.1/firebase-database.js';
         import { getAuth } from 'https://www.gstatic.com/firebasejs/10.13.1/firebase-auth.js';
 
-         const firebaseConfig = {
+        const firebaseConfig = {
             apiKey: "AIzaSyBDrzrgLslaJvnXbo1e90irCEtdcm9ZsCU",
             authDomain: "logins-13661.firebaseapp.com",
             databaseURL: "https://logins-13661-default-rtdb.firebaseio.com",
@@ -138,62 +157,57 @@
             measurementId: "G-DWP16WX2H7"
         };
 
-
         const app = initializeApp(firebaseConfig);
         const database = getDatabase(app);
         const auth = getAuth();
 
         let userEmail;
         const urlParams = new URLSearchParams(window.location.search);
+        const snapshotTime = urlParams.get('snapshot'); // Get the snapshot timestamp from the URL
         const email = urlParams.get('email');
 
         auth.onAuthStateChanged(user => {
             if (user) {
                 userEmail = user.email.replace('.', ',');
-                displayCartItems(userEmail);
+                displayCartItems(userEmail, snapshotTime);
             } else {
                 alert("You are not logged in. Please log in to view your cart.");
-                window.location.href = "login.html";
+                window.location.href = "login.html"; // Redirect to login if not authenticated
             }
         });
 
-        function displayCartItems(userEmail) {
-            const cartRef = ref(database, `carts`);
-            onValue(cartRef, (snapshot) => {
+        function displayCartItems(userEmail, snapshotTime) {
+            const snapshotRef = ref(database, `cartSnapshots/${userEmail}/${snapshotTime}`);
+            onValue(snapshotRef, (snapshot) => {
                 const data = snapshot.val();
                 const cartDiv = document.getElementById('cartItems');
                 cartDiv.innerHTML = '';
 
-                if (!data) {
+                if (!data || data.length === 0) {
                     cartDiv.innerHTML = '<p>No items in the cart.</p>';
                     return;
                 }
 
-                // Filter for the user's cart items
-                Object.keys(data).forEach(cartId => {
-                    const item = data[cartId];
-                    if (item.email === userEmail) {
-                        const itemDiv = document.createElement('div');
-                        itemDiv.className = 'cart-item';
+                data.forEach(item => {
+                    const itemDiv = document.createElement('div');
+                    itemDiv.className = 'cart-item';
 
-                        const img = document.createElement('img');
-                        img.src = item.image;
-                        img.alt = "Uploaded Image";
+                    const img = document.createElement('img');
+                    img.src = item.image;
+                    img.alt = "Uploaded Image";
 
-                        const textDiv = document.createElement('div');
-                        textDiv.innerText = item.text;
+                    const textDiv = document.createElement('div');
+                    textDiv.innerText = item.text;
 
-                        itemDiv.appendChild(img);
-                        itemDiv.appendChild(textDiv);
-                        cartDiv.appendChild(itemDiv);
-                    }
+                    itemDiv.appendChild(img);
+                    itemDiv.appendChild(textDiv);
+                    cartDiv.appendChild(itemDiv);
                 });
             });
         }
 
         function submitCart() {
-            const cartId = Date.now().toString(); // Create a unique ID for the link
-            const cartLink = `https://fumstudio.shop/cart?cartId=${cartId}&email=${userEmail}`;
+            const cartLink = `https://fumstudio.shop/cart?email=${userEmail}&snapshot=${snapshotTime}`; // Use the snapshot time
             const whatsappNumber = '0659860276';
             const whatsappMessage = `Check out my cart: ${cartLink}`;
             const whatsappLink = `https://api.whatsapp.com/send?phone=${whatsappNumber}&text=${encodeURIComponent(whatsappMessage)}`;
@@ -204,3 +218,4 @@
     </script>
 </body>
 </html>
+
