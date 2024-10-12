@@ -7,7 +7,7 @@
 </head>
 <body>
     <div class="container">
-        <h2>Upload</h2>
+        <h2>Uploadarrr</h2>
         <input type="file" id="photo" accept="image/*" required>
         <input type="text" id="text" placeholder="Write something" required>
         <button id="addToCartButton">Add to Cart</button>
@@ -58,7 +58,7 @@
                 text: text
             };
 
-            // Set the cart item directly instead of onValue
+            // Fetch existing items
             const snapshot = await getCartItems(cartRef);
             const existingData = snapshot || [];
             existingData.push(cartItem); // Add new item to the cart
@@ -95,7 +95,6 @@
                 (snapshot) => {
                     const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
                     document.getElementById('uploadProgress').value = progress;
-                    console.log('Upload is ' + progress + '% done');
                 }, 
                 (error) => {
                     console.error("Upload failed:", error);
@@ -179,16 +178,16 @@
         auth.onAuthStateChanged(user => {
             if (user) {
                 userEmail = user.email.replace('.', ',');
-                displayCartItems(userEmail, snapshotId);
+                displayCartItems(userEmail);
             } else {
                 alert("You are not logged in. Please log in to view your cart.");
                 window.location.href = "login.html"; // Redirect to login if not authenticated
             }
         });
 
-        function displayCartItems(userEmail, snapshotId) {
-            const snapshotRef = ref(database, `cartSnapshots/${userEmail}/${snapshotId}`);
-            onValue(snapshotRef, (snapshot) => {
+        function displayCartItems(userEmail) {
+            const cartRef = ref(database, `carts/${userEmail}`);
+            onValue(cartRef, (snapshot) => {
                 const data = snapshot.val();
                 const cartDiv = document.getElementById('cartItems');
                 cartDiv.innerHTML = '';
@@ -217,7 +216,7 @@
         }
 
         function submitCart() {
-            const cartLink = `https://fumstudio.shop/cart?email=${userEmail}&snapshot=${snapshotId}`; // Include snapshot ID in the link
+            const cartLink = `https://fumstudio.shop/cart?email=${userEmail}`; // Generate the cart link
             const whatsappNumber = '0659860276';
             const whatsappMessage = `Check out my cart: ${cartLink}`;
             const whatsappLink = `https://api.whatsapp.com/send?phone=${whatsappNumber}&text=${encodeURIComponent(whatsappMessage)}`;
@@ -228,3 +227,4 @@
     </script>
 </body>
 </html>
+
