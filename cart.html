@@ -174,21 +174,21 @@
 
         let userEmail;
         const urlParams = new URLSearchParams(window.location.search);
-        const email = urlParams.get('email');
+        const snapshotId = urlParams.get('snapshot'); // Get the snapshot ID from the URL
 
         auth.onAuthStateChanged(user => {
             if (user) {
                 userEmail = user.email.replace('.', ',');
-                displayCartItems(userEmail);
+                displayCartItems(userEmail, snapshotId);
             } else {
                 alert("You are not logged in. Please log in to view your cart.");
                 window.location.href = "login.html"; // Redirect to login if not authenticated
             }
         });
 
-        function displayCartItems(userEmail) {
-            const cartRef = ref(database, `carts/${userEmail}`);
-            onValue(cartRef, (snapshot) => {
+        function displayCartItems(userEmail, snapshotId) {
+            const snapshotRef = ref(database, `cartSnapshots/${userEmail}/${snapshotId}`);
+            onValue(snapshotRef, (snapshot) => {
                 const data = snapshot.val();
                 const cartDiv = document.getElementById('cartItems');
                 cartDiv.innerHTML = '';
@@ -217,7 +217,7 @@
         }
 
         function submitCart() {
-            const cartLink = `https://fumstudio.shop/cart?email=${userEmail}`; // Share the cart link
+            const cartLink = `https://fumstudio.shop/cart?email=${userEmail}&snapshot=${snapshotId}`; // Include snapshot ID in the link
             const whatsappNumber = '0659860276';
             const whatsappMessage = `Check out my cart: ${cartLink}`;
             const whatsappLink = `https://api.whatsapp.com/send?phone=${whatsappNumber}&text=${encodeURIComponent(whatsappMessage)}`;
@@ -228,6 +228,3 @@
     </script>
 </body>
 </html>
-
-
-
