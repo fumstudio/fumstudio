@@ -7,7 +7,7 @@
 </head>
 <body>
     <div class="container">
-        <h2>Upl</h2>
+        <h2>Uploadd</h2>
         <input type="file" id="photo" accept="image/*" required>
         <input type="text" id="text" placeholder="Write something" required>
         <button id="addToCartButton">Add to Cart</button>
@@ -20,7 +20,6 @@
         import { getDatabase, ref, set, onValue } from 'https://www.gstatic.com/firebasejs/10.13.1/firebase-database.js';
         import { getAuth, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.13.1/firebase-auth.js';
 
-     
         const firebaseConfig = {
             apiKey: "AIzaSyBDrzrgLslaJvnXbo1e90irCEtdcm9ZsCU",
             authDomain: "logins-13661.firebaseapp.com",
@@ -31,7 +30,6 @@
             appId: "1:451535349483:web:d3c9867fd2bffbbdca40ae",
             measurementId: "G-DWP16WX2H7"
         };
-
 
         const app = initializeApp(firebaseConfig);
         const database = getDatabase(app);
@@ -44,35 +42,23 @@
                 userEmail = user.email.replace('.', ',');
             } else {
                 alert("You are not logged in. Please log in to upload items.");
-                window.location.href = "login.html"; // Redirect to login if not authenticated
+                window.location.href = "login.html";
             }
         });
 
         async function addToCart(imageData, text) {
-            const cartRef = ref(database, `carts/${userEmail}`);
+            const cartId = Date.now().toString(); // Create a unique cart ID
+            const cartRef = ref(database, `carts/${cartId}`);
 
-            // Create a unique identifier for the item
-            const cartItemId = Date.now().toString();
             const cartItem = {
-                id: cartItemId,
+                email: userEmail,
                 image: imageData,
                 text: text
             };
 
-            onValue(cartRef, async (snapshot) => {
-                const existingData = snapshot.val() || [];
-
-                // Check if the item already exists
-                const itemExists = existingData.some(item => item.id === cartItemId);
-
-                if (!itemExists) {
-                    existingData.push(cartItem);
-                    await set(cartRef, existingData);
-                    alert("Item added to cart!");
-                } else {
-                    alert("Item is already in the cart.");
-                }
-            });
+            // Save the item to the cart
+            await set(cartRef, cartItem);
+            alert("Item added to cart!");
         }
 
         async function handleAddToCart() {
@@ -116,7 +102,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Your Cart</title>
     <style>
-        /* Your existing styles */
         .cart-item {
             margin: 10px 0;
             border: 1px solid #ccc;
@@ -142,7 +127,7 @@
         import { getDatabase, ref, onValue } from 'https://www.gstatic.com/firebasejs/10.13.1/firebase-database.js';
         import { getAuth } from 'https://www.gstatic.com/firebasejs/10.13.1/firebase-auth.js';
 
-        const firebaseConfig = {
+         const firebaseConfig = {
             apiKey: "AIzaSyBDrzrgLslaJvnXbo1e90irCEtdcm9ZsCU",
             authDomain: "logins-13661.firebaseapp.com",
             databaseURL: "https://logins-13661-default-rtdb.firebaseio.com",
@@ -152,6 +137,7 @@
             appId: "1:451535349483:web:d3c9867fd2bffbbdca40ae",
             measurementId: "G-DWP16WX2H7"
         };
+
 
         const app = initializeApp(firebaseConfig);
         const database = getDatabase(app);
@@ -167,42 +153,47 @@
                 displayCartItems(userEmail);
             } else {
                 alert("You are not logged in. Please log in to view your cart.");
-                window.location.href = "login.html"; // Redirect to login if not authenticated
+                window.location.href = "login.html";
             }
         });
 
         function displayCartItems(userEmail) {
-            const cartRef = ref(database, `carts/${userEmail}`);
+            const cartRef = ref(database, `carts`);
             onValue(cartRef, (snapshot) => {
                 const data = snapshot.val();
                 const cartDiv = document.getElementById('cartItems');
                 cartDiv.innerHTML = '';
 
-                if (!data || data.length === 0) {
+                if (!data) {
                     cartDiv.innerHTML = '<p>No items in the cart.</p>';
                     return;
                 }
 
-                data.forEach(item => {
-                    const itemDiv = document.createElement('div');
-                    itemDiv.className = 'cart-item';
+                // Filter for the user's cart items
+                Object.keys(data).forEach(cartId => {
+                    const item = data[cartId];
+                    if (item.email === userEmail) {
+                        const itemDiv = document.createElement('div');
+                        itemDiv.className = 'cart-item';
 
-                    const img = document.createElement('img');
-                    img.src = item.image;
-                    img.alt = "Uploaded Image";
+                        const img = document.createElement('img');
+                        img.src = item.image;
+                        img.alt = "Uploaded Image";
 
-                    const textDiv = document.createElement('div');
-                    textDiv.innerText = item.text;
+                        const textDiv = document.createElement('div');
+                        textDiv.innerText = item.text;
 
-                    itemDiv.appendChild(img);
-                    itemDiv.appendChild(textDiv);
-                    cartDiv.appendChild(itemDiv);
+                        itemDiv.appendChild(img);
+                        itemDiv.appendChild(textDiv);
+                        cartDiv.appendChild(itemDiv);
+                    }
                 });
             });
         }
 
         function submitCart() {
-            const cartLink = `https://fumstudio.shop/cart?email=${userEmail}`; // Use the email
+            const cartId = Date.now().toString(); // Create a unique ID for the link
+            const cartLink = `https://fumstudio.shop/cart?cartId=${cartId}&email=${userEmail}`;
             const whatsappNumber = '0659860276';
             const whatsappMessage = `Check out my cart: ${cartLink}`;
             const whatsappLink = `https://api.whatsapp.com/send?phone=${whatsappNumber}&text=${encodeURIComponent(whatsappMessage)}`;
@@ -213,5 +204,3 @@
     </script>
 </body>
 </html>
-
-
