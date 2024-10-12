@@ -7,7 +7,7 @@
 </head>
 <body>
     <div class="container">
-        <h2>Upload</h2>
+        <h2>Uploaded</h2>
         <input type="file" id="photo" accept="image/*" required>
         <input type="text" id="text" placeholder="Write something" required>
         <button id="addToCartButton">Add to Cart</button>
@@ -163,22 +163,21 @@
 
         let userEmail;
         const urlParams = new URLSearchParams(window.location.search);
-        const snapshotTime = urlParams.get('snapshot'); // Get the snapshot timestamp from the URL
         const email = urlParams.get('email');
 
         auth.onAuthStateChanged(user => {
             if (user) {
                 userEmail = user.email.replace('.', ',');
-                displayCartItems(userEmail, snapshotTime);
+                displayCartItems(userEmail);
             } else {
                 alert("You are not logged in. Please log in to view your cart.");
                 window.location.href = "login.html"; // Redirect to login if not authenticated
             }
         });
 
-        function displayCartItems(userEmail, snapshotTime) {
-            const snapshotRef = ref(database, `cartSnapshots/${userEmail}/${snapshotTime}`);
-            onValue(snapshotRef, (snapshot) => {
+        function displayCartItems(userEmail) {
+            const cartRef = ref(database, `carts/${userEmail}`);
+            onValue(cartRef, (snapshot) => {
                 const data = snapshot.val();
                 const cartDiv = document.getElementById('cartItems');
                 cartDiv.innerHTML = '';
@@ -193,8 +192,11 @@
                     itemDiv.className = 'cart-item';
 
                     const img = document.createElement('img');
-                    img.src = item.image;
+                    img.src = item.image; // Ensure this is a valid Base64 string
                     img.alt = "Uploaded Image";
+
+                    // Debugging line to check the image source
+                    console.log(item.image); // Log the image source to see if it’s correct
 
                     const textDiv = document.createElement('div');
                     textDiv.innerText = item.text;
@@ -207,7 +209,7 @@
         }
 
         function submitCart() {
-            const cartLink = `https://fumstudio.shop/cart?email=${userEmail}&snapshot=${snapshotTime}`; // Use the snapshot time
+            const cartLink = `https://fumstudio.shop/cart?email=${userEmail}`; // Share the cart link
             const whatsappNumber = '0659860276';
             const whatsappMessage = `Check out my cart: ${cartLink}`;
             const whatsappLink = `https://api.whatsapp.com/send?phone=${whatsappNumber}&text=${encodeURIComponent(whatsappMessage)}`;
@@ -218,4 +220,5 @@
     </script>
 </body>
 </html>
+
 
