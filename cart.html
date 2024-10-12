@@ -7,18 +7,20 @@
 </head>
 <body>
     <div class="container">
-        <h2>Uploaded</h2>
+        <h2>Upload</h2>
         <input type="file" id="photo" accept="image/*" required>
         <input type="text" id="text" placeholder="Write something" required>
         <button id="addToCartButton">Add to Cart</button>
         <button onclick="viewCart()">View Cart</button>
         <p id="uploadMessage"></p>
+        <progress id="uploadProgress" value="0" max="100" style="display:none;"></progress>
     </div>
 
     <script type="module">
         import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.13.1/firebase-app.js';
         import { getDatabase, ref, set, onValue } from 'https://www.gstatic.com/firebasejs/10.13.1/firebase-database.js';
         import { getAuth, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.13.1/firebase-auth.js';
+        import { getStorage, ref as storageRef, uploadBytesResumable, getDownloadURL } from 'https://www.gstatic.com/firebasejs/10.13.1/firebase-storage.js';
 
         const firebaseConfig = {
             apiKey: "AIzaSyBDrzrgLslaJvnXbo1e90irCEtdcm9ZsCU",
@@ -34,6 +36,7 @@
         const app = initializeApp(firebaseConfig);
         const database = getDatabase(app);
         const auth = getAuth();
+        const storage = getStorage();
 
         let userEmail;
 
@@ -48,35 +51,26 @@
 
         async function addToCart(imageData, text) {
             const cartRef = ref(database, `carts/${userEmail}`);
-            const cartItemId = Date.now().toString();
+            const cartItemId = Date.now().toString(); // Use a timestamp as the cart item ID
             const cartItem = {
                 id: cartItemId,
                 image: imageData,
                 text: text
             };
 
-            onValue(cartRef, async (snapshot) => {
-                const existingData = snapshot.val() || [];
-                const itemExists = existingData.some(item => item.id === cartItemId);
-
-                if (!itemExists) {
-                    existingData.push(cartItem);
-                    await set(cartRef, existingData);
-                    alert("Item added to cart!");
-                } else {
-                    alert("Item is already in the cart.");
-                }
-            });
+            // Set the cart item directly instead of onValue
+            const snapshot = await getCartItems(cartRef);
+            const existingData = snapshot || [];
+            existingData.push(cartItem); // Add new item to the cart
+            await set(cartRef, existingData); // Update cart in the database
+            alert("Item added to cart!");
         }
 
-        async function createCartSnapshot() {
-            const cartRef = ref(database, `carts/${userEmail}`);
-            const snapshotRef = ref(database, `cartSnapshots/${userEmail}/${Date.now()}`);
-
-            onValue(cartRef, async (snapshot) => {
-                const existingData = snapshot.val() || [];
-                await set(snapshotRef, existingData);
-                alert("Cart snapshot created! You can now share this link.");
+        async function getCartItems(cartRef) {
+            return new Promise((resolve) => {
+                onValue(cartRef, (snapshot) => {
+                    resolve(snapshot.val() || []);
+                });
             });
         }
 
@@ -89,16 +83,34 @@
                 return;
             }
 
-            const reader = new FileReader();
-            reader.onloadend = async () => {
-                const base64data = reader.result;
-                await addToCart(base64data, text);
-                document.getElementById('uploadMessage').innerText = "Added to cart!";
-                document.getElementById('photo').value = '';
-                document.getElementById('text').value = '';
-            };
+            const storagePath = `images/${Date.now()}.png`;
+            const imageRef = storageRef(storage, storagePath);
 
-            reader.readAsDataURL(file);
+            const uploadTask = uploadBytesResumable(imageRef, file);
+
+            // Show the progress bar
+            document.getElementById('uploadProgress').style.display = 'block';
+
+            uploadTask.on('state_changed', 
+                (snapshot) => {
+                    const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                    document.getElementById('uploadProgress').value = progress;
+                    console.log('Upload is ' + progress + '% done');
+                }, 
+                (error) => {
+                    console.error("Upload failed:", error);
+                    document.getElementById('uploadMessage').innerText = "Upload failed.";
+                }, 
+                async () => {
+                    const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
+                    await addToCart(downloadURL, text);
+                    document.getElementById('uploadMessage').innerText = "Added to cart!";
+                    document.getElementById('photo').value = '';
+                    document.getElementById('text').value = '';
+                    document.getElementById('uploadProgress').style.display = 'none'; // Hide progress
+                    document.getElementById('uploadProgress').value = 0; // Reset progress
+                }
+            );
         }
 
         function viewCart() {
@@ -106,8 +118,7 @@
                 alert("You need to be logged in to view your cart.");
                 return;
             }
-            createCartSnapshot(); // Create snapshot before viewing
-            window.location.href = `cart.html?email=${userEmail}`; // Redirect to the cart page
+            window.location.href = `cart.html?email=${userEmail}`; // Redirect to cart page
         }
 
         document.getElementById('addToCartButton').addEventListener('click', handleAddToCart);
@@ -192,11 +203,8 @@
                     itemDiv.className = 'cart-item';
 
                     const img = document.createElement('img');
-                    img.src = item.image; // Ensure this is a valid Base64 string
+                    img.src = item.image; // Ensure correct image source
                     img.alt = "Uploaded Image";
-
-                    // Debugging line to check the image source
-                    console.log(item.image); // Log the image source to see if it’s correct
 
                     const textDiv = document.createElement('div');
                     textDiv.innerText = item.text;
@@ -213,12 +221,13 @@
             const whatsappNumber = '0659860276';
             const whatsappMessage = `Check out my cart: ${cartLink}`;
             const whatsappLink = `https://api.whatsapp.com/send?phone=${whatsappNumber}&text=${encodeURIComponent(whatsappMessage)}`;
-            window.open(whatsappLink);
+            window.open(whatsappLink, '_blank');
         }
 
         document.getElementById('submitCartButton').addEventListener('click', submitCart);
     </script>
 </body>
 </html>
+
 
 
