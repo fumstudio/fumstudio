@@ -3,158 +3,152 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Upload Page</title>
-</head>
-<body>
-    <div class="container">
-        <h2>Uploadarrr</h2>
-        <input type="file" id="photo" accept="image/*" required>
-        <input type="text" id="text" placeholder="Write something" required>
-        <button id="addToCartButton">Add to Cart</button>
-        <button onclick="viewCart()">View Cart</button>
-        <p id="uploadMessage"></p>
-        <progress id="uploadProgress" value="0" max="100" style="display:none;"></progress>
-    </div>
-
-    <script type="module">
-        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.13.1/firebase-app.js';
-        import { getDatabase, ref, set, onValue } from 'https://www.gstatic.com/firebasejs/10.13.1/firebase-database.js';
-        import { getAuth, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.13.1/firebase-auth.js';
-        import { getStorage, ref as storageRef, uploadBytesResumable, getDownloadURL } from 'https://www.gstatic.com/firebasejs/10.13.1/firebase-storage.js';
-
-        const firebaseConfig = {
-            apiKey: "AIzaSyBDrzrgLslaJvnXbo1e90irCEtdcm9ZsCU",
-            authDomain: "logins-13661.firebaseapp.com",
-            databaseURL: "https://logins-13661-default-rtdb.firebaseio.com",
-            projectId: "logins-13661",
-            storageBucket: "logins-13661.appspot.com",
-            messagingSenderId: "451535349483",
-            appId: "1:451535349483:web:d3c9867fd2bffbbdca40ae",
-            measurementId: "G-DWP16WX2H7"
-        };
-
-        const app = initializeApp(firebaseConfig);
-        const database = getDatabase(app);
-        const auth = getAuth();
-        const storage = getStorage();
-
-        let userEmail;
-
-        onAuthStateChanged(auth, (user) => {
-            if (user) {
-                userEmail = user.email.replace('.', ',');
-            } else {
-                alert("You are not logged in. Please log in to upload items.");
-                window.location.href = "login.html"; // Redirect to login if not authenticated
-            }
-        });
-
-        async function addToCart(imageData, text) {
-            const cartRef = ref(database, `carts/${userEmail}`);
-            const cartItemId = Date.now().toString(); // Use a timestamp as the cart item ID
-            const cartItem = {
-                id: cartItemId,
-                image: imageData,
-                text: text
-            };
-
-            // Fetch existing items
-            const snapshot = await getCartItems(cartRef);
-            const existingData = snapshot || [];
-            existingData.push(cartItem); // Add new item to the cart
-            await set(cartRef, existingData); // Update cart in the database
-            alert("Item added to cart!");
-        }
-
-        async function getCartItems(cartRef) {
-            return new Promise((resolve) => {
-                onValue(cartRef, (snapshot) => {
-                    resolve(snapshot.val() || []);
-                });
-            });
-        }
-
-        async function handleAddToCart() {
-            const file = document.getElementById('photo').files[0];
-            const text = document.getElementById('text').value;
-
-            if (!file) {
-                document.getElementById('uploadMessage').innerText = "Please select a photo.";
-                return;
-            }
-
-            const storagePath = `images/${Date.now()}.png`;
-            const imageRef = storageRef(storage, storagePath);
-
-            const uploadTask = uploadBytesResumable(imageRef, file);
-
-            // Show the progress bar
-            document.getElementById('uploadProgress').style.display = 'block';
-
-            uploadTask.on('state_changed', 
-                (snapshot) => {
-                    const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-                    document.getElementById('uploadProgress').value = progress;
-                }, 
-                (error) => {
-                    console.error("Upload failed:", error);
-                    document.getElementById('uploadMessage').innerText = "Upload failed.";
-                }, 
-                async () => {
-                    const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
-                    await addToCart(downloadURL, text);
-                    document.getElementById('uploadMessage').innerText = "Added to cart!";
-                    document.getElementById('photo').value = '';
-                    document.getElementById('text').value = '';
-                    document.getElementById('uploadProgress').style.display = 'none'; // Hide progress
-                    document.getElementById('uploadProgress').value = 0; // Reset progress
-                }
-            );
-        }
-
-        function viewCart() {
-            if (!userEmail) {
-                alert("You need to be logged in to view your cart.");
-                return;
-            }
-            window.location.href = `cart.html?email=${userEmail}`; // Redirect to cart page
-        }
-
-        document.getElementById('addToCartButton').addEventListener('click', handleAddToCart);
-    </script>
-</body>
-</html>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your Cart</title>
+    <title>Cart Page</title>
     <style>
-        .cart-item {
-            margin: 10px 0;
-            border: 1px solid #ccc;
-            padding: 10px;
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+            padding: 20px;
+            padding-bottom: 80px;
+        }
+        h1 {
+            text-align: center;
+            color: #007bff;
+        }
+        .cartItem {
+            border: 1px solid #dee2e6;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 15px 0;
             display: flex;
             align-items: center;
+            transition: box-shadow 0.3s;
         }
-        .cart-item img {
-            max-width: 100px; 
-            margin-right: 10px;
+        .cartItem:hover {
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+        img {
+            max-width: 80px;
+            margin-right: 15px;
+            border-radius: 4px;
+        }
+        .itemDetails {
+            flex: 1;
+        }
+        .bottomNavbar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: #ffffff;
+            border-top: 1px solid #dee2e6;
+            padding: 10px;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+        }
+        .totalPrice {
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 15px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-bottom: 10px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .deleteButton {
+            background-color: #dc3545;
+        }
+        .deleteButton:hover {
+            background-color: #c82333;
+        }
+        .viewDesignButton {
+            background-color: #28a745;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background-color 0.3s;
+            display: inline-block;
+            margin-top: 5px;
+            margin-bottom: 10px;
+        }
+        .viewDesignButton:hover {
+            background-color: #218838;
+        }
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        .alertBox {
+            background-color: #007bff;
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        .alertBox button {
+            background-color: white;
+            color: #007bff;
+            margin-top: 15px;
+        }
+        .alertBox button:hover {
+            background-color: #e0e0e0;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h2>Your Cart</h2>
+    <div class="cartContainer">
+        <h1>Your Cart</h1>
         <div id="cartItems"></div>
-        <button id="submitCartButton">Send Cart Link to WhatsApp</button>
+        <div id="allCarts"></div>
+    </div>
+
+    <div class="bottomNavbar">
+        <div class="totalPrice">
+            Total Price: <span class="price" data-price="0">ZAR 0</span>
+        </div>
+        <button id="submitButton">Submit Cart</button>
+    </div>
+
+    <div class="overlay" id="alertOverlay" style="display:none;">
+        <div class="alertBox" id="alertBox">
+            <p id="alertMessage">Your message here.</p>
+            <button id="alertOkButton">OK</button>
+        </div>
+    </div>
+
+    <div class="overlay" id="confirmOverlay" style="display:none;">
+        <div class="alertBox" id="confirmBox">
+            <p id="confirmMessage">Are you sure?</p>
+            <button id="confirmYesButton">Yes</button>
+            <button id="confirmCancelButton">Cancel</button>
+        </div>
     </div>
 
     <script type="module">
-        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.13.1/firebase-app.js';
-        import { getDatabase, ref, onValue } from 'https://www.gstatic.com/firebasejs/10.13.1/firebase-database.js';
-        import { getAuth } from 'https://www.gstatic.com/firebasejs/10.13.1/firebase-auth.js';
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-app.js";
+        import { getDatabase, ref, set, get } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-database.js";
+        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-auth.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyBDrzrgLslaJvnXbo1e90irCEtdcm9ZsCU",
@@ -169,62 +163,218 @@
 
         const app = initializeApp(firebaseConfig);
         const database = getDatabase(app);
-        const auth = getAuth();
+        const auth = getAuth(app);
 
-        let userEmail;
-        const urlParams = new URLSearchParams(window.location.search);
-        const snapshotId = urlParams.get('snapshot'); // Get the snapshot ID from the URL
+        let autoSaveTimer;
 
-        auth.onAuthStateChanged(user => {
+        onAuthStateChanged(auth, (user) => {
             if (user) {
-                userEmail = user.email.replace('.', ',');
-                displayCartItems(userEmail);
+                startAutoSave();
+                fetchAllCarts(); // Fetch saved carts when user is authenticated
             } else {
-                alert("You are not logged in. Please log in to view your cart.");
-                window.location.href = "login.html"; // Redirect to login if not authenticated
+                clearAutoSave();
             }
         });
 
-        function displayCartItems(userEmail) {
-            const cartRef = ref(database, `carts/${userEmail}`);
-            onValue(cartRef, (snapshot) => {
-                const data = snapshot.val();
-                const cartDiv = document.getElementById('cartItems');
-                cartDiv.innerHTML = '';
+        function startAutoSave() {
+            clearAutoSave();
+            autoSaveTimer = setTimeout(() => {
+                saveToFirebase();
+            }, 10000); // 10 seconds
+        }
 
-                if (!data || data.length === 0) {
-                    cartDiv.innerHTML = '<p>No items in the cart.</p>';
-                    return;
-                }
+        function clearAutoSave() {
+            if (autoSaveTimer) {
+                clearTimeout(autoSaveTimer);
+                autoSaveTimer = null;
+            }
+        }
 
-                data.forEach(item => {
-                    const itemDiv = document.createElement('div');
-                    itemDiv.className = 'cart-item';
+        function showAlert(message) {
+            document.getElementById('alertMessage').innerText = message;
+            document.getElementById('alertOverlay').style.display = 'flex';
+            document.getElementById('alertOkButton').onclick = hideAlert;
+        }
 
-                    const img = document.createElement('img');
-                    img.src = item.image; // Ensure correct image source
-                    img.alt = "Uploaded Image";
+        function showConfirm(message, onConfirm) {
+            document.getElementById('confirmMessage').innerText = message;
+            document.getElementById('confirmOverlay').style.display = 'flex';
+            document.getElementById('confirmYesButton').onclick = () => {
+                onConfirm();
+                hideConfirm();
+            };
+            document.getElementById('confirmCancelButton').onclick = hideConfirm;
+        }
 
-                    const textDiv = document.createElement('div');
-                    textDiv.innerText = item.text;
+        function hideAlert() {
+            document.getElementById('alertOverlay').style.display = 'none';
+        }
 
-                    itemDiv.appendChild(img);
-                    itemDiv.appendChild(textDiv);
-                    cartDiv.appendChild(itemDiv);
+        function hideConfirm() {
+            document.getElementById('confirmOverlay').style.display = 'none';
+        }
+
+        let storedCurrency = localStorage.getItem('selectedCurrency') || 'ZAR';
+        const designLinks = JSON.parse(localStorage.getItem('designLinks')) || {};
+
+        function displayCartItems() {
+            const cartItemsContainer = document.getElementById('cartItems');
+            const cartItems = JSON.parse(localStorage.getItem('cart')) || [];
+            cartItemsContainer.innerHTML = '';
+
+            if (cartItems.length === 0) {
+                cartItemsContainer.innerHTML = '<p>Your cart is empty.</p>';
+                document.querySelector('.price').innerText = 'ZAR 0';
+                document.querySelector('.price').setAttribute('data-price', '0');
+                return;
+            }
+
+            let total = 0;
+            cartItems.forEach((item, index) => {
+                const itemPriceInSelectedCurrency = convertPrice(item.itemPrice, storedCurrency);
+                const imagesHtml = item.images.map((imageData, imgIndex) => 
+                    `<div>
+                        <a href="${imageData.file}" target="_blank">
+                            <img src="${imageData.file}" alt="Photo: none">
+                        </a>
+                        <div>${imgIndex + 1}. Custom: ${imageData.design}</div>
+                        <div>Text: ${imageData.text}</div>
+                        <div><a href="${designLinks[imageData.design] || '#'}" target="_blank" class="viewDesignButton">View Design</a></div>
+                    </div>`).join('');
+
+                const cartItemDiv = document.createElement('div');
+                cartItemDiv.className = 'cartItem';
+                cartItemDiv.innerHTML = `
+                    <div class="itemDetails">
+                        <strong>${item.itemName}</strong><br>
+                        ${imagesHtml}
+                        <div>Price: ${storedCurrency} ${itemPriceInSelectedCurrency}</div>
+                    </div>
+                    <div>
+                        <button onclick="window.open('${item.catalogLink}', '_blank')">View Catalog</button>
+                        <br><button class="deleteButton" data-index="${index}">Delete</button>
+                    </div>`;
+                cartItemsContainer.appendChild(cartItemDiv);
+                total += item.itemPrice;
+            });
+
+            document.querySelector('.price').innerText = `ZAR ${total}`;
+            document.querySelector('.price').setAttribute('data-price', total);
+            convertCurrency(storedCurrency, document.querySelector('.price'));
+
+            document.querySelectorAll('.deleteButton').forEach(button => {
+                button.addEventListener('click', (event) => {
+                    const index = event.target.getAttribute('data-index');
+                    showConfirm('Are you sure you want to delete this item?', () => deleteCartItem(index));
                 });
             });
         }
 
-        function submitCart() {
-            const cartLink = `https://fumstudio.shop/cart?email=${userEmail}`; // Generate the cart link
-            const whatsappNumber = '0659860276';
-            const whatsappMessage = `Check out my cart: ${cartLink}`;
-            const whatsappLink = `https://api.whatsapp.com/send?phone=${whatsappNumber}&text=${encodeURIComponent(whatsappMessage)}`;
-            window.open(whatsappLink, '_blank');
+        function deleteCartItem(index) {
+            const cartItems = JSON.parse(localStorage.getItem('cart')) || [];
+            cartItems.splice(index, 1);
+            localStorage.setItem('cart', JSON.stringify(cartItems));
+            displayCartItems();
+            saveToFirebase(); // Save without showing alert
         }
 
-        document.getElementById('submitCartButton').addEventListener('click', submitCart);
+        async function saveToFirebase() {
+            const user = auth.currentUser;
+            if (!user) {
+                showAlert('You must be logged in to save the cart.');
+                return;
+            }
+
+            const cartItems = JSON.parse(localStorage.getItem('cart')) || [];
+            const storedCurrency = localStorage.getItem('selectedCurrency') || 'ZAR';
+
+            try {
+                await set(ref(database, 'carts/' + user.uid + '/currentCart'), {
+                    cart: cartItems,
+                    currency: storedCurrency
+                });
+            } catch (error) {
+                console.error('Error saving cart to Realtime Database:', error);
+                showAlert('Failed to save cart. Please try again.');
+            }
+        }
+
+        function generateCartLink(cartId) {
+            const baseUrl = window.location.origin + '/cart'; // Adjust this to your cart page URL
+            return `${baseUrl}?cartId=${cartId}`;
+        }
+
+        async function fetchAllCarts() {
+            const user = auth.currentUser;
+            if (!user) return;
+
+            const userCartsRef = ref(database, `carts/${user.uid}`);
+            const snapshot = await get(userCartsRef);
+            if (snapshot.exists()) {
+                const carts = snapshot.val();
+                displayAllCarts(carts);
+            } else {
+                showAlert('No saved carts found.');
+            }
+        }
+
+        function displayAllCarts(carts) {
+            const allCartsContainer = document.getElementById('allCarts');
+            allCartsContainer.innerHTML = '<h2>Saved Carts</h2>';
+
+            for (const cartId in carts) {
+                const cart = carts[cartId];
+                const cartDiv = document.createElement('div');
+                cartDiv.className = 'cartItem';
+                cartDiv.innerHTML = `<h3>Cart ID: ${cartId}</h3>`;
+                
+                let total = 0;
+                cart.cart.forEach((item) => {
+                    const itemPriceInSelectedCurrency = convertPrice(item.itemPrice, cart.currency);
+                    cartDiv.innerHTML += `
+                        <div>
+                            <strong>${item.itemName}</strong><br>
+                            Price: ${cart.currency} ${itemPriceInSelectedCurrency}<br>
+                        </div>`;
+                    total += item.itemPrice;
+                });
+                
+                cartDiv.innerHTML += `<div><strong>Total: ${cart.currency} ${total}</strong></div>`;
+                cartDiv.innerHTML += `<div><a href="${generateCartLink(cartId)}">View Full Cart</a></div>`;
+                allCartsContainer.appendChild(cartDiv);
+            }
+        }
+
+        async function submitCart() {
+            const cartItems = JSON.parse(localStorage.getItem('cart')) || [];
+            if (cartItems.length === 0) {
+                showAlert('Your cart is empty. Please add items to the cart before submitting.');
+                return;
+            }
+
+            const user = auth.currentUser;
+            const cartId = Date.now(); // Generate a unique cart ID (or fetch from the database)
+
+            await saveToFirebase(); // Save cart data
+
+            // Generate the cart link
+            const cartLink = generateCartLink(cartId);
+
+            // Create WhatsApp message
+            const message = `Check out my cart: ${cartLink}`;
+            const phoneNumber = '0659860276';
+            const whatsappUrl = `https://api.whatsapp.com/send?phone=${phoneNumber}&text=${encodeURIComponent(message)}`;
+            window.open(whatsappUrl, '_blank');
+
+            startAutoSave(); // Restart auto-save timer after submit
+        }
+
+        document.getElementById('submitButton').addEventListener('click', submitCart);
+
+        displayCartItems();
+        convertCurrency(storedCurrency, document.querySelector('.price'));
     </script>
+    <script src="currency-Converter.js"></script>
 </body>
 </html>
 
