@@ -120,7 +120,6 @@
     <div class="cartContainer">
         <h1>Your Cart</h1>
         <div id="cartItems"></div>
-        <div id="allCarts"></div>
     </div>
 
     <div class="bottomNavbar">
@@ -147,7 +146,7 @@
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-app.js";
-        import { getDatabase, ref, set, get, onValue } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-database.js";
+        import { getDatabase, ref, set, get } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-database.js";
         import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-auth.js";
 
         const firebaseConfig = {
@@ -169,14 +168,10 @@
 
         onAuthStateChanged(auth, (user) => {
             if (user) {
+                loadCartFromFirebase(); // Load the cart when user logs in
                 startAutoSave();
-                fetchCartData(); // Fetch cart data on login
-                fetchAllCarts(); // Fetch saved carts when user is authenticated
             } else {
                 clearAutoSave();
-                localStorage.removeItem('cart'); // Clear local cart on logout
-                localStorage.removeItem('selectedCurrency');
-                displayCartItems(); // Clear the displayed cart
             }
         });
 
@@ -184,7 +179,7 @@
             clearAutoSave();
             autoSaveTimer = setTimeout(() => {
                 saveToFirebase();
-            }, 10000); // 10 seconds
+            }, 10000); // Save every 10 seconds
         }
 
         function clearAutoSave() {
@@ -221,6 +216,26 @@
         let storedCurrency = localStorage.getItem('selectedCurrency') || 'ZAR';
         const designLinks = JSON.parse(localStorage.getItem('designLinks')) || {};
 
+        async function loadCartFromFirebase() {
+            const user = auth.currentUser;
+            if (!user) return;
+
+            const cartRef = ref(database, 'carts/' + user.uid + '/currentCart');
+            try {
+                const snapshot = await get(cartRef);
+                if (snapshot.exists()) {
+                    const data = snapshot.val();
+                    localStorage.setItem('cart', JSON.stringify(data.cart));
+                    localStorage.setItem('selectedCurrency', data.currency);
+                    displayCartItems();
+                } else {
+                    console.log('No cart found.');
+                }
+            } catch (error) {
+                console.error('Error retrieving cart from Firebase:', error);
+            }
+        }
+
         function displayCartItems() {
             const cartItemsContainer = document.getElementById('cartItems');
             const cartItems = JSON.parse(localStorage.getItem('cart')) || [];
@@ -248,8 +263,8 @@
 
                 const cartItemDiv = document.createElement('div');
                 cartItemDiv.className = 'cartItem';
-                cartItemDiv.innerHTML = `
-                    <div class="itemDetails">
+                cartItemDiv.innerHTML = 
+                    `<div class="itemDetails">
                         <strong>${item.itemName}</strong><br>
                         ${imagesHtml}
                         <div>Price: ${storedCurrency} ${itemPriceInSelectedCurrency}</div>
@@ -297,109 +312,45 @@
                     cart: cartItems,
                     currency: storedCurrency
                 });
+                // Removed the success alert
             } catch (error) {
                 console.error('Error saving cart to Realtime Database:', error);
                 showAlert('Failed to save cart. Please try again.');
             }
         }
 
-        function generateCartLink(cartId) {
-            const user = auth.currentUser;
-            if (!user) return ''; // No user logged in
-
-            const baseUrl = window.location.origin + '/cart'; // Adjust this to your cart page URL
-            const userEmail = encodeURIComponent(user.email); // URL encode the email
-            return `${baseUrl}?cartId=${cartId}&email=${userEmail}`;
-        }
-
-        async function fetchCartData() {
-            const user = auth.currentUser;
-            if (!user) return; // No user logged in
-
-            const cartRef = ref(database, 'carts/' + user.uid + '/currentCart');
-            onValue(cartRef, (snapshot) => {
-                const data = snapshot.val();
-                if (data) {
-                    localStorage.setItem('cart', JSON.stringify(data.cart)); // Save cart in local storage
-                    localStorage.setItem('selectedCurrency', data.currency); // Save selected currency
-                    displayCartItems(); // Update the cart display
-                } else {
-                    console.log('No cart found for this user.');
-                }
-            });
-        }
-
-        async function fetchAllCarts() {
-            const user = auth.currentUser;
-            if (!user) return;
-
-            const userCartsRef = ref(database, `carts/${user.uid}`);
-            const snapshot = await get(userCartsRef);
-            if (snapshot.exists()) {
-                const carts = snapshot.val();
-                displayAllCarts(carts);
-            } else {
-                showAlert('No saved carts found.');
-            }
-        }
-
-        function displayAllCarts(carts) {
-            const allCartsContainer = document.getElementById('allCarts');
-            allCartsContainer.innerHTML = '<h2>Saved Carts</h2>';
-
-            for (const cartId in carts) {
-                const cart = carts[cartId];
-                const cartDiv = document.createElement('div');
-                cartDiv.className = 'cartItem';
-                cartDiv.innerHTML = `<h3>Cart ID: ${cartId}</h3>`;
-                
-                let total = 0;
-                cart.cart.forEach((item) => {
-                    const itemPriceInSelectedCurrency = convertPrice(item.itemPrice, cart.currency);
-                    cartDiv.innerHTML += `
-                        <div>
-                            <strong>${item.itemName}</strong><br>
-                            Price: ${cart.currency} ${itemPriceInSelectedCurrency}<br>
-                        </div>`;
-                    total += item.itemPrice;
-                });
-                
-                cartDiv.innerHTML += `<div><strong>Total: ${cart.currency} ${total}</strong></div>`;
-                cartDiv.innerHTML += `<div><a href="${generateCartLink(cartId)}">View Full Cart</a></div>`;
-                allCartsContainer.appendChild(cartDiv);
-            }
-        }
-
-        async function submitCart() {
+        document.getElementById('submitButton').addEventListener('click', async () => {
+            const phoneNumber = '0659860276';
             const cartItems = JSON.parse(localStorage.getItem('cart')) || [];
             if (cartItems.length === 0) {
                 showAlert('Your cart is empty. Please add items to the cart before submitting.');
                 return;
             }
 
-            const user = auth.currentUser;
-            const cartId = Date.now(); // Generate a unique cart ID (or fetch from the database)
+            await saveToFirebase();
 
-            await saveToFirebase(); // Save cart data
+            const message = cartItems.map((item, index) => 
+                `*item ${index + 1}. ${item.itemName}*\n\n` + 
+                `Selected:\n` + 
+                item.images.map((img, imgIndex) => 
+                    `${imgIndex + 1}. Design: ${img.design}\n` + 
+                    `Text: ${img.text}\n` + 
+                    `Photo: ${img.file}\n` + 
+                    `Design Link: ${designLinks[img.design] || ''}\n`
+                ).join('') + 
+                `Catalog Link: ${item.catalogLink}\n\n`
+            ).join('');
 
-            // Generate the cart link
-            const cartLink = generateCartLink(cartId);
-
-            // Create WhatsApp message
-            const message = `Check out my cart: ${cartLink}`;
-            const phoneNumber = '0659860276';
             const whatsappUrl = `https://api.whatsapp.com/send?phone=${phoneNumber}&text=${encodeURIComponent(message)}`;
             window.open(whatsappUrl, '_blank');
 
             startAutoSave(); // Restart auto-save timer after submit
-        }
-
-        document.getElementById('submitButton').addEventListener('click', submitCart);
+        });
 
         displayCartItems();
         convertCurrency(storedCurrency, document.querySelector('.price'));
     </script>
-    <script src="currency-converter.js"></script>
+    <script src="currency-Converter.js"></script>
 </body>
 </html>
 
