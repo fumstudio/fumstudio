@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cartting Page</title>
+    <title>Cart Page</title>
     <style>
         body {
             font-family: 'Arial', sans-serif;
@@ -118,7 +118,7 @@
 </head>
 <body>
     <div class="cartContainer">
-        <h1>Your Cartting</h1>
+        <h1>Your Cart</h1>
         <div id="cartItems"></div>
         <div id="allCarts"></div>
     </div>
@@ -262,7 +262,7 @@
                 total += item.itemPrice;
             });
 
-            document.querySelector('.price').innerText = ZAR ${total};
+            document.querySelector('.price').innerText = `ZAR ${total}`;
             document.querySelector('.price').setAttribute('data-price', total);
             convertCurrency(storedCurrency, document.querySelector('.price'));
 
@@ -309,7 +309,7 @@
 
             const baseUrl = window.location.origin + '/cart'; // Adjust this to your cart page URL
             const userEmail = encodeURIComponent(user.email); // URL encode the email
-            return ${baseUrl}?cartId=${cartId}&email=${userEmail};
+            return `${baseUrl}?cartId=${cartId}&email=${userEmail}`;
         }
 
         async function fetchCartData() {
@@ -333,7 +333,7 @@
             const user = auth.currentUser;
             if (!user) return;
 
-            const userCartsRef = ref(database, carts/${user.uid});
+            const userCartsRef = ref(database, `carts/${user.uid}`);
             const snapshot = await get(userCartsRef);
             if (snapshot.exists()) {
                 const carts = snapshot.val();
@@ -351,7 +351,7 @@
                 const cart = carts[cartId];
                 const cartDiv = document.createElement('div');
                 cartDiv.className = 'cartItem';
-                cartDiv.innerHTML = <h3>Cart ID: ${cartId}</h3>;
+                cartDiv.innerHTML = `<h3>Cart ID: ${cartId}</h3>`;
                 
                 let total = 0;
                 cart.cart.forEach((item) => {
@@ -364,8 +364,8 @@
                     total += item.itemPrice;
                 });
                 
-                cartDiv.innerHTML += <div><strong>Total: ${cart.currency} ${total}</strong></div>;
-                cartDiv.innerHTML += <div><a href="${generateCartLink(cartId)}">View Full Cart</a></div>;
+                cartDiv.innerHTML += `<div><strong>Total: ${cart.currency} ${total}</strong></div>`;
+                cartDiv.innerHTML += `<div><a href="${generateCartLink(cartId)}">View Full Cart</a></div>`;
                 allCartsContainer.appendChild(cartDiv);
             }
         }
@@ -386,9 +386,9 @@
             const cartLink = generateCartLink(cartId);
 
             // Create WhatsApp message
-            const message = Check out my cart: ${cartLink};
+            const message = `Check out my cart: ${cartLink}`;
             const phoneNumber = '0659860276';
-            const whatsappUrl = https://api.whatsapp.com/send?phone=${phoneNumber}&text=${encodeURIComponent(message)};
+            const whatsappUrl = `https://api.whatsapp.com/send?phone=${phoneNumber}&text=${encodeURIComponent(message)}`;
             window.open(whatsappUrl, '_blank');
 
             startAutoSave(); // Restart auto-save timer after submit
@@ -399,7 +399,7 @@
         displayCartItems();
         convertCurrency(storedCurrency, document.querySelector('.price'));
     </script>
-    <script src="currencyconverter.js"></script>
+    <script src="currency-converter.js"></script>
 </body>
 </html>
 
