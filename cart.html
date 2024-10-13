@@ -10,12 +10,14 @@
             background-color: #f8f9fa;
             color: #333;
             padding: 20px;
-            padding-bottom: 80px;
+            padding-bottom: 80px; /* Space for the bottom navbar */
         }
+
         h1 {
             text-align: center;
             color: #007bff;
         }
+
         .cartItem {
             border: 1px solid #dee2e6;
             border-radius: 5px;
@@ -25,17 +27,21 @@
             align-items: center;
             transition: box-shadow 0.3s;
         }
+
         .cartItem:hover {
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
         }
+
         img {
             max-width: 80px;
             margin-right: 15px;
             border-radius: 4px;
         }
+
         .itemDetails {
             flex: 1;
         }
+
         .bottomNavbar {
             position: fixed;
             bottom: 0;
@@ -50,10 +56,12 @@
             align-items: center;
             z-index: 1000;
         }
+
         .totalPrice {
             font-weight: bold;
             font-size: 1.2em;
         }
+
         button {
             background-color: #007bff;
             color: white;
@@ -64,15 +72,19 @@
             transition: background-color 0.3s;
             margin-bottom: 10px;
         }
+
         button:hover {
             background-color: #0056b3;
         }
+
         .deleteButton {
             background-color: #dc3545;
         }
+
         .deleteButton:hover {
             background-color: #c82333;
         }
+
         .viewDesignButton {
             background-color: #28a745;
             color: white;
@@ -84,9 +96,11 @@
             margin-top: 5px;
             margin-bottom: 10px;
         }
+
         .viewDesignButton:hover {
             background-color: #218838;
         }
+
         .overlay {
             position: fixed;
             top: 0;
@@ -99,6 +113,7 @@
             align-items: center;
             z-index: 1000;
         }
+
         .alertBox {
             background-color: #007bff;
             color: white;
@@ -106,11 +121,13 @@
             border-radius: 8px;
             text-align: center;
         }
+
         .alertBox button {
             background-color: white;
             color: #007bff;
             margin-top: 15px;
         }
+
         .alertBox button:hover {
             background-color: #e0e0e0;
         }
@@ -118,7 +135,7 @@
 </head>
 <body>
     <div class="cartContainer">
-        <h1>Your Carto</h1>
+        <h1>Your Cart</h1>
         <div id="cartItems"></div>
     </div>
 
@@ -144,64 +161,24 @@
         </div>
     </div>
 
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-app.js";
-        import { getDatabase, ref, set, get } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-database.js";
-        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-auth.js";
-
-        const firebaseConfig = {
-            apiKey: "AIzaSyBDrzrgLslaJvnXbo1e90irCEtdcm9ZsCU",
-            authDomain: "logins-13661.firebaseapp.com",
-            databaseURL: "https://logins-13661-default-rtdb.firebaseio.com",
-            projectId: "logins-13661",
-            storageBucket: "logins-13661.appspot.com",
-            messagingSenderId: "451535349483",
-            appId: "1:451535349483:web:d3c9867fd2bffbbdca40ae",
-            measurementId: "G-DWP16WX2H7"
-        };
-
-        const app = initializeApp(firebaseConfig);
-        const database = getDatabase(app);
-        const auth = getAuth(app);
-
-        let autoSaveTimer;
-
-        onAuthStateChanged(auth, (user) => {
-            if (user) {
-                loadCartFromFirebase(); // Load the cart when user logs in
-                startAutoSave();
-            } else {
-                clearAutoSave();
-            }
-        });
-
-        function startAutoSave() {
-            clearAutoSave();
-            autoSaveTimer = setTimeout(() => {
-                saveToFirebase();
-            }, 10000); // Save every 10 seconds
-        }
-
-        function clearAutoSave() {
-            if (autoSaveTimer) {
-                clearTimeout(autoSaveTimer);
-                autoSaveTimer = null;
-            }
-        }
-
+    <script src="currency-Converter.js"></script>
+    <script>
         function showAlert(message) {
             document.getElementById('alertMessage').innerText = message;
             document.getElementById('alertOverlay').style.display = 'flex';
+
             document.getElementById('alertOkButton').onclick = hideAlert;
         }
 
         function showConfirm(message, onConfirm) {
             document.getElementById('confirmMessage').innerText = message;
             document.getElementById('confirmOverlay').style.display = 'flex';
+
             document.getElementById('confirmYesButton').onclick = () => {
                 onConfirm();
                 hideConfirm();
             };
+
             document.getElementById('confirmCancelButton').onclick = hideConfirm;
         }
 
@@ -215,26 +192,6 @@
 
         let storedCurrency = localStorage.getItem('selectedCurrency') || 'ZAR';
         const designLinks = JSON.parse(localStorage.getItem('designLinks')) || {};
-
-        async function loadCartFromFirebase() {
-            const user = auth.currentUser;
-            if (!user) return;
-
-            const cartRef = ref(database, 'carts/' + user.uid + '/currentCart');
-            try {
-                const snapshot = await get(cartRef);
-                if (snapshot.exists()) {
-                    const data = snapshot.val();
-                    localStorage.setItem('cart', JSON.stringify(data.cart));
-                    localStorage.setItem('selectedCurrency', data.currency);
-                    displayCartItems();
-                } else {
-                    console.log('No cart found.');
-                }
-            } catch (error) {
-                console.error('Error retrieving cart from Firebase:', error);
-            }
-        }
 
         function displayCartItems() {
             const cartItemsContainer = document.getElementById('cartItems');
@@ -259,12 +216,13 @@
                         <div>${imgIndex + 1}. Custom: ${imageData.design}</div>
                         <div>Text: ${imageData.text}</div>
                         <div><a href="${designLinks[imageData.design] || '#'}" target="_blank" class="viewDesignButton">View Design</a></div>
-                    </div>`).join('');
+                    </div>`
+                ).join('');
 
                 const cartItemDiv = document.createElement('div');
                 cartItemDiv.className = 'cartItem';
-                cartItemDiv.innerHTML = 
-                    `<div class="itemDetails">
+                cartItemDiv.innerHTML = `
+                    <div class="itemDetails">
                         <strong>${item.itemName}</strong><br>
                         ${imagesHtml}
                         <div>Price: ${storedCurrency} ${itemPriceInSelectedCurrency}</div>
@@ -272,12 +230,13 @@
                     <div>
                         <button onclick="window.open('${item.catalogLink}', '_blank')">View Catalog</button>
                         <br><button class="deleteButton" data-index="${index}">Delete</button>
-                    </div>`;
+                    </div>
+                `;
                 cartItemsContainer.appendChild(cartItemDiv);
                 total += item.itemPrice;
             });
 
-            document.querySelector('.price').innerText = `ZAR ${total}`;
+            document.querySelector('.price').innerText = ZAR ${total};
             document.querySelector('.price').setAttribute('data-price', total);
             convertCurrency(storedCurrency, document.querySelector('.price'));
 
@@ -294,63 +253,34 @@
             cartItems.splice(index, 1);
             localStorage.setItem('cart', JSON.stringify(cartItems));
             displayCartItems();
-            saveToFirebase(); // Save without showing alert
         }
 
-        async function saveToFirebase() {
-            const user = auth.currentUser;
-            if (!user) {
-                showAlert('You must be logged in to save the cart.');
-                return;
-            }
-
-            const cartItems = JSON.parse(localStorage.getItem('cart')) || [];
-            const storedCurrency = localStorage.getItem('selectedCurrency') || 'ZAR';
-
-            try {
-                await set(ref(database, 'carts/' + user.uid + '/currentCart'), {
-                    cart: cartItems,
-                    currency: storedCurrency
-                });
-                // Removed the success alert
-            } catch (error) {
-                console.error('Error saving cart to Realtime Database:', error);
-                showAlert('Failed to save cart. Please try again.');
-            }
-        }
-
-        document.getElementById('submitButton').addEventListener('click', async () => {
+        document.getElementById('submitButton').addEventListener('click', () => {
             const phoneNumber = '0659860276';
             const cartItems = JSON.parse(localStorage.getItem('cart')) || [];
             if (cartItems.length === 0) {
                 showAlert('Your cart is empty. Please add items to the cart before submitting.');
                 return;
             }
-
-            await saveToFirebase();
-
             const message = cartItems.map((item, index) => 
-                `*item ${index + 1}. ${item.itemName}*\n\n` + 
-                `Selected:\n` + 
+                *item${index + 1}. ${item.itemName}*\n\n + 
+                Selected:\n + 
                 item.images.map((img, imgIndex) => 
-                    `${imgIndex + 1}. Design: ${img.design}\n` + 
-                    `Text: ${img.text}\n` + 
-                    `Photo: ${img.file}\n` + 
-                    `Design Link: ${designLinks[img.design] || ''}\n`
+                    ${imgIndex + 1}. Design: ${img.design}\n + 
+                    Text: ${img.text}\n + 
+                    Photo: ${img.file}\n + 
+                    Design Link: ${designLinks[img.design] || ''}\n
                 ).join('') + 
-                `Catalog Link: ${item.catalogLink}\n\n`
+                Catalog Link: ${item.catalogLink}\n\n
             ).join('');
 
-            const whatsappUrl = `https://api.whatsapp.com/send?phone=${phoneNumber}&text=${encodeURIComponent(message)}`;
+            const whatsappUrl = https://api.whatsapp.com/send?phone=${phoneNumber}&text=${encodeURIComponent(message)};
             window.open(whatsappUrl, '_blank');
-
-            startAutoSave(); // Restart auto-save timer after submit
         });
 
         displayCartItems();
         convertCurrency(storedCurrency, document.querySelector('.price'));
     </script>
-    <script src="currency-Converter.js"></script>
 </body>
 </html>
 
