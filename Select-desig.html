@@ -201,45 +201,63 @@
                 currentImagesData.push(imageData);
                 imageCounter++; // Increment counter for next textarea 
             });
-            cartButton.addEventListener('click', () => {
-                const cartItems = JSON.parse(localStorage.getItem('cart')) || [];
-                const itemName = "Key Holder"; // Replace with your actual item name
-                const itemPrice = 300; // Replace with your actual item price
-                const catalogLink = 'https://yourcataloglink.com'; // Replace with your actual product catalog link
-                // Store design links in local storage
-                localStorage.setItem('designLinks', JSON.stringify(availableDesignLinks));
-                const designTexts = currentImagesData.map(data => ({
-                    design: data.design,
-                    text: data.text || "none",
-                    file: data.file || "none",
-                    link: data.link || "none"
-                }));
-                if (designTexts.some(data => data.file !== 'none')) {
-                    const combinedItem = {
-                        itemName,
-                        itemPrice,
-                        catalogLink,
-                        images: designTexts
-                    };
-                    cartItems.push(combinedItem);
-                    localStorage.setItem('cart', JSON.stringify(cartItems));
-                    document.getElementById('customAlert').style.display = 'block';
-                    document.getElementById('customAlert').classList.add('show'); 
-                    darkOverlay.style.display = 'block'; // Show the overlay
-                    // Hide the alert after 1 second
-                    setTimeout(() => {
-                        document.getElementById('customAlert').style.display = 'none';
-                        document.getElementById('customAlert').classList.remove('show');
-                        darkOverlay.style.display = 'none'; // Hide the overlay
-                    }, 1000); 
-                    // Update the cart counter after adding an item
-                    updateCartCounter();
-                } else {
-                    alertMessage.style.display = 'block';
-                    alertMessage.classList.add('show');
-                    darkOverlay.style.display = 'block'; // Show the overlay
-                }
-            });
+      cartButton.addEventListener('click', () => {
+    const cartItems = JSON.parse(localStorage.getItem('cart')) || [];
+    const itemName = "Key Holder"; // Replace with your actual item name
+    const itemPrice = 300; // Replace with your actual item price
+    const catalogLink = 'https://yourcataloglink.com'; // Replace with your actual product catalog link
+
+    // Store design links in local storage
+    localStorage.setItem('designLinks', JSON.stringify(availableDesignLinks));
+    const designTexts = currentImagesData.map(data => ({
+        design: data.design,
+        text: data.text || "none",
+        file: data.file || "none",
+        link: data.link || "none"
+    }));
+
+    if (designTexts.some(data => data.file !== 'none')) {
+        const combinedItem = {
+            itemName,
+            itemPrice,
+            catalogLink,
+            images: designTexts
+        };
+
+        // Log current cart items
+        console.log('Cart items before adding:', cartItems);
+        console.log('Adding item:', combinedItem);
+
+        cartItems.push(combinedItem);
+        localStorage.setItem('cart', JSON.stringify(cartItems));
+
+        // Show success alert
+        document.getElementById('customAlert').style.display = 'block';
+        document.getElementById('customAlert').classList.add('show');
+        darkOverlay.style.display = 'block'; // Show the overlay
+
+        // Hide the alert after 1 second
+        setTimeout(() => {
+            document.getElementById('customAlert').style.display = 'none';
+            document.getElementById('customAlert').classList.remove('show');
+            darkOverlay.style.display = 'none'; // Hide the overlay
+        }, 1000); 
+
+        // Update the cart counter
+        updateCartCounter();
+
+        // Display the updated cart items
+        displayCartItems(); // Ensure this is called to update the cart display
+
+        // Log after displaying the cart items
+        console.log('Cart items after adding:', JSON.parse(localStorage.getItem('cart')));
+    } else {
+        alertMessage.style.display = 'block';
+        alertMessage.classList.add('show');
+        darkOverlay.style.display = 'block'; // Show the overlay
+    }
+});
+ 
             document.getElementById('alertOkButton').addEventListener('click', () => {
                 alertMessage.style.display = 'none'; // Hide the alert message
                 alertMessage.classList.remove('show');
