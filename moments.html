@@ -160,6 +160,27 @@ li {
             z-index: 2; /* Ensures it stays on top of other content */
            margin-top:-1px;
 } 
+
+.video-container {
+  
+    padding: 10px; /* Space between border and video */
+    border-radius: 8px; /* Rounded corners */
+    background-color: #fff; /* Background color */
+    max-width: 100%; /* Prevents overflow */
+    overflow: hidden; /* Ensures no overflow */
+    position: relative; /* Needed for the responsive aspect ratio */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4); /* Optional shadow */ 
+}
+
+.video-container iframe {
+    width: 100%; /* Makes iframe responsive */
+    height: auto; /* Maintains aspect ratio */
+    aspect-ratio: 9 / 16; /* Maintains a 9:16 aspect ratio for vertical videos */
+   border-radius: 8px; /* Rounded corners */
+  
+}
+
+
       
     </style>
 </head>
@@ -180,7 +201,7 @@ li {
     <div class="details">
         <h2>Jewelry Necklace</h2>
         <p class="small">Draw attention to the neckline.</p>
-        <h3 class="price">R179.99<span class="original-price"><span class="line-through">R279.99</span></span><button class="buy-button" onclick='JewelryNecklace()'>ORDER NOW</button></h3>
+        <h3 class="price">R179.99<span class="original-price"><span class="line-through">R279.99</span></span></h3><button class="buy-button" onclick='JewelryNecklace()'>ORDER NOW</button>
        <button class="more-details">More Details</button>
                 <div class="details" style="display:none;">Male | Female,1 Picture or name,color: silver,Pendant: 3.5cm round circle,Necklace sizes: 50cm &58cm, Box color: pink or Lightblue,4x6.</div>
             </li>
@@ -188,6 +209,12 @@ li {
     </div>
     </div>
 </div>
+
+<div class="video-container">
+    <iframe width="360" height="640" src="https://www.youtube.com/embed/65mFN-jugks?autoplay=1&mute=1" frameborder="0" allowfullscreen></iframe>
+</div>
+
+
 
 <!-- Tote Bag Item -->
 <div class="catalog-item">
@@ -202,7 +229,7 @@ li {
     <div class="details">
         <h2>Stylish Tote Bag</h2>
         <p class="small">Perfect for your daily essentials.</p>
-        <h3 class="price">R179.99<span class="original-price"><span class="line-through">R259.99</span></span><button class="buy-button" onclick='toteBag()'>ORDER NOW</button></h3>
+        <h3 class="price">R179.99<span class="original-price"><span class="line-through">R259.99</span></span></h3><button class="buy-button" onclick='toteBag()'>ORDER NOW</button>
         <button class="more-details">More Details</button>
                 <div class="details" style="display:none;">Male | Female,1 Picture or name</div>
             </li>
@@ -221,7 +248,7 @@ li {
     <div class="details">
         <h2>Rectangle wood keychain</h2>
         <p class="small">Experience to see these pictures daily, it's easier to identify your set of keys.</p>
-        <h3 class="price">R110<span class="original-price"><span class="line-through">R160</span></span><button class="buy-button" onclick='elegantWatch()'>ORDER NOW</button></h3>
+        <h3 class="price">R109.99<span class="original-price"><span class="line-through">R159.99</span></span></h3><button class="buy-button" onclick='elegantWatch()'>ORDER NOW</button>
       <button class="more-details">More Details</button>
                 <div class="details" style="display:none;">2 Pictures (back to back),
   color: black ,Rectangle: 4cm x 6cm,1 Leather Tassel.</div>
@@ -243,7 +270,7 @@ li {
         <p class="small">Experience to see these pictures daily, it's easier to identify your set of keys.</p>
         <h3 class="price">R99.99<span class="original-price"><span class="line-through">R144.99</span>
           
-        </span><button class="buy-button" onclick='squrekeyholder()'>ORDER NOW</button></h3>
+        </span></h3><button class="buy-button" onclick='squrekeyholder()'>ORDER NOW</button>
      <button class="more-details">More Details</button>
                 <div class="details" style="display:none;">2 Pictures (back to back),
   color: black ,Square: 5cm x 5cm,1 Leather Tassel.</div>
@@ -262,7 +289,7 @@ li {
     <div class="details">
         <h2>Round wood keychain</h2>
         <p class="small">Experience to see these pictures daily, it's easier to identify your set of keys.</p>
-        <h3 class="price">R79.99<span class="original-price"><span class="line-through">R119.99</span></span><button class="buy-button" onclick='roundkeyholder()'>ORDER NOW</button></h3>
+        <h3 class="price">R79.99<span class="original-price"><span class="line-through">R119.99</span></span></h3><button class="buy-button" onclick='roundkeyholder()'>ORDER NOW</button>
      <button class="more-details">More Details</button>
                 <div class="details" style="display:none;">2 Pictures (back to back),
   color: black ,6cm round circle,1 Leather Tassel.</div>
@@ -282,7 +309,7 @@ li {
     <div class="details">
         <h2>Photo Locket Charm Necklace</h2>
         <p class="small">Display 2 pictures of love ones.</p>
-        <h3 class="price">R140<span class="original-price"><span class="line-through">R160</span></span><button class="buy-button" onclick='PhotoLocketCharm()'>ORDER NOW</button></h3>
+        <h3 class="price">R139.99<span class="original-price"><span class="line-through">R159.99</span></span><button class="buy-button" onclick='PhotoLocketCharm()'>ORDER NOW</button></h3>
     </div>
 </div>
   <!-- Watch Item -->
@@ -296,7 +323,7 @@ li {
     <div class="details">
         <h2>Polished Photo Locket Necklace</h2>
         <p class="small">Display 2 pictures of love ones.</p>
-        <h3 class="price">R130<span class="original-price"><span class="line-through">R140</span></span><button class="buy-button" onclick='polishedPhotoLocketCharm()'>ORDER NOW</button></h3>
+        <h3 class="price">R129.99<span class="original-price"><span class="line-through">R139.99</span></span><button class="buy-button" onclick='polishedPhotoLocketCharm()'>ORDER NOW</button></h3>
     </div>
 </div>
   <div class="catalog-item">
@@ -394,14 +421,103 @@ li {
     <div class="details">
         <h2>Photo frame </h2>
         <p class="small">Showcase Your Favorite Moments with Beautiful Table Frames!</p>
-        <h3 class="price">R99.99, R159.99 for 2<span class="original-price"><button class="buy-button" onclick='whiteframe4x6()'>ORDER NOW</button></h3>
+        <h3 class="price">R99.99, R159.99 for 2<span class="original-price"></h3><button class="buy-button" onclick='whiteframe4x6()'>ORDER NOW</button>
           <button class="more-details">More Details</button>
                 <div class="details" style="display:none;">Color white ,4X6 frame ,gift bag</div>
             </li>
         </ul>
     </div>       
     </div>
-  </div>   
+  </div> 
+  <div class="catalog-item">
+    <div class="slider">
+      <img src="https://firebasestorage.googleapis.com/v0/b/myhost-a7ee9.appspot.com/o/images%2FWhatsApp%20Image%202024-10-20%20at%2012.53.19%20AM%20(1).jpeg?alt=media&token=181e3d34-6249-4ec9-8c7f-003feb7545cf" class="active">
+      <img src="https://firebasestorage.googleapis.com/v0/b/myhost-a7ee9.appspot.com/o/images%2FWhatsApp%20Image%202024-10-20%20at%202.18.24%20AM.jpeg?alt=media&token=accb5ca3-9f51-437f-beb9-980cd9cb0902">
+       <img src="https://firebasestorage.googleapis.com/v0/b/myhost-a7ee9.appspot.com/o/images%2FWhatsApp%20Image%202024-10-20%20at%2012.53.18%20AM.jpeg?alt=media&token=b96f316b-a492-4609-980e-e022dc089a2a">
+       <img src="https://firebasestorage.googleapis.com/v0/b/myhost-a7ee9.appspot.com/o/images%2FWhatsApp%20Image%202024-10-20%20at%202.10.47%20AM.jpeg?alt=media&token=e4934132-cea0-4078-9c54-f9da4ac5806a">   
+    <div class="details">
+    </div>
+    <div class="details">
+        <h2>Pesonalized Calendar</h2>
+        <p class="small">Display pictures of love ones ,mark birthday months & elevate your space with a personalized wall calendar – a daily dose of inspiration!</p>
+      
+     <p>A. 5 Photos <span class="price">
+    ZAR 119.99
+</span> </p>
+
+   <p>B. 6-10 Photos <span class="price">
+    ZAR 159.99
+</span> </p>  
+   <p>C. 11-15 Photos <span class="price">
+    ZAR 179.99
+</span> </p> 
+       <button class="buy-button" onclick='Calendar()'>ORDER NOW</button>
+          <button class="more-details">More Details</button>
+                <div class="details" style="display:none;">Calendar size: A3, pictures & spacial names,
+     Laminated ,4 Wall stickers.</div>
+            </li>
+        </ul>
+    </div>       
+    </div>
+  </div>
+ <div class="catalog-item">
+    <div class="slider">
+     
+    <img src="https://firebasestorage.googleapis.com/v0/b/myhost-a7ee9.appspot.com/o/images%2FWhatsApp%20Image%202024-10-20%20at%2012.50.31%20AM.jpeg?alt=media&token=353e557b-cccf-4501-baa7-218d9d377105" class="active">
+       <img src="https://firebasestorage.googleapis.com/v0/b/myhost-a7ee9.appspot.com/o/images%2FWhatsApp%20Image%202024-10-20%20at%2012.49.04%20AM%20(1).jpeg?alt=media&token=2f5e92f5-b194-44e7-9a2a-290606b1612a">
+       <img src="https://firebasestorage.googleapis.com/v0/b/myhost-a7ee9.appspot.com/o/images%2FWhatsApp%20Image%202024-10-20%20at%2012.51.20%20AM.jpeg?alt=media&token=3535e1d0-f478-447a-b44a-0527bfbc295f">
+      <img src="https://firebasestorage.googleapis.com/v0/b/myhost-a7ee9.appspot.com/o/images%2FWhatsApp%20Image%202024-10-20%20at%2012.53.18%20AM.jpeg?alt=media&token=b96f316b-a492-4609-980e-e022dc089a2a">
+      
+    <div class="details">
+        <h2>Pic mixing</h2>
+        <p class="small">"Capture the Moment: A3 Picture Mixing Available Now!</p>
+      
+     <p>A. 5 Photos <span class="price">
+    ZAR 119.99
+</span> </p>
+
+   <p>B. 6-10 Photos <span class="price">
+    ZAR 159.99
+</span> </p>  
+   <p>C. 11-15 Photos <span class="price">
+    ZAR 179.99
+</span> </p> 
+       <button class="buy-button" onclick='picmixing()'>ORDER NOW</button>
+          <button class="more-details">More Details</button>
+                <div class="details" style="display:none;">Size: A3, pictures & spacial names,
+     Laminated ,4 Wall stickers.</div>
+            </li>
+        </ul>
+    </div>       
+    </div>
+  </div> 
+<div class="catalog-item">
+    <div class="slider">
+        <img src="https://firebasestorage.googleapis.com/v0/b/myhost-a7ee9.appspot.com/o/images%2FWhatsApp%20Image%202024-10-19%20at%201.52.46%20PM.jpeg?alt=media&token=63bf2f06-960f-4cd6-a359-96b5b1b5b48d" class="active">
+  
+    </div>
+  <div class="discount-label">10% Off</div> 
+    <div class="details">
+        <h2>A4 white wall frame</h2>
+      <p class="small">Experience to see these pictures daily</p>
+        <h3 class="price">R199.99<span class="original-price"><span class="line-through">R219.99</span></span><button class="buy-button" onclick='whiteA4()'>ORDER NOW</button></h3>
+    
+    </div>
+</div>
+<div class="catalog-item">
+    <div class="slider">
+        <img src="https://firebasestorage.googleapis.com/v0/b/myhost-a7ee9.appspot.com/o/images%2FWhatsApp%20Image%202024-10-20%20at%2012.53.18%20AM%20(1).jpeg?alt=media&token=76b16603-e984-4b02-82d7-1849d063d53a" class="active">
+    <img src="https://firebasestorage.googleapis.com/v0/b/myhost-a7ee9.appspot.com/o/images%2FWhatsApp%20Image%202024-10-20%20at%2012.53.19%20AM.jpeg?alt=media&token=b1152292-38de-4b95-adee-17eef38f6f21">
+      
+    </div>
+ 
+    <div class="details">
+        <h2>Wood table frame</h2>
+      <p class="small">Experience to see these pictures daily</p>
+        <h3 class="price">R159.99<span class="original-price"><button class="buy-button" onclick='whiteA4()'>ORDER NOW</button></h3>
+    
+    </div>
+</div>
 <script>
     const sliders = document.querySelectorAll('.slider');
 
@@ -504,11 +620,30 @@ function photobracelet() {
         const whatsappNumber = '+27 72 866 2309'; // Update this with your WhatsApp number
         window.open(`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`, "_blank");
     } 
-   function whiteframe4x6() {
+  
+    function whiteframe4x6() {
         const message = "Is this still available, https://firebasestorage.googleapis.com/v0/b/myhost-a7ee9.appspot.com/o/images%2FWhatsApp%20Image%202024-10-19%20at%201.53.35%20PM.jpeg?alt=media&token=f2657254-eec1-4235-acce-3eb3f3a84f7a";
         const whatsappNumber = '+27 72 866 2309'; // Update this with your WhatsApp number
         window.open(`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`, "_blank");
+    }
+   function Calendar() {
+        const message = "Is this still available, https://firebasestorage.googleapis.com/v0/b/myhost-a7ee9.appspot.com/o/images%2FWhatsApp%20Image%202024-10-20%20at%2012.53.19%20AM%20(1).jpeg?alt=media&token=181e3d34-6249-4ec9-8c7f-003feb7545cf";
+        const whatsappNumber = '+27 72 866 2309'; // Update this with your WhatsApp number
+        window.open(`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`, "_blank");
     } 
+    
+      function picmixing() {
+        const message = "Is this still available, https://firebasestorage.googleapis.com/v0/b/myhost-a7ee9.appspot.com/o/images%2FWhatsApp%20Image%202024-10-20%20at%2012.49.04%20AM%20(1).jpeg?alt=media&token=2f5e92f5-b194-44e7-9a2a-290606b1612a";
+        const whatsappNumber = '+27 72 866 2309'; // Update this with your WhatsApp number
+        window.open(`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`, "_blank");
+    }
+   function whiteA4() {
+        const message = "Is this still available, ";
+        const whatsappNumber = '+27 72 866 2309'; // Update this with your WhatsApp number
+        window.open(`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`, "_blank");
+    }
 </script>
 </body>
 </html>
+
+
