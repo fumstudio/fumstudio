@@ -3,743 +3,195 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Photo Upload</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbY2d4PAwjU8sRiH7q0Q1GS+7OEI/dwak6qLSP9o5QY+6jy68Y+XsbmClvJnaQ4Y+kIQ+w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-app.js";
-        import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-storage.js";
-        const firebaseConfig = {
-            apiKey: "AIzaSyAqm1p_jkuS9BgDFTlUIZ1R1OV61Qdt1Ok", // Replace with your actual Firebase API Key
-            authDomain: "login-2ff4a.firebaseapp.com", // Replace with your Firebase Auth Domain
-            databaseURL: "https://login-2ff4a-default-rtdb.firebaseio.com", // Replace with your Firebase Database URL
-            projectId: "login-2ff4a", // Replace with your Firebase Project ID
-            storageBucket: "login-2ff4a.appspot.com", // Replace with your Firebase Storage Bucket
-            messagingSenderId: "177553893792", // Replace with your Firebase Messaging Sender ID
-            appId: "1:177553893792:web:fdc0766a083fac3008dcc5", // Replace with your Firebase App ID
-            measurementId: "G-QT1RW7ECT0" // Replace with your Firebase Measurement ID
-        };
-        const app = initializeApp(firebaseConfig);
-        const storage = getStorage(app);
-        document.addEventListener('DOMContentLoaded', () => {
-            const designSlider = document.getElementById('designSlider');
-            const chooseFileButton = document.getElementById('chooseFileButton');
-            const fileInput = document.getElementById('fileInput');
-            const imagesContainer = document.getElementById('imagesContainer');
-            const addTextareaButton = document.getElementById('addTextareaButton');
-            const cartButton = document.getElementById('addToCartButton');
-            const alertMessage = document.getElementById('alertMessage');
-            const uploadAlert = document.getElementById('uploadingAlert');
-            const uploadProgressBar = document.getElementById('uploadProgressBar');
-            const uploadProgress = document.getElementById('uploadProgress');
-            const darkOverlay = document.querySelector('.dark-overlay'); // Get the overlay
-            let currentImagesData = [];
-            let imageCounter = 1; // Counter for numbering
-            const availableDesignLinks = {
-                "Design 1": "https://firebasestorage.googleapis.com/v0/b/myhost-a7ee9.appspot.com/o/images%2Finbound607641169803999416.jpg?alt=media&token=169613f8-36ee-459f-afbb-6286d0759439", // Replace with your actual design image URLs
-                  "Design 8": "https://firebasestorage.googleapis.com/v0/b/myhost-a7ee9.appspot.com/o/images%2Finbound1991832920086774078.jpg?alt=media&token=9e10b4c0-b4d8-49d7-b933-64c9a6c59d36",
-                "Design 2": "https://wedding-favours.co.za/wp-content/uploads/2021/09/acrylic-names-keyrings.jpg",
-                "Design 3": "https://link3.com/image3.jpg",
-                "Design 4": "https://link4.com/image4.jpg",
-                "Design 5": "https://link5.com/image5.jpg",
-                "Design 6": "https://link6.com/image6.jpg",
-                "Design 7": "https://link7.com/image7.jpg",
-            };
-            const designColors = {
-                "Design 1": "#FF5733",
-                "Design 2": "#33FF57",
-                "Design 3": "#3357FF",
-                "Design 4": "#F1C40F",
-                "Design 5": "#9B59B6",
-                "Design 6": "#E67E22",
-                "Design 7": "#2ECC71",
-                "Design 8": "#3498DB",
-            };
-            Object.keys(availableDesignLinks).forEach(design => {
-                const designDiv = document.createElement('div');
-                designDiv.className = 'design-option';
-                designDiv.innerHTML = `
-                    <input type="radio" name="design" id="${design}" value="${design}" />
-                    <label for="${design}" style="background-color: ${designColors[design]};">
-                        <img src="${availableDesignLinks[design]}" alt="${design}" class="design-image" style="width: 99%; height: auto; border-radius: 30px; border: 1px solid ${designColors[design]};">
-                        <span class="selected-label">Selected Design</span>
-                    </label>
-                `;
-                designSlider.appendChild(designDiv);
-            });
-            designSlider.addEventListener('click', (event) => {
-                if (event.target.tagName === 'INPUT') {
-                    const selectedDesign = event.target.value;
-                    const selectedColor = designColors[selectedDesign];
-                    chooseFileButton.style.backgroundColor = selectedColor;
-                    addTextareaButton.style.backgroundColor = selectedColor;
-                    chooseFileButton.style.color = 'white';
-                    addTextareaButton.style.color = 'white';
-                    chooseFileButton.style.display = ['Design 1', 'Design 4', 'Design 3', 'Design 6', 'Design 8'].includes(selectedDesign) ? 'block' : 'none';
-                    addTextareaButton.style.display = ['Design 2', 'Design 5'].includes(selectedDesign) ? 'block' : 'none';
-                }
-            });
-            chooseFileButton.addEventListener('click', () => {
-                const selectedDesign = document.querySelector('input[name="design"]:checked');
-                if (!selectedDesign) {
-                    alertMessage.style.display = 'block'; // Show the alert message
-                    alertMessage.classList.add('show');
-                    darkOverlay.style.display = 'block'; // Show the overlay
-                } else {
-                    fileInput.click();
-                }
-            });
-            fileInput.addEventListener('change', async () => {
-                const file = fileInput.files[0];
-                if (file) {
-                    const selectedDesign = document.querySelector('input[name="design"]:checked').value;
-                    const imageDiv = document.createElement('div');
-                    const imageData = { design: selectedDesign, text: "", file: null, link: availableDesignLinks[selectedDesign] };
-                    imageDiv.className = 'imageItem';
-                    imageDiv.innerHTML = `
-                        <div class="image-container" style="background-color: ${designColors[selectedDesign]};">
-                            <img src="${URL.createObjectURL(file)}" alt="Uploaded Image" class="design-image">
-                            <textarea placeholder="Add text here..." style="display: none; border: 2px solid #ccc; padding: 10px; resize: vertical; width: 200px; height: 80px;"></textarea>
-                            <button class="deleteButton">Delete</button>
-                        </div>
-                        <p>${imageCounter}. Selected: ${selectedDesign}</p> 
-                        <a href="${imageData.link}" target="_blank" class="design-link">View Design</a>
-                    `;
-                    imagesContainer.appendChild(imageDiv);
-                    // Show upload alert
-                    uploadAlert.style.display = 'block';
-                    uploadAlert.classList.add('show'); 
-                    darkOverlay.style.display = 'block'; // Show the overlay
-                    uploadProgress.style.width = '0%'; // Reset progress bar
-                    uploadProgress.innerText = '0%'; // Reset progress text
-                    const compressedFile = await compressImage(file);
-                    uploadImage(compressedFile, imageData, imageDiv);
-                    if (['Design 3', 'Design 6', 'Design 8'].includes(selectedDesign)) {
-                        const textarea = imageDiv.querySelector('textarea');
-                        textarea.style.display = 'block';
-                        textarea.addEventListener('input', () => {
-                            imageData.text = textarea.value;
-                        });
-                    }
-                    imageDiv.querySelector('.deleteButton').addEventListener('click', () => {
-                        imagesContainer.removeChild(imageDiv);
-                        currentImagesData = currentImagesData.filter(data => data.file !== imageData.file);
-                        renumberDesigns(); // Renumber after deleting
-                    });
-                    currentImagesData.push(imageData);
-                    imageCounter++; // Increment counter for next image 
-                }
-            });
-            async function compressImage(file) {
-                if (file.size <= 1 * 1024 * 1024) {
-                    return file; 
-                }
-                const img = document.createElement('img');
-                img.src = URL.createObjectURL(file);
-                return new Promise((resolve) => {
-                    img.onload = () => {
-                        const canvas = document.createElement('canvas');
-                        const ctx = canvas.getContext('2d');
-                        const maxWidth = 800; 
-                        const scaleSize = maxWidth / img.width;
-                        canvas.width = maxWidth;
-                        canvas.height = img.height * scaleSize;
-                        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-                        canvas.toBlob(resolve, 'image/jpeg', 0.7); 
-                    };
-                });
-            }
-            async function uploadImage(file, imageData, imageDiv) {
-                const storageRef = ref(storage, 'images/' + file.name);
-                const uploadTask = uploadBytesResumable(storageRef, file);
-                uploadTask.on('state_changed', 
-                    (snapshot) => {
-                        const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-                        uploadProgress.style.width = progress + '%';
-                        uploadProgress.innerText = Math.round(progress) + '%'; // Show progress percentage
-                    },
-                    (error) => {
-                        console.error('Upload error:', error.message);
-                        uploadAlert.style.display = 'none'; 
-                        uploadAlert.classList.remove('show'); 
-                        darkOverlay.style.display = 'none'; // Hide the overlay
-                    },
-                    async () => {
-                        const url = await getDownloadURL(uploadTask.snapshot.ref);
-                        imageData.file = url;
-                        uploadAlert.style.display = 'none'; 
-                        uploadAlert.classList.remove('show'); 
-                        darkOverlay.style.display = 'none'; // Hide the overlay
-                    }
-                );
-            }
-            addTextareaButton.addEventListener('click', () => {
-                const selectedDesign = document.querySelector('input[name="design"]:checked').value;
-                const imageDiv = document.createElement('div');
-                const imageData = { design: selectedDesign, text: "", file: null, link: availableDesignLinks[selectedDesign] };
-                imageDiv.className = 'imageItem';
-                imageDiv.innerHTML = `
-                    <div class="image-container" style="background-color: ${designColors[selectedDesign]};">
-                        <textarea placeholder="Add text here..." style="display: block; border: 2px solid #ccc; padding: 10px; resize: vertical; width: 200px; height: 80px;"></textarea>
-                        <button class="deleteButton">Delete</button>
-                    </div>
-                    <p>${imageCounter}. Design: ${selectedDesign}</p>
-                    <a href="${imageData.link}" target="_blank" class="design-link">View Design</a>
-                `;
-                imagesContainer.appendChild(imageDiv);
-                const textarea = imageDiv.querySelector('textarea');
-                textarea.style.display = 'block';
-                textarea.addEventListener('input', () => {
-                    imageData.text = textarea.value;
-                });
-                imageDiv.querySelector('.deleteButton').addEventListener('click', () => {
-                    imagesContainer.removeChild(imageDiv);
-                    currentImagesData = currentImagesData.filter(data => data.file === null);
-                    renumberDesigns(); // Renumber after deleting
-                });
-                currentImagesData.push(imageData);
-                imageCounter++; // Increment counter for next textarea 
-            });
-      cartButton.addEventListener('click', () => {
-    const cartItems = JSON.parse(localStorage.getItem('cart')) || [];
-    const itemName = "Key Holder"; // Replace with your actual item name
-    const itemPrice = 300; // Replace with your actual item price
-    const catalogLink = 'https://yourcataloglink.com'; // Replace with your actual product catalog link
-
-    // Store design links in local storage
-    localStorage.setItem('designLinks', JSON.stringify(availableDesignLinks));
-    const designTexts = currentImagesData.map(data => ({
-        design: data.design,
-        text: data.text || "none",
-        file: data.file || "none",
-        link: data.link || "none"
-    }));
-
-    if (designTexts.some(data => data.file !== 'none')) {
-        const combinedItem = {
-            itemName,
-            itemPrice,
-            catalogLink,
-            images: designTexts
-        };
-
-        // Log current cart items
-        console.log('Cart items before adding:', cartItems);
-        console.log('Adding item:', combinedItem);
-
-        cartItems.push(combinedItem);
-        localStorage.setItem('cart', JSON.stringify(cartItems));
-
-        // Show success alert
-        document.getElementById('customAlert').style.display = 'block';
-        document.getElementById('customAlert').classList.add('show');
-        darkOverlay.style.display = 'block'; // Show the overlay
-
-        // Hide the alert after 1 second
-        setTimeout(() => {
-            document.getElementById('customAlert').style.display = 'none';
-            document.getElementById('customAlert').classList.remove('show');
-            darkOverlay.style.display = 'none'; // Hide the overlay
-        }, 1000); 
-
-        // Update the cart counter
-        updateCartCounter();
-
-        // Display the updated cart items
-        displayCartItems(); // Ensure this is called to update the cart display
-
-        // Log after displaying the cart items
-        console.log('Cart items after adding:', JSON.parse(localStorage.getItem('cart')));
-    } else {
-        alertMessage.style.display = 'block';
-        alertMessage.classList.add('show');
-        darkOverlay.style.display = 'block'; // Show the overlay
-    }
-});
- 
-            document.getElementById('alertOkButton').addEventListener('click', () => {
-                alertMessage.style.display = 'none'; // Hide the alert message
-                alertMessage.classList.remove('show');
-                darkOverlay.style.display = 'none'; // Hide the overlay
-            });
-            // Touch event listeners for sliding
-let isDragging = false;
-let startX = 0;
-let scrollLeft = 0;
-
-function handleTouchStart(e) {
-    isDragging = true;
-    startX = e.touches[0].pageX - designSlider.offsetLeft;
-    scrollLeft = designSlider.scrollLeft;
-}
-
-function handleTouchMove(e) {
-    if (!isDragging) return;
-    const x = e.touches[0].pageX - designSlider.offsetLeft;
-    const walk = (x - startX) * 2; // Increase the multiplier for faster sliding
-    designSlider.scrollLeft = scrollLeft - walk;
-}
-
-function handleTouchEnd() {
-    isDragging = false;
-}
-designSlider.addEventListener('touchstart', handleTouchStart);
-designSlider.addEventListener('touchmove', handleTouchMove);
-designSlider.addEventListener('touchend', handleTouchEnd);
-
-// Button event listeners
-const slideLeftButton = document.getElementById('slideLeft');
-const slideRightButton = document.getElementById('slideRight');
-
-function smoothScroll(targetScroll, duration = 100) { // Reduced duration to 100ms
-    const startScroll = designSlider.scrollLeft;
-    const timeStart = Date.now();
-    function animateScroll() {
-        const timeElapsed = Date.now() - timeStart;
-        const progress = Math.min(timeElapsed / duration, 1);
-        designSlider.scrollLeft = startScroll + progress * (targetScroll - startScroll);
-        if (timeElapsed < duration) {
-            requestAnimationFrame(animateScroll);
-        } else {
-            designSlider.scrollLeft = targetScroll;
-        }
-    }
-    requestAnimationFrame(animateScroll);
-}
-
-slideLeftButton.addEventListener('click', () => {
-    smoothScroll(designSlider.scrollLeft - 300); // Increased scroll amount
-});
-slideRightButton.addEventListener('click', () => {
-    smoothScroll(designSlider.scrollLeft + 300); // Increased scroll amount
-});
-
-            // Function to renumber designs after deleting one
-            function renumberDesigns() {
-                imageCounter = 1; // Reset the counter
-                const designItems = imagesContainer.querySelectorAll('.imageItem');
-                designItems.forEach(item => {
-                    const designText = item.querySelector('p');
-                    designText.textContent = `${imageCounter}. Design: ${designText.textContent.split('Design: ')[1]}`; 
-                    imageCounter++;
-                });
-            }
-        });
-        // Function to update the cart counter
-        function updateCartCounter() {
-            const cartItems = JSON.parse(localStorage.getItem('cart')) || [];
-            const cartCountElement = document.querySelector('.cart-count');
-            cartCountElement.textContent = cartItems.length; 
-        }
-        // Call updateCartCounter on page load and whenever the cart changes
-        window.addEventListener('load', updateCartCounter);
-        // Assuming you're adding items to the cart with localStorage.setItem('cart', ...);
-        // After each cart update, call updateCartCounter() to refresh the counter
-    </script>
+    <title>Payments Data</title>
     <style>
+        /* Simple styling for the page */
         body {
             font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
+            margin: 20px;
+            padding: 10px;
         }
-        #designSlider {
-            display: flex;
-            overflow-x: auto; /* Enable horizontal scrolling */
+        .payment-item {
             margin-bottom: 20px;
-            scroll-behavior: smooth; /* Smooth scroll for modern browsers */
-            gap: 10px;  /* Add space between design options */
-            width: 100%; /* Ensure it takes full width */
-        }
-        .design-option {
-            margin-right: 10px;
-            position: relative;
-            cursor: pointer;
-        }
-        .design-option input[type="radio"] {
-            display: none;
-        }
-        .design-option label {
-            display: block;
-            width: 200px; /* Adjust width as needed */
-            height: 200px; /* Adjust height as needed */
-            border-radius: 10px;
-            transition: background-color 0.3s;
-            position: relative;
-            margin-bottom: 20px;
-        }
-        .selected-label {
-            display: none;
-            position: absolute;
-            bottom: 170px;
-            left: 20px;
-            background-color: rgba(0, 0, 0, 0.5);
-            color: white;
-            padding: 2px 5px;
+            padding: 10px;
+            border: 1px solid #ddd;
             border-radius: 5px;
         }
-        .design-option input[type="radio"]:checked + label .selected-label {
-            display: block;
+        .payment-item h3 {
+            margin: 0;
         }
-        button {
-            padding: 10px 20px;
-            border: none;
-
-            border-radius: 25px;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: background-color 0.3s, color 0.3s;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            margin-bottom: 10px;
+        .payment-item p {
+            margin: 5px 0;
         }
-                .design-link {
-            display: block; /* Make the link a block element */
-            border: 2px solid #ccc; /* Add a border to the link */
-            padding: 10px 10px; /* Add some padding to the link */
-            border-radius: 8px; /* Make the corners rounded */
-            margin-top: 10px; /* Add margin above the link */
-            text-decoration: none; /* Remove default underline */
-            color: black; /* Set the text color to black */
-            text-align: center; /* Center the text */
-        }
-        #chooseFileButton, #addTextareaButton {
-            background-color: #000000; /* Default color */
-            color: #FFFFFF;
-        }
-        .imageItem {
-            display: flex;
-            align-items: center;
-            margin-bottom: 10px;
-            flex-direction: column; /* Align items vertically */
-            border: 2px solid #ccc; /* Added border */
-            padding: 10px; /* Added padding */
-            border-radius: 8px; /* Make the corners rounded */
-            position: relative;
-        }
-        textarea {
-            margin-left: 10px;
-            resize: none;
-            width: 200px;
-            height: 50px;
-            border: 2px solid #ccc; /* Added border */
-            padding: 10px; /* Added padding */
-            margin-top: 10px; /* Add margin above the textarea */
-            border-radius: 8px; /* Make the corners rounded */
-        }
-        #customAlert, #alertMessage, #uploadingAlert {
-            display: none;
-            position: fixed; /* Position it relative to the viewport */
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%); /* Center the alert */
-            background-color: #FFFFFF; /* Dark background */
-            color: #000000; /* White text */
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-            z-index: 1000; /* Ensure it's on top of other elements */
-            width: 300px; /* Set a fixed width */
-            max-width: 80%; /* Make it responsive to smaller screens */
-        }
-        #customAlert button, 
-#alertOkButton, 
-#okButton {
+        .update-button {
+            padding: 5px 10px;
             margin-top: 10px;
-            background-color: #000000; /* Blue background for OK button */
-            color: #FFFFFF;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
             cursor: pointer;
-                width: 100%; /* Make it responsive to smaller screens */
-        }
-#alertMessage {
-    color: #000000; /* White text color for alert message */
-
-}
-.design-image {
-    border-radius: 8px;
-    width: auto;
-    height: auto;
-    border: 8px solid ${designColors[design]}; /* Add a border to the design images */
-}
-/* Styling for Slider Buttons */
-#sliderButtons {
-    display: flex;
-    justify-content: space-between; /* Keeps space between left and right elements */
-    align-items: center; /* Vertically centers items */
-    margin-bottom: 10px;
-    position: relative;
-    top: 20px;
-}
-#slideLeft {
-    margin-right: -50px; /* Pushes it to the left */
-    z-index: 10;
-}
-#slideRight {
-    margin-left: -50px; /* Pushes it to the right */
-    z-index: 10;
-}
-/* Styling for Slide Buttons */
-
-/* Styling for Upload Progress Bar */
-#uploadProgressBar {
-    width: 100%;
-    background-color: #e0e0e0;
-    border-radius: 5px;
-    margin-top: 10px;
-    height: 10px;
-}
-#uploadProgress {
-    height: 10px;
-    width: 0%;
-    background-color: #4CAF50; /* Green background */
-    border-radius: 5px;
-    text-align: center;
-    color: white;
-    line-height: 10px; /* Vertical centering of text */
-}
-        /* Style for the dark overlay */
-        .dark-overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
-            z-index: 999; /* Make sure it's on top */
-        }
-        /* Show overlay when alerts are visible */
-        #customAlert.show,
-        #alertMessage.show,
-        #uploadingAlert.show {
-            display: block;
-            z-index: 1000;  /* Ensure overlay is behind the alerts */
-        }
-        /* Style for the cart icon */
-        .cart-icon {
-            font-size: 20px;
-            color: #000000; /* Blue color */
-            margin-right: px; /* Add space to the right of the icon */
-        }
-.cart {
-            background-color: white;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            padding: 20px;
-            max-width: 400px;
-            margin: auto;
-        }
-        .cart h2 {
-            text-align: center;
-            font-weight: 600;
-            margin-bottom: 20px;
-        }
-        .cart-item {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 15px;
-        }
-        .cart-item span {
-            font-weight: 400;
-        }
-        .cart-total {
-            font-weight: 600;
-            border-top: 1px solid #ddd;
-            padding-top: 10px;
-            margin-top: 10px;
-            text-align: right;
-        }
-        /* Style for cart counter */
-        .cart-count {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background-color: red;
+            background-color: #4CAF50;
             color: white;
-            border-radius: 50%;
-            padding: 2px 5px;
-            font-size: 12px;
+            border: none;
+            border-radius: 5px;
         }
-        /* Style for cart link */
-        #cartLink {
-            position: fixed;
-            top: 10px;
-            right: 10px;
-            text-decoration: none;
-        }
-        #addToCartButton {
-            margin-top: 20px; /* Add margin above the button */
-        }
-        .image-number {
-            font-size: 20px;
-            margin-right: 10px; 
-        }
-        .image-container {
-            display: inline-block; /* Make the image container inline for better formatting */
-            border: 2px solid #ccc; /* Add a border to the image container */
-            padding: 5px; /* Add some padding around the image */
-            border-radius: 8px; /* Make the corners rounded */
-            margin-right: 8px; /* Add some space to the right of the image container */
-        }
-        .image-container img,
-        .image-container textarea,
-        .image-container button {
-            border-radius: 8px; /* Make the corners rounded */
-        }
-        .image-container textarea {
-            width: 100%; /* Make the textarea fill the width of the container */
-            box-sizing: border-box; /* Include padding and border in the width calculation */
-            margin-bottom: 10px; /* Add margin below the textarea */
-        }
-        .deleteButton {
-            margin-top: 10px; /* Add margin above the delete button */
-        }
-        /* Style to make the design image background the color */
-         .image-container img {
-            border-radius: 10px; /* Make the corners rounded */
-            padding: 5px; /* Add some padding around the image */
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add a subtle shadow */
-             width: auto; /* Make the image fill the width of the container */
-            height: 100%; /* Maintain the aspect ratio of the image */
-            display: block; /* Ensure the image takes up the entire width */
-        }
-      .image-container img {
-            width: 98%;
-        overflow: hidden;  
-            height: auto; /* Maintain the aspect ratio of the image */
-            display: block;
-      }
-        .imageItem {
-            background-color: ${designColors[selectedDesign]}; /* Set the background color of the container */
-            padding: 10px;
-            border-radius: 1px;
-            margin-bottom: 10px;
-        }
-
-        #designSlider {
-            display: flex;
-            overflow-x: auto; /* Enable horizontal scrolling */
-            margin-bottom: 20px;
-            scroll-behavior: smooth; /* Smooth scroll for modern browsers */
-            gap: 5px;  /* Add space between design options */
-            width: 100%; /* Ensure it takes full width */
-        }
-        .design-image {
-            /* Make sure the border-radius is applied to the image itself */
-            border-radius: 8px;
-        }
-        .imageItem {
-            /* Ensure the container has a consistent border-radius */
-            border-radius: 8px;
-        }
-        /* Add consistent border-radius to textarea and image */
-        .image-container textarea,
-        .image-container img {
-            border-radius: 8px;
-        }
-        .imageItem {
-            /* Ensure the container has a consistent border-radius */
-            border-radius: 8px;
-        }
-        .bottomNavbar {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: #FFFFFF;
-            border-top: 1px solid #dee2e6;
-            padding: 10px;
-            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            z-index: 1000;
-        }
-#addToCartButton {
-    position: fixed;
-    bottom: -10px;
-    left: 0;
-    right: 0;
-    background-color: #000000; /* Button background color */
-    color: #FFFFFF; /* Text color */
-    border: none; /* Remove border */
-    border-radius: 0; /* No rounded corners */
-    padding: 20px; /* Padding for the button */
-    font-size: 16px; /* Font size */
-    cursor: pointer; /* Pointer on hover */
-    width: 100%; /* Full width */
-
-}
-        /* Slider button styles */
-#sliderButtons {
-    display: flex;
-    justify-content: space-between; /* Keeps space between left and right elements */
-    align-items: center; /* Vertically centers items */
-    margin-bottom: 10px;
-    position: relative;
-    top: 20px;
-}
-#slideLeft, 
-#slideRight {
-    background-color: #131417; /* Blue background */
-    color: white;
-    padding: 5px 10px; /* Reduced padding */
-    font-size: 20px; /* Smaller font size */
-    border-radius: 15px; /* Slightly rounded corners */
-    width: auto; /* Adjust as needed */
-    height: auto; /* Adjust as needed */
-    display: inline-block; /* Ensures background wraps tightly around content */
-    border: none; /* Remove default border */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Subtle shadow */
-}
-   
-        </style>
+    </style>
 </head>
 <body>
-    <h1>Upload Your Imager</h1>
-    <div id="sliderButtons">
-        <button id="slideLeft">&lt;</button>  
-        <div id="designSlider"></div>
-        <button id="slideRight">&gt;</button> 
-    </div>
-    <button id="chooseFileButton"> Upload photo</button>
-    <input type="file" id="fileInput" style="display: none;" accept="image/*">
-    <button id="addTextareaButton" style="display: none;">Add Textarea</button>
-    <div id="imagesContainer"></div>
-    <button id="addToCartButton">Add to Cart</button>
-    <div id="customAlert"> 
-        <p>Item added to cart!</p>
-    </div>
-    <div id="alertMessage">
-        <p>Please select a design first!</p>
-        <button id="alertOkButton">OK</button>
-    </div>
-    <div id="uploadingAlert">
-        <p>Please wait, the image is uploading...</p>
-         <div id="uploadProgressBar">
-            <div id="uploadProgress">0%</div>
-        </div>
-    </div>
-    <div class="dark-overlay"></div> 
-    <a href="cart.html" id="cartLink">
-        <i class="fas fa-shopping-cart cart-icon"></i> <span class="cart-count">0</span>
-    </a>
-    <script>
-          // Function to update the cart counter
-        function updateCartCounter() {
-            const cartItems = JSON.parse(localStorage.getItem('cart')) || [];
-            const cartCountElement = document.querySelector('.cart-count');
-            cartCountElement.textContent = cartItems.length; 
+    <h1>Payments Data</h1>
+
+    <!-- Search input fields for each criterion -->
+    <input type="text" id="searchEmail" placeholder="Search by Email" />
+    <input type="text" id="searchStatus" placeholder="Search by Status" />
+    <input type="text" id="searchTimestamp" placeholder="Search by Timestamp" />
+    <input type="text" id="searchCartId" placeholder="Search by Cart ID" />
+
+    <!-- Container to display payments -->
+    <div id="paymentsContainer"></div> <!-- This is where payments will be displayed -->
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-app.js";
+        import { getDatabase, ref as dbRef, get, update } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-database.js";
+        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-auth.js";
+
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyBDrzrgLslaJvnXbo1e90irCEtdcm9ZsCU",
+            authDomain: "logins-13661.firebaseapp.com",
+            databaseURL: "https://logins-13661-default-rtdb.firebaseio.com",
+            projectId: "logins-13661",
+            storageBucket: "logins-13661.appspot.com",
+            messagingSenderId: "451535349483",
+            appId: "1:451535349483:web:d3c9867fd2bffbbdca40ae",
+            measurementId: "G-DWP16WX2H7"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+        const auth = getAuth(app);
+
+        let paymentsData = {};  // Store the loaded payment data
+
+        // Function to load payment data
+        async function loadPayments(userId) {
+            const paymentsRef = dbRef(db, payments/${userId});
+            const snapshot = await get(paymentsRef);
+
+            if (snapshot.exists()) {
+                paymentsData = snapshot.val();  // Store loaded payments
+                displayPayments(paymentsData);
+            } else {
+                document.getElementById('paymentsContainer').innerHTML = 'No payment data found.';
+            }
         }
 
-        
-        // Call updateCartCounter on page load and whenever the cart changes
-        window.addEventListener('load', updateCartCounter);
+        // Display all payment data
+        function displayPayments(paymentsData) {
+            const paymentsContainer = document.getElementById('paymentsContainer');
+            paymentsContainer.innerHTML = '';  // Clear the container before adding new data
 
-        // Assuming you're adding items to the cart with localStorage.
+            Object.keys(paymentsData).forEach(cartId => {
+                const payment = paymentsData[cartId];
+                const paymentDiv = document.createElement('div');
+                paymentDiv.classList.add('payment-item');
+                
+                paymentDiv.innerHTML = `
+                    <h3>Cart ID: ${cartId}</h3>
+                    <p>Status: ${payment.status}</p>
+                    <p>Timestamp: ${payment.timestamp}</p>
+                    <p>Profile: ${JSON.stringify(payment.profile)}</p>
+                    <p>Payment Details: ${JSON.stringify(payment.response)}</p>
+                    <button class="update-button" data-cart-id="${cartId}">Change to "Viewed"</button>
+                `;
+                
+                paymentsContainer.appendChild(paymentDiv);
+            });
+
+            // Add event listeners to "Update" buttons
+            document.querySelectorAll('.update-button').forEach(button => {
+                button.addEventListener('click', updatePaymentStatus);
+            });
+        }
+
+        // Function to update payment status to "Viewed"
+        async function updatePaymentStatus(event) {
+            const cartId = event.target.getAttribute('data-cart-id');
+            const userId = auth.currentUser?.uid;
+
+            if (userId) {
+                const paymentRef = dbRef(db, payments/${userId}/${cartId});
+                const paymentSnapshot = await get(paymentRef);
+
+                if (paymentSnapshot.exists()) {
+                    // Update status to 'viewed'
+                    await update(paymentRef, {
+                        status: 'viewed'
+                    });
+
+                    alert('Payment status updated to "Viewed"');
+                    loadPayments(userId);  // Reload the data to reflect the change
+                } else {
+                    alert('Payment not found.');
+                }
+            }
+        }
+
+        // Live search for data based on any input field (Email, Status, Timestamp, Cart ID)
+        function searchCartData() {
+            const searchEmail = document.getElementById('searchEmail').value.trim().toLowerCase();
+            const searchStatus = document.getElementById('searchStatus').value.trim().toLowerCase();
+            const searchTimestamp = document.getElementById('searchTimestamp').value.trim();
+            const searchCartId = document.getElementById('searchCartId').value.trim();
+
+            const paymentsContainer = document.getElementById('paymentsContainer');
+            paymentsContainer.innerHTML = '';  // Clear current display
+
+            const filteredResults = Object.keys(paymentsData).filter(cartId => {
+                const payment = paymentsData[cartId];
+
+                // Filter independently by each search field
+                const emailMatch = !searchEmail || (payment.profile && payment.profile.email && payment.profile.email.toLowerCase().includes(searchEmail));
+                const statusMatch = !searchStatus || payment.status.toLowerCase().includes(searchStatus);
+                const timestampMatch = !searchTimestamp || payment.timestamp.toString().includes(searchTimestamp);
+                const cartIdMatch = !searchCartId || cartId.includes(searchCartId);
+
+                // Only show results that match the filters (if they are provided)
+                return emailMatch && statusMatch && timestampMatch && cartIdMatch;
+            });
+
+            if (filteredResults.length > 0) {
+                filteredResults.forEach(cartId => {
+                    const payment = paymentsData[cartId];
+                    const paymentDiv = document.createElement('div');
+                    paymentDiv.classList.add('payment-item');
+                    
+                    paymentDiv.innerHTML = `
+                        <h3>Cart ID: ${cartId}</h3>
+                        <p>Status: ${payment.status}</p>
+                        <p>Timestamp: ${payment.timestamp}</p>
+                        <p>Profile: ${JSON.stringify(payment.profile)}</p>
+                        <p>Payment Details: ${JSON.stringify(payment.paymentDetails)}</p>
+                        <button class="update-button" data-cart-id="${cartId}">Change to "Viewed"</button>
+                    `;
+                    
+                    paymentsContainer.appendChild(paymentDiv);
+                });
+            } else {
+                paymentsContainer.innerHTML = 'No matching payment found.';
+            }
+        }
+
+        // Check authentication and load payments when the user is logged in
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                loadPayments(user.uid);  // Load payment data for the logged-in user
+            } else {
+                document.getElementById('paymentsContainer').innerHTML = 'Please log in to view your payment data.';
+            }
+        });
+
+        // Event listeners for real-time search
+        document.getElementById('searchEmail').addEventListener('input', searchCartData);
+        document.getElementById('searchStatus').addEventListener('input', searchCartData);
+        document.getElementById('searchTimestamp').addEventListener('input', searchCartData);
+        document.getElementById('searchCartId').addEventListener('input', searchCartData);
     </script>
-
 </body>
 </html>
