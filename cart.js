@@ -81,12 +81,10 @@ function formatData(data, level = 0) {
     return formattedData;
 }
 
-// Function to display payments sorted by timestamp in descending order
-function displayPayments(paymentsData, archivedCarts) {
+function displayPayments(paymentsData) {
     const paymentsContainer = document.getElementById('paymentsContainer');
     paymentsContainer.innerHTML = '';  // Clear the container
 
-    // Sort payments by timestamp in descending order
     const sortedPayments = Object.keys(paymentsData).sort((a, b) => {
         const timestampA = new Date(paymentsData[a].timestamp);
         const timestampB = new Date(paymentsData[b].timestamp);
@@ -102,16 +100,9 @@ function displayPayments(paymentsData, archivedCarts) {
         // Fetch the status from archivedCarts if available
         const statusText = archivedCarts[cartId] ? archivedCarts[cartId].status : payment.status; // Use archivedCarts status if available
 
-        let imageContent = '';
-        let imageStatusText = 'No image uploaded';
-        if (payment.imageUrl) {
-            imageContent = `<img src="${payment.imageUrl}" alt="Uploaded Image" class="image-thumbnail" />`;
-            imageStatusText = payment.imageStatus || 'Uploaded';
-        }
-
         paymentDiv.innerHTML = `
             <h3 class="payment-title">Cart ID: ${cartId}</h3>
-            <p class="status-display">Status: ${statusText}</p> <!-- Show status from archivedCarts or payments -->
+            <p class="status-display">Status: ${statusText}</p>
             <p>Timestamp: ${new Date(payment.timestamp).toLocaleString()}</p> <!-- Display timestamp in a readable format -->
             <h4>Profile</h4>
             ${formatProfile(payment.profile)}
@@ -128,6 +119,7 @@ function displayPayments(paymentsData, archivedCarts) {
 
         paymentsContainer.appendChild(paymentDiv);
     });
+
 
     document.getElementById('paymentsContainer').addEventListener('click', function (event) {
         // Toggle the visibility of the payment response when "Toggle Response" button is clicked
@@ -278,7 +270,6 @@ async function uploadImage(cartId, file) {
     }
 }
 
-// Function to search cart data based on user input
 function searchCartData() {
     const emailSearch = document.getElementById('searchEmail').value.toLowerCase();
     const statusSearch = document.getElementById('searchStatus').value.toLowerCase();
@@ -306,6 +297,7 @@ function searchCartData() {
 
     displayPayments(filteredPaymentsData);  // Re-render the filtered payments
 }
+
 
 // Function to update payment status
 async function updatePaymentStatus(event) {
