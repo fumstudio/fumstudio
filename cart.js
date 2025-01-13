@@ -21,14 +21,21 @@ const storage = getStorage(app);
 
 let paymentsData = {}; // Global variable for payments data
 
-// Function to load payment data and sort by timestamp (descending order)
+// Function to load payments and fetch status from archivedCarts
 async function loadPayments(userId) {
-    const paymentsRef = dbRef(db, `payments/${userId}`);
-    const snapshot = await get(paymentsRef);
+    const paymentsRef = dbRef(db, payments/${userId});
+    const archivedCartsRef = dbRef(db, archivedCarts/${userId}); // Reference to archivedCarts
+    const paymentsSnapshot = await get(paymentsRef);
+    const archivedCartsSnapshot = await get(archivedCartsRef);
 
-    if (snapshot.exists()) {
-        paymentsData = snapshot.val(); // Store the payments data
-        displayPayments(paymentsData);
+    let archivedCarts = {};
+    if (archivedCartsSnapshot.exists()) {
+        archivedCarts = archivedCartsSnapshot.val(); // Get the archived carts data
+    }
+
+    if (paymentsSnapshot.exists()) {
+        const paymentsData = paymentsSnapshot.val(); // Store the payments data
+        displayPayments(paymentsData, archivedCarts); // Pass both payments data and archivedCarts data
     } else {
         document.getElementById('paymentsContainer').innerHTML = 'No payment data found.';
     }
@@ -54,7 +61,6 @@ function formatProfile(profile) {
         <p><strong>Address Changed:</strong> ${address.addressChanged}</p>
     `;
 }
-
 function formatData(data, level = 0) {
     let formattedData = '';
     const indent = ' '.repeat(level * 4); // Indentation based on the depth level
@@ -73,9 +79,8 @@ function formatData(data, level = 0) {
     }
     return formattedData;
 }
-
 // Function to display payments sorted by timestamp in descending order
-function displayPayments(paymentsData) {
+function displayPayments(paymentsData, archivedCarts) {
     const paymentsContainer = document.getElementById('paymentsContainer');
     paymentsContainer.innerHTML = '';  // Clear the container
 
@@ -92,22 +97,25 @@ function displayPayments(paymentsData) {
         paymentDiv.classList.add('payment-item');
         paymentDiv.setAttribute('data-cart-id', cartId);
 
+        // Fetch the status from archivedCarts if available
+        const statusText = archivedCarts[cartId] ? archivedCarts[cartId].status : payment.status; // Use archivedCarts status if available
+
         let imageContent = '';
         let imageStatusText = 'No image uploaded';
         if (payment.imageUrl) {
-            imageContent = `<img src="${payment.imageUrl}" alt="Uploaded Image" class="image-thumbnail" />`;
+            imageContent = <img src="${payment.imageUrl}" alt="Uploaded Image" class="image-thumbnail" />;
             imageStatusText = payment.imageStatus || 'Uploaded';
         }
 
         paymentDiv.innerHTML = `
-            <h3 class="payment-title">Cart ID: ${cartId}</h3> <!-- Added onClick to view the cart -->
-            <p class="status-display">Status: ${payment.status}</p>
+            <h3 class="payment-title">Cart ID: ${cartId}</h3>
+            <p class="status-display">Status: ${statusText}</p> <!-- Show status from archivedCarts or payments -->
             <p>Timestamp: ${new Date(payment.timestamp).toLocaleString()}</p> <!-- Display timestamp in a readable format -->
             <h4>Profile</h4>
             ${formatProfile(payment.profile)}
             <button class="update-button" data-cart-id="${cartId}" data-status="${payment.status}">Toggle Status</button>
             <div class="drop-zone" data-cart-id="${cartId}">
-                ${imageContent ? `<a href="${payment.imageUrl}" target="_blank">${imageContent}</a>` : '<i class="fas fa-image icon"></i>'}
+                ${imageContent ? <a href="${payment.imageUrl}" target="_blank">${imageContent}</a> : '<i class="fas fa-image icon"></i>'}
             </div>
             <input type="file" class="file-input" data-cart-id="${cartId}" accept="image/*" style="display:none;" />
             <button class="change-image-button" data-cart-id="${cartId}" style="display: ${payment.imageUrl ? 'block' : 'none'};">Change Image</button>
@@ -301,7 +309,7 @@ async function updatePaymentStatus(event) {
     const statusDisplay = event.target.closest('.payment-item').querySelector('.status-display');
 
     if (userId) {
-        const paymentRef = dbRef(db, `payments/${userId}/${cartId}`);
+        const paymentRef = dbRef(db, `archivedCarts/${userId}/${cartId}`);
         const paymentSnapshot = await get(paymentRef);
 
         if (paymentSnapshot.exists()) {
