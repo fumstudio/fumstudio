@@ -18,8 +18,8 @@ const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 const auth = getAuth(app);
 const storage = getStorage(app);
-
 let paymentsData = {}; // Global variable for payments data
+let archivedCarts = {}; // Global variable for archived carts data
 
 // Function to load payments and fetch status from archivedCarts
 async function loadPayments(userId) {
@@ -28,18 +28,18 @@ async function loadPayments(userId) {
     const paymentsSnapshot = await get(paymentsRef);
     const archivedCartsSnapshot = await get(archivedCartsRef);
 
-    let archivedCarts = {};
     if (archivedCartsSnapshot.exists()) {
         archivedCarts = archivedCartsSnapshot.val(); // Get the archived carts data
     }
 
     if (paymentsSnapshot.exists()) {
-        const paymentsData = paymentsSnapshot.val(); // Store the payments data
-        displayPayments(paymentsData, archivedCarts); // Pass both payments data and archivedCarts data
+        paymentsData = paymentsSnapshot.val(); // Store the payments data
+        displayPayments(paymentsData); // Pass payments data
     } else {
         document.getElementById('paymentsContainer').innerHTML = 'No payment data found.';
     }
 }
+
 
 // Function to format profile object
 function formatProfile(profile) {
