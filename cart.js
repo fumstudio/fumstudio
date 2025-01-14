@@ -1,4 +1,4 @@
-<script type="module">import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-app.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-app.js";
 import { getDatabase, ref as dbRef, get, update } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-database.js";
 import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-auth.js";
 import { getStorage, ref as storageRef, uploadBytesResumable, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-storage.js";
@@ -374,6 +374,6 @@ onAuthStateChanged(auth, (user) => {
 document.getElementById('searchEmail').addEventListener('input', searchCartData);
 document.getElementById('searchStatus').addEventListener('input', searchCartData);
 document.getElementById('searchTimestamp').addEventListener('input', searchCartData);
-document.getElementById('searchCartId').addEventListener('input', searchCartData);</script>
+document.getElementById('searchCartId').addEventListener('input', searchCartData);
 
 
