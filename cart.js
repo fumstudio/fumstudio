@@ -62,7 +62,6 @@ function formatProfile(profile) {
     `;
 }
 
-// Function to format data object recursively
 function formatData(data, level = 0) {
     let formattedData = '';
     const indent = ' '.repeat(level * 4); // Indentation based on the depth level
@@ -183,48 +182,220 @@ async function uploadImage(cartId, file) {
                 const paymentDataSnapshot = await get(paymentRef);
                 const currentPaymentData = paymentDataSnapshot.val();
 
-                let newStatus = 'Uploaded'; // Default status for the uploaded image
-                if (currentPaymentData?.imageUrl) {
-                    newStatus = 'Updated'; // If there's already an image, we update the status
+                let newStatus = 'Uploaded'; // Default status for the first upload
+
+                // If the image URL has changed, update the status to "Changed"
+                if (currentPaymentData.imageUrl && currentPaymentData.imageUrl !== imageUrl) {
+                    newStatus = 'Changed';
                 }
 
-                // Update the payment record with the new image URL and status
+                // Update the payment record in the database with the new image URL and status
                 await update(paymentRef, {
-                    imageUrl: imageUrl,
+                    imageUrl,
                     imageStatus: newStatus
                 });
 
-                // Update the status text
+                // Update the status element in the UI to reflect the new status
                 statusElement.innerText = newStatus;
-                displayPayments(paymentsData); // Re-display payments to update the status
+
+                // Update the status in the archivedCarts path as well (optional)
+                const archivedCartRef = dbRef(db, `archivedCarts/${userId}/${cartId}`);
+                await update(archivedCartRef, {
+                    status: "Your items are now personalized" // Updating status in archivedCarts
+                });
+
+                // Re-render the payments list to reflect the changes
+                displayPayments(paymentsData);
             }
         );
     }
 }
 
-// Update payment status (Toggle between different statuses)
-async function updatePaymentStatus(event) {
-    const cartId = event.target.dataset.cartId;
-    const newStatus = event.target.dataset.status === 'pending' ? 'completed' : 'pending';
+// Attach event listeners to each Cart ID
+const paymentTitles = document.querySelectorAll('.payment-title');
+paymentTitles.forEach(title => {
+    title.addEventListener('click', function() {
+        const cartId = title.textContent.split('Cart ID: ')[1];
+        viewCart(cartId); // Call viewCart with the Cart ID
+    });
+});
 
-    const userId = auth.currentUser?.uid;
-    if (userId && cartId) {
-        const paymentRef = dbRef(db, `payments/${userId}/${cartId}`);
-        await update(paymentRef, { status: newStatus });
-        event.target.dataset.status = newStatus; // Update the button status attribute
-        event.target.innerText = `Status: ${newStatus}`;
+// Attach event listeners for file inputs, drop zones, and change image buttons
+document.querySelectorAll('.file-input').forEach(input => {
+    input.addEventListener('change', handleFileSelect);
+});
+
+document.querySelectorAll('.drop-zone').forEach(dropZone => {
+    dropZone.addEventListener('click', handleDropZoneClick);
+    dropZone.addEventListener('dragover', handleDragOver);
+    dropZone.addEventListener('drop', handleDrop);
+});
+
+document.querySelectorAll('.change-image-button').forEach(button => {
+    button.addEventListener('click', handleChangeImage);
+});
+
+// Function to handle when a user clicks a cart ID
+function viewCart(cartId) {
+    window.location.href = `http://localhost:7700/viewcart_id.html?cartId=${cartId}`;
+}
+
+// Function to handle file selection
+async function handleFileSelect(event) {
+    const file = event.target.files[0];
+    if (file) {
+        const cartId = event.target.getAttribute('data-cart-id');
+        await uploadImage(cartId, file);
     }
 }
 
-// Firebase authentication state change
-onAuthStateChanged(auth, async (user) => {
-    if (user) {
-        const userId = user.uid;
-        loadPayments(userId);
+// Handle drop zone click (to upload image)
+function handleDropZoneClick(event) {
+    const cartId = event.target.getAttribute('data-cart-id');
+    const fileInput = document.querySelector(`.file-input[data-cart-id="${cartId}"]`);
+    
+    // Check if fileInput exists before calling click()
+    if (fileInput) {
+        fileInput.click();
     } else {
-        alert('User not authenticated');
+        // Handle the case where the file input doesn't exist
+    }
+}
+
+// Handle change image button click
+async function handleChangeImage(event) {
+    const cartId = event.target.getAttribute('data-cart-id');
+    const fileInput = document.querySelector(`.file-input[data-cart-id="${cartId}"]`);
+    
+    // Check if fileInput exists before calling click()
+    if (fileInput) {
+        fileInput.click();
+    } else {
+        // Handle the case where the file input doesn't exist
+    }
+}
+
+// Handle drag over event for drop zone
+function handleDragOver(event) {
+    event.preventDefault();  
+}
+
+// Handle image drop into the drop zone
+async function handleDrop(event) {
+    event.preventDefault();  
+    const files = event.dataTransfer.files;
+    if (files.length > 0) {
+        const cartId = event.target.getAttribute('data-cart-id');
+        await uploadImage(cartId, files[0]);
+    }
+}
+
+document.getElementById('paymentsContainer').addEventListener('click', function (event) {
+    // Toggle the visibility of the payment response when "Toggle Response" button is clicked
+    if (event.target.classList.contains('toggle-button')) {
+        const cartId = event.target.id.split('-')[1];  // Extract cartId from button ID
+        const responseElement = document.getElementById(`response-${cartId}`);
+
+        // Toggle the visibility of the payment response
+        if (responseElement.style.display === 'none') {
+            responseElement.style.display = 'block';  // Show the response
+        } else {
+            responseElement.style.display = 'none';  // Hide the response
+        }
+    }
+
+    // Handle update status button clicks
+    if (event.target.classList.contains('update-button')) {
+        updatePaymentStatus(event);
     }
 });
+
+// Function to search cart data based on user input
+function searchCartData() {
+    const emailSearch = document.getElementById('searchEmail').value.toLowerCase();
+    const statusSearch = document.getElementById('searchStatus').value.toLowerCase();
+    const timestampSearch = document.getElementById('searchTimestamp').value.toLowerCase();
+    const cartIdSearch = document.getElementById('searchCartId').value.toLowerCase();
+
+    const filteredPayments = Object.keys(paymentsData).filter(cartId => {
+        const payment = paymentsData[cartId];
+
+        // Get the status from archivedCarts (if available)
+        const archivedCartStatus = archivedCarts[cartId] ? archivedCarts[cartId].status : payment.status;
+
+        const emailMatch = payment.profile?.email?.toLowerCase().includes(emailSearch);
+        const statusMatch = archivedCartStatus?.toLowerCase().includes(statusSearch); // Match status from archivedCarts
+        const timestampMatch = new Date(payment.timestamp).toLocaleString().toLowerCase().includes(timestampSearch);
+        const cartIdMatch = cartId.toLowerCase().includes(cartIdSearch);
+        
+        return emailMatch && statusMatch && timestampMatch && cartIdMatch;
+    });
+
+    const filteredPaymentsData = filteredPayments.reduce((result, cartId) => {
+        result[cartId] = paymentsData[cartId];
+        return result;
+    }, {});
+
+    displayPayments(filteredPaymentsData);  // Re-render the filtered payments
+}
+
+// Function to update payment status
+async function updatePaymentStatus(event) {
+    const cartId = event.target.getAttribute('data-cart-id');
+    const userId = auth.currentUser?.uid;
+    const currentStatus = event.target.getAttribute('data-status');
+    const statusDisplay = event.target.closest('.payment-item').querySelector('.status-display');
+
+    if (userId) {
+        const paymentRef = dbRef(db, `archivedCarts/${userId}/${cartId}`);
+        const paymentSnapshot = await get(paymentRef);
+
+        if (paymentSnapshot.exists()) {
+            // Toggle the status between 'completed' and 'viewed'
+            const newStatus = currentStatus === 'completed' ? 'viewed' : 'completed';
+
+            // Update status in Firebase
+            await update(paymentRef, {
+                status: newStatus
+            });
+
+            // Update the UI status
+            statusDisplay.innerHTML = `Status: ${newStatus}`;
+
+            // If status is 'viewed', show an alert
+            if (newStatus === 'viewed') {
+                alert('Payment status updated to "viewed"');
+            }
+
+            // Update the button's data-status attribute to the new status
+            event.target.setAttribute('data-status', newStatus);
+        } else {
+            alert('Payment not found.');
+        }
+    }
+}
+
+// Event listener for toggle status buttons
+document.getElementById('paymentsContainer').addEventListener('click', function (event) {
+    if (event.target.classList.contains('update-button')) {
+        updatePaymentStatus(event);
+    }
+});
+
+// Check authentication and load payments when the user is logged in
+onAuthStateChanged(auth, (user) => {
+    if (user) {
+        loadPayments(user.uid);
+    } else {
+        document.getElementById('paymentsContainer').innerHTML = 'Please log in to view your payment data.';
+    }
+});
+
+// Attach event listeners for search input fields after everything is loaded
+document.getElementById('searchEmail').addEventListener('input', searchCartData);
+document.getElementById('searchStatus').addEventListener('input', searchCartData);
+document.getElementById('searchTimestamp').addEventListener('input', searchCartData);
+document.getElementById('searchCartId').addEventListener('input', searchCartData);
 
 
 
