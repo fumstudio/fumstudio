@@ -24,8 +24,8 @@ let archivedCarts = {}; // Global variable for archived carts data
 
 // Function to load payments and fetch status from archivedCarts
 async function loadPayments(userId) {
-    const paymentsRef = dbRef(db, `payments/${userId}`);
-    const archivedCartsRef = dbRef(db, `archivedCarts/${userId}`); // Reference to archivedCarts
+    const paymentsRef = dbRef(db, payments/${userId});
+    const archivedCartsRef = dbRef(db, archivedCarts/${userId}); // Reference to archivedCarts
     const paymentsSnapshot = await get(paymentsRef);
     const archivedCartsSnapshot = await get(archivedCartsRef);
 
@@ -69,14 +69,14 @@ function formatData(data, level = 0) {
         for (let key in data) {
             if (data.hasOwnProperty(key)) {
                 if (typeof data[key] === 'object') {
-                    formattedData += `${indent}${key}:\n${formatData(data[key], level + 1)}`;
+                    formattedData += ${indent}${key}:\n${formatData(data[key], level + 1)};
                 } else {
-                    formattedData += `${indent}${key}: ${data[key]}\n`;
+                    formattedData += ${indent}${key}: ${data[key]}\n;
                 }
             }
         }
     } else {
-        formattedData = `${indent}${data}\n`;
+        formattedData = ${indent}${data}\n;
     }
     return formattedData;
 }
@@ -105,68 +105,68 @@ function displayPayments(paymentsData) {
         let imageContent = '';
         let imageStatusText = 'No image uploaded';
         if (payment.imageUrl) {
-            imageContent = `<img src="${payment.imageUrl}" alt="Uploaded Image" class="image-thumbnail" />`;
+            imageContent = <img src="${payment.imageUrl}" alt="Uploaded Image" class="image-thumbnail" />;
             imageStatusText = payment.imageStatus || 'Uploaded';
         }
 
-        paymentDiv.innerHTML = `
-            <h3 class="payment-title">Cart ID: ${cartId}</h3>
-            <p class="status-display">Status: ${statusText}</p> <!-- Show status from archivedCarts or payments -->
-            <p>Timestamp: ${new Date(payment.timestamp).toLocaleString()}</p> <!-- Display timestamp in a readable format -->
-            <h4>Profile</h4>
-            ${formatProfile(payment.profile)}
-            <button class="update-button" data-cart-id="${cartId}" data-status="${payment.status}">Toggle Status</button>
-            <div class="drop-zone" data-cart-id="${cartId}">
-                ${imageContent ? `<a href="${payment.imageUrl}" target="_blank">${imageContent}</a>` : '<i class="fas fa-image icon"></i>'}
-            </div>
-            <input type="file" class="file-input" data-cart-id="${cartId}" accept="image/*" style="display:none;" />
-            <button class="change-image-button" data-cart-id="${cartId}" style="display: ${payment.imageUrl ? 'block' : 'none'};">Change Image</button>
-            <p class="image-status" id="status-${cartId}">${imageStatusText}</p>
-            <button class="toggle-button" id="toggleResponse-${cartId}">Toggle Response</button>
-            <pre class="payment-response" id="response-${cartId}" style="display: none;">${formatData(payment.response)}</pre>
-        `;
+       paymentDiv.innerHTML = `
+    <h3 class="payment-title">Cart ID: ${cartId}</h3>
+    <p class="status-display">Status: ${statusText}</p>
+    <p>Timestamp: ${new Date(payment.timestamp).toLocaleString()}</p>
+    <h4>Profile</h4>
+    ${formatProfile(payment.profile)}
+    <button class="update-button" data-cart-id="${cartId}" data-status="${payment.status}">Toggle Status</button>
+    <div class="drop-zone" data-cart-id="${cartId}">
+        ${imageContent ? `<a href="${payment.imageUrl}" target="_blank">${imageContent}</a>` : '<i class="fas fa-image icon"></i>'}
+    </div>
+    <input type="file" class="file-input" data-cart-id="${cartId}" accept="image/*" style="display:none;" />
+    <button class="change-image-button" data-cart-id="${cartId}" style="display: ${payment.imageUrl ? 'block' : 'none'};">Change Image</button>
+    <p class="image-status" id="status-${cartId}">${imageStatusText}</p>
+    <button class="toggle-button" id="toggleResponse-${cartId}">Toggle Response</button>
+    <pre class="payment-response" id="response-${cartId}" style="display: none;">${formatData(payment.response)}</pre>
+`;
 
         paymentsContainer.appendChild(paymentDiv);
     });
-}
 
-document.getElementById('paymentsContainer').addEventListener('click', function (event) {
-    // Toggle the visibility of the payment response when "Toggle Response" button is clicked
-    if (event.target.classList.contains('toggle-button')) {
-        const cartId = event.target.id.split('-')[1];  // Extract cartId from button ID
-        const responseElement = document.getElementById(`response-${cartId}`);
+    document.getElementById('paymentsContainer').addEventListener('click', function (event) {
+        // Toggle the visibility of the payment response when "Toggle Response" button is clicked
+        if (event.target.classList.contains('toggle-button')) {
+            const cartId = event.target.id.split('-')[1];  // Extract cartId from button ID
+            const responseElement = document.getElementById(response-${cartId});
 
-        // Toggle the visibility of the payment response
-        if (responseElement.style.display === 'none') {
-            responseElement.style.display = 'block';  // Show the response
-        } else {
-            responseElement.style.display = 'none';  // Hide the response
+            // Toggle the visibility of the payment response
+            if (responseElement.style.display === 'none') {
+                responseElement.style.display = 'block';  // Show the response
+            } else {
+                responseElement.style.display = 'none';  // Hide the response
+            }
         }
-    }
 
-    // Handle update status button clicks
-    if (event.target.classList.contains('update-button')) {
-        updatePaymentStatus(event);
-    }
-});
+        // Handle update status button clicks
+        if (event.target.classList.contains('update-button')) {
+            updatePaymentStatus(event);
+        }
+    });
+
 
 // Upload image to Firebase Storage
 async function uploadImage(cartId, file) {
     const userId = auth.currentUser?.uid;
     if (userId) {
         // Create a reference to upload the image to Firebase Storage
-        const storageReference = storageRef(storage, `images/${userId}/${cartId}/${file.name}`);
+        const storageReference = storageRef(storage, images/${userId}/${cartId}/${file.name});
         const uploadTask = uploadBytesResumable(storageReference, file);
 
         // Get the status element to show upload progress
-        const statusElement = document.getElementById(`status-${cartId}`);
+        const statusElement = document.getElementById(status-${cartId});
         statusElement.innerText = 'Uploading... 0%';
 
         uploadTask.on('state_changed', 
             (snapshot) => {
                 // Calculate upload progress
                 const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-                statusElement.innerText = `Uploading... ${Math.round(progress)}%`;
+                statusElement.innerText = Uploading... ${Math.round(progress)}%;
             }, 
             (error) => {
                 // Handle upload error
@@ -176,7 +176,7 @@ async function uploadImage(cartId, file) {
             async () => {
                 // Once the upload is complete, get the image URL
                 const imageUrl = await getDownloadURL(uploadTask.snapshot.ref);
-                const paymentRef = dbRef(db, `payments/${userId}/${cartId}`);
+                const paymentRef = dbRef(db, payments/${userId}/${cartId});
 
                 // Check if there is already an image URL in the payment record
                 const paymentDataSnapshot = await get(paymentRef);
@@ -199,7 +199,7 @@ async function uploadImage(cartId, file) {
                 statusElement.innerText = newStatus;
 
                 // Update the status in the archivedCarts path as well (optional)
-                const archivedCartRef = dbRef(db, `archivedCarts/${userId}/${cartId}`);
+                const archivedCartRef = dbRef(db, archivedCarts/${userId}/${cartId});
                 await update(archivedCartRef, {
                     status: "Your items are now personalized" // Updating status in archivedCarts
                 });
@@ -210,15 +210,14 @@ async function uploadImage(cartId, file) {
         );
     }
 }
-
-// Attach event listeners to each Cart ID
-const paymentTitles = document.querySelectorAll('.payment-title');
-paymentTitles.forEach(title => {
-    title.addEventListener('click', function() {
-        const cartId = title.textContent.split('Cart ID: ')[1];
-        viewCart(cartId); // Call viewCart with the Cart ID
-    });
-});
+        // Attach event listeners to each Cart ID
+        const paymentTitles = document.querySelectorAll('.payment-title');
+        paymentTitles.forEach(title => {
+            title.addEventListener('click', function() {
+                const cartId = title.textContent.split('Cart ID: ')[1];
+                viewCart(cartId); // Call viewCart with the Cart ID
+            });
+        });
 
 // Attach event listeners for file inputs, drop zones, and change image buttons
 document.querySelectorAll('.file-input').forEach(input => {
@@ -237,7 +236,7 @@ document.querySelectorAll('.change-image-button').forEach(button => {
 
 // Function to handle when a user clicks a cart ID
 function viewCart(cartId) {
-    window.location.href = `http://localhost:7700/viewcart_id.html?cartId=${cartId}`;
+    window.location.href = http://localhost:7700/viewcart_id.html?cartId=${cartId};
 }
 
 // Function to handle file selection
@@ -252,7 +251,7 @@ async function handleFileSelect(event) {
 // Handle drop zone click (to upload image)
 function handleDropZoneClick(event) {
     const cartId = event.target.getAttribute('data-cart-id');
-    const fileInput = document.querySelector(`.file-input[data-cart-id="${cartId}"]`);
+    const fileInput = document.querySelector(.file-input[data-cart-id="${cartId}"]);
     
     // Check if fileInput exists before calling click()
     if (fileInput) {
@@ -265,7 +264,7 @@ function handleDropZoneClick(event) {
 // Handle change image button click
 async function handleChangeImage(event) {
     const cartId = event.target.getAttribute('data-cart-id');
-    const fileInput = document.querySelector(`.file-input[data-cart-id="${cartId}"]`);
+    const fileInput = document.querySelector(.file-input[data-cart-id="${cartId}"]);
     
     // Check if fileInput exists before calling click()
     if (fileInput) {
@@ -289,26 +288,26 @@ async function handleDrop(event) {
         await uploadImage(cartId, files[0]);
     }
 }
+    document.getElementById('paymentsContainer').addEventListener('click', function (event) {
+        // Toggle the visibility of the payment response when "Toggle Response" button is clicked
+        if (event.target.classList.contains('toggle-button')) {
+            const cartId = event.target.id.split('-')[1];  // Extract cartId from button ID
+            const responseElement = document.getElementById(response-${cartId});
 
-document.getElementById('paymentsContainer').addEventListener('click', function (event) {
-    // Toggle the visibility of the payment response when "Toggle Response" button is clicked
-    if (event.target.classList.contains('toggle-button')) {
-        const cartId = event.target.id.split('-')[1];  // Extract cartId from button ID
-        const responseElement = document.getElementById(`response-${cartId}`);
-
-        // Toggle the visibility of the payment response
-        if (responseElement.style.display === 'none') {
-            responseElement.style.display = 'block';  // Show the response
-        } else {
-            responseElement.style.display = 'none';  // Hide the response
+            // Toggle the visibility of the payment response
+            if (responseElement.style.display === 'none') {
+                responseElement.style.display = 'block';  // Show the response
+            } else {
+                responseElement.style.display = 'none';  // Hide the response
+            }
         }
-    }
 
-    // Handle update status button clicks
-    if (event.target.classList.contains('update-button')) {
-        updatePaymentStatus(event);
-    }
-});
+        // Handle update status button clicks
+        if (event.target.classList.contains('update-button')) {
+            updatePaymentStatus(event);
+        }
+    });
+}
 
 // Function to search cart data based on user input
 function searchCartData() {
@@ -347,7 +346,7 @@ async function updatePaymentStatus(event) {
     const statusDisplay = event.target.closest('.payment-item').querySelector('.status-display');
 
     if (userId) {
-        const paymentRef = dbRef(db, `archivedCarts/${userId}/${cartId}`);
+        const paymentRef = dbRef(db, archivedCarts/${userId}/${cartId});
         const paymentSnapshot = await get(paymentRef);
 
         if (paymentSnapshot.exists()) {
@@ -360,7 +359,7 @@ async function updatePaymentStatus(event) {
             });
 
             // Update the UI status
-            statusDisplay.innerHTML = `Status: ${newStatus}`;
+            statusDisplay.innerHTML = Status: ${newStatus};
 
             // If status is 'viewed', show an alert
             if (newStatus === 'viewed') {
@@ -396,6 +395,5 @@ document.getElementById('searchEmail').addEventListener('input', searchCartData)
 document.getElementById('searchStatus').addEventListener('input', searchCartData);
 document.getElementById('searchTimestamp').addEventListener('input', searchCartData);
 document.getElementById('searchCartId').addEventListener('input', searchCartData);
-
 
 
