@@ -82,6 +82,7 @@ function formatData(data, level = 0) {
 }
 
 // Function to display payments sorted by timestamp in descending order
+// Function to display payments sorted by timestamp in descending order
 function displayPayments(paymentsData) {
     const paymentsContainer = document.getElementById('paymentsContainer');
     paymentsContainer.innerHTML = '';  // Clear the container
@@ -105,11 +106,11 @@ function displayPayments(paymentsData) {
         let imageContent = '';
         let imageStatusText = 'No image uploaded';
         if (payment.imageUrl) {
-            imageContent = <img src="${payment.imageUrl}" alt="Uploaded Image" class="image-thumbnail" />;
+            imageContent = `<img src="${payment.imageUrl}" alt="Uploaded Image" class="image-thumbnail" />`;
             imageStatusText = payment.imageStatus || 'Uploaded';
         }
 
-        paymentDiv.innerHTML = 
+        paymentDiv.innerHTML = `
             <h3 class="payment-title">Cart ID: ${cartId}</h3>
             <p class="status-display">Status: ${statusText}</p> <!-- Show status from archivedCarts or payments -->
             <p>Timestamp: ${new Date(payment.timestamp).toLocaleString()}</p> <!-- Display timestamp in a readable format -->
@@ -117,17 +118,18 @@ function displayPayments(paymentsData) {
             ${formatProfile(payment.profile)}
             <button class="update-button" data-cart-id="${cartId}" data-status="${payment.status}">Toggle Status</button>
             <div class="drop-zone" data-cart-id="${cartId}">
-                ${imageContent ? <a href="${payment.imageUrl}" target="_blank">${imageContent}</a> : '<i class="fas fa-image icon"></i>'}
+                ${imageContent ? `<a href="${payment.imageUrl}" target="_blank">${imageContent}</a>` : '<i class="fas fa-image icon"></i>'}
             </div>
             <input type="file" class="file-input" data-cart-id="${cartId}" accept="image/*" style="display:none;" />
             <button class="change-image-button" data-cart-id="${cartId}" style="display: ${payment.imageUrl ? 'block' : 'none'};">Change Image</button>
             <p class="image-status" id="status-${cartId}">${imageStatusText}</p>
             <button class="toggle-button" id="toggleResponse-${cartId}">Toggle Response</button>
             <pre class="payment-response" id="response-${cartId}" style="display: none;">${formatData(payment.response)}</pre>
-        ;
+        `;
 
         paymentsContainer.appendChild(paymentDiv);
     });
+}
 
     document.getElementById('paymentsContainer').addEventListener('click', function (event) {
         // Toggle the visibility of the payment response when "Toggle Response" button is clicked
