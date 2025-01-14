@@ -1,4 +1,4 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-app.js";
+<script type="module">import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-app.js";
 import { getDatabase, ref as dbRef, get, update } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-database.js";
 import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-auth.js";
 import { getStorage, ref as storageRef, uploadBytesResumable, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-storage.js";
@@ -109,22 +109,22 @@ function displayPayments(paymentsData) {
             imageStatusText = payment.imageStatus || 'Uploaded';
         }
 
-       paymentDiv.innerHTML = `
-    <h3 class="payment-title">Cart ID: ${cartId}</h3>
-    <p class="status-display">Status: ${statusText}</p>
-    <p>Timestamp: ${new Date(payment.timestamp).toLocaleString()}</p>
-    <h4>Profile</h4>
-    ${formatProfile(payment.profile)}
-    <button class="update-button" data-cart-id="${cartId}" data-status="${payment.status}">Toggle Status</button>
-    <div class="drop-zone" data-cart-id="${cartId}">
-        ${imageContent ? `<a href="${payment.imageUrl}" target="_blank">${imageContent}</a>` : '<i class="fas fa-image icon"></i>'}
-    </div>
-    <input type="file" class="file-input" data-cart-id="${cartId}" accept="image/*" style="display:none;" />
-    <button class="change-image-button" data-cart-id="${cartId}" style="display: ${payment.imageUrl ? 'block' : 'none'};">Change Image</button>
-    <p class="image-status" id="status-${cartId}">${imageStatusText}</p>
-    <button class="toggle-button" id="toggleResponse-${cartId}">Toggle Response</button>
-    <pre class="payment-response" id="response-${cartId}" style="display: none;">${formatData(payment.response)}</pre>
-`;
+        paymentDiv.innerHTML = `
+            <h3 class="payment-title">Cart ID: ${cartId}</h3>
+            <p class="status-display">Status: ${statusText}</p> <!-- Show status from archivedCarts or payments -->
+            <p>Timestamp: ${new Date(payment.timestamp).toLocaleString()}</p> <!-- Display timestamp in a readable format -->
+            <h4>Profile</h4>
+            ${formatProfile(payment.profile)}
+            <button class="update-button" data-cart-id="${cartId}" data-status="${payment.status}">Toggle Status</button>
+            <div class="drop-zone" data-cart-id="${cartId}">
+                ${imageContent ? <a href="${payment.imageUrl}" target="_blank">${imageContent}</a> : '<i class="fas fa-image icon"></i>'}
+            </div>
+            <input type="file" class="file-input" data-cart-id="${cartId}" accept="image/*" style="display:none;" />
+            <button class="change-image-button" data-cart-id="${cartId}" style="display: ${payment.imageUrl ? 'block' : 'none'};">Change Image</button>
+            <p class="image-status" id="status-${cartId}">${imageStatusText}</p>
+            <button class="toggle-button" id="toggleResponse-${cartId}">Toggle Response</button>
+            <pre class="payment-response" id="response-${cartId}" style="display: none;">${formatData(payment.response)}</pre>
+        `;
 
         paymentsContainer.appendChild(paymentDiv);
     });
@@ -288,27 +288,7 @@ async function handleDrop(event) {
         await uploadImage(cartId, files[0]);
     }
 }
-    document.getElementById('paymentsContainer').addEventListener('click', function (event) {
-        // Toggle the visibility of the payment response when "Toggle Response" button is clicked
-        if (event.target.classList.contains('toggle-button')) {
-            const cartId = event.target.id.split('-')[1];  // Extract cartId from button ID
-            const responseElement = document.getElementById(response-${cartId});
-
-            // Toggle the visibility of the payment response
-            if (responseElement.style.display === 'none') {
-                responseElement.style.display = 'block';  // Show the response
-            } else {
-                responseElement.style.display = 'none';  // Hide the response
-            }
-        }
-
-        // Handle update status button clicks
-        if (event.target.classList.contains('update-button')) {
-            updatePaymentStatus(event);
-        }
-    });
-}
-
+  
 // Function to search cart data based on user input
 function searchCartData() {
     const emailSearch = document.getElementById('searchEmail').value.toLowerCase();
@@ -394,6 +374,6 @@ onAuthStateChanged(auth, (user) => {
 document.getElementById('searchEmail').addEventListener('input', searchCartData);
 document.getElementById('searchStatus').addEventListener('input', searchCartData);
 document.getElementById('searchTimestamp').addEventListener('input', searchCartData);
-document.getElementById('searchCartId').addEventListener('input', searchCartData);
+document.getElementById('searchCartId').addEventListener('input', searchCartData);</script>
 
 
