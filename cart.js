@@ -41,12 +41,11 @@ async function loadPayments(userId) {
     }
 }
 
-// Function to format profile object
 function formatProfile(profile) {
     if (!profile || !profile.addresses) return 'No profile data';
 
     const address = profile.addresses.address1;
-    return 
+    return `
         <p><strong>Email:</strong> ${profile.email}</p>
         <div class="address-details">
             <p><strong>Street:</strong> ${address.street}</p>
@@ -59,7 +58,7 @@ function formatProfile(profile) {
             <p><strong>Last Changed:</strong> ${address.lastChangedDate}</p>
         </div>
         <p><strong>Address Changed:</strong> ${address.addressChanged}</p>
-    ;
+    `;
 }
 
 function formatData(data, level = 0) {
@@ -69,17 +68,19 @@ function formatData(data, level = 0) {
         for (let key in data) {
             if (data.hasOwnProperty(key)) {
                 if (typeof data[key] === 'object') {
-                    formattedData += ${indent}${key}:\n${formatData(data[key], level + 1)};
+                    formattedData += `${indent}${key}:\n${formatData(data[key], level + 1)}`;
                 } else {
-                    formattedData += ${indent}${key}: ${data[key]}\n;
+                    formattedData += `${indent}${key}: ${data[key]}\n`;
                 }
             }
         }
     } else {
-        formattedData = ${indent}${data}\n;
+        formattedData = `${indent}${data}\n`;
     }
     return formattedData;
 }
+
+
 
 // Function to display payments sorted by timestamp in descending order
 // Function to display payments sorted by timestamp in descending order
@@ -131,25 +132,25 @@ function displayPayments(paymentsData) {
     });
 }
 
-    document.getElementById('paymentsContainer').addEventListener('click', function (event) {
-        // Toggle the visibility of the payment response when "Toggle Response" button is clicked
-        if (event.target.classList.contains('toggle-button')) {
-            const cartId = event.target.id.split('-')[1];  // Extract cartId from button ID
-            const responseElement = document.getElementById(response-${cartId});
+   document.getElementById('paymentsContainer').addEventListener('click', function (event) {
+    // Toggle the visibility of the payment response when "Toggle Response" button is clicked
+    if (event.target.classList.contains('toggle-button')) {
+        const cartId = event.target.id.split('-')[1];  // Extract cartId from button ID
+        const responseElement = document.getElementById(`response-${cartId}`);
 
-            // Toggle the visibility of the payment response
-            if (responseElement.style.display === 'none') {
-                responseElement.style.display = 'block';  // Show the response
-            } else {
-                responseElement.style.display = 'none';  // Hide the response
-            }
+        // Toggle the visibility of the payment response
+        if (responseElement.style.display === 'none') {
+            responseElement.style.display = 'block';  // Show the response
+        } else {
+            responseElement.style.display = 'none';  // Hide the response
         }
+    }
 
-        // Handle update status button clicks
-        if (event.target.classList.contains('update-button')) {
-            updatePaymentStatus(event);
-        }
-    });
+    // Handle update status button clicks
+    if (event.target.classList.contains('update-button')) {
+        updatePaymentStatus(event);
+    }
+});
 
 
 // Upload image to Firebase Storage
