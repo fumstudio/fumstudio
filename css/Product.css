@@ -1,0 +1,127 @@
+.container3 {
+  max-width: 1000px;
+  width: 100%;
+  margin: 1px auto;
+  background: #fff;
+  border-radius: 5px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  margin-top: 20px;
+              padding: 20px;
+  
+}
+
+  
+  .main-nav .logo {
+    font-size: 2.4em; /* Adjust the font size as needed */
+    color: #000000;
+  }
+
+.like {
+
+    margin-top: 30px;
+    
+}
+
+.product {
+  width: 47%;
+  
+  border: 1px solid #FBEFEF;
+  border-radius: 7px;
+  margin-top: -30px;
+  background-color: #FFFFFF;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 10px;
+  position: relative;
+}
+
+.product img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 5px;
+}
+
+.product h2 {
+  margin-top: 0px;
+  font-size: 1.2em;
+  color: #333;
+  text-align: left;
+}
+
+.product p {
+  
+  font-size: 15px;
+  text-align: left;
+}
+
+.product-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1px;
+}
+
+.price {
+  color: #333;
+  font-weight: bold;
+}
+
+.shipping {
+  color: #2ecc71; /* Green color for free shipping */
+}
+
+
+.products {
+  display: flex;
+  animation: scroll 10s linear infinite;
+}
+
+
+.price-container {
+  margin-top: -30px;
+}
+
+
+@keyframes scroll {
+  0% {
+    transform: translateX(0);
+  }
+   100% {
+    transform: translateX(-800px);
+  }
+}
+
+.product.active {
+  background-color: #EDEEFF;
+}
+
+
+.fab {
+    margin-right: 10px;
+    text-decoration: none; /* Remove underline from the icon */
+}
+
+.whatsapp-icon span {
+    text-decoration: none; /* Remove underline from the text */
+}
+@media only screen and (max-width: 767px) and (-webkit-min-device-pixel-ratio: 0) {
+    .ads {
+        text-align: left;
+        margin-right: 80px; /* Move the element 10px to the left */
+    }
+}
+   
+
+.item {
+  z-index: 1000;
+}
+.like {
+           text-align: center;
+    color: gray; /* Text color */
+    font-family: Arial, sans-serif; /* Specify the font family */
+    /* Add any additional styling you desire */
+ 
+}
