@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Business Card Generator</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css">
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js"></script>
+  
+<style>
+h3 {
+  background-color:#000000;
+      border-radius: 5px;
+      color: white;
+      padding: 10px 20px;
+}
+ /* General body styling */
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    padding: 20px;
+    background-color: #f9f9f9;
+}
+.card-preview {
+    width: 350px; /* Default width */
+    height: 200px; /* Default height */
+    margin: 20px auto;
+    border: 1px solid #ccc;
+   
+    overflow: hidden;
+    background-color: #f1f1f1;
+}
+
+/* Canvas styling */
+canvas {
+    width: 100%;
+    height: 100%;
+    touch-action: none; /* Disable default touch actions */
+}
+
+/* Card preview container */
+
+/* Input, button, label, and select styling */
+input, button, label, select {
+    margin: 5px;
+    padding: 10px;
+    width: 80%;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+button {
+    background-color: #000000;
+    color: white;
+    cursor: pointer;
+    border: none;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+/* Modal for cropping */
+.modal {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+    border-radius: 10px;
+}
+
+.modal img {
+    max-width: 100%;
+    border-radius: 5px;
+}
+
+/* Overlay for modal */
+.overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+}
+
+/* Image previews */
+.image-preview {
+    margin: 10px auto;
+    width: 265px;
+    height: 265px;
+    border: 1px solid #ccc;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    position: relative;
+    border-radius: 10px;
+    background-color: #E3E3E3;
+  
+}
+
+.image-preview img {
+    max-width: 100%;
+    max-height: 100%;
+    border-radius: 5px;
+}
+
+/* Delete button for image previews */
+.delete-btn {
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    background: red;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    display: none;
+    border-radius: 5px;
+}
+
+.delete-btn:hover {
+    background: darkred;
+}
+
+/* File input styling */
+input[type="file"] {
+    display: none;
+}
+
+/* Custom file upload button */
+.custom-file-upload {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+    border-radius: 5px;
+    margin: 5px;
+}
+
+.custom-file-upload:hover {
+    background-color: #0056b3;
+}
+
+/* Card container styling */
+.card-container {
+    position: fixed;
+    top: 0;
+    left: 100%; /* Start off-screen */
+    width: 100%;
+    height: 100%;
+    background: white;
+    transition: left 0.5s ease-in-out;
+    z-index: 1001;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.card-container.active {
+    left: 0; /* Slide into view */
+}
+
+/* Back button styling */
+.back-btn {
+    margin: 20px;
+    padding: 10px 20px;
+    background-color: #6c757d;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.back-btn:hover {
+    background-color: #5a6268;
+}
+
+/* Responsive design */
+/* Responsive design */
+@media (max-width: 600px) {
+    input, button, label, select {
+        width: 80%;
+    }
+
+    .card-preview {
+        width: 90%; /* Adjust width for small screens */
+        height: auto; /* Allow height to adjust based on content */
+        max-width: 100%; /* Ensure it doesn't exceed the screen width */
+    }
+
+    canvas {
+        width: 100%; /* Ensure canvas fills the container */
+        height: auto; /* Allow height to adjust based on width */
+    }
+}
+.fa-download, .fa-cart-plus{
+  margin-left: 10px;
+}
+
+</style>
+   <style>
+
+
+#cartAlert {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            color: black;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+            z-index: 1000; 
+        }
+    #overlay {
+                  display: none;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 1;
+    }
+   /* From Uiverse.io by vinodjangid07 */ 
+
+  </style>
+  
+  <!-- navbar bottom -->
+
+
+</head>
+<body>
+
+    <h3>Upload Company Logo/photo</h3>
+
+ 
+    <label for="photo"  style="display:none;">Upload Photo:</label>
+    <input type="file" id="photo" accept="image/*" style="display: none;">
+    <div class="image-preview" id="photoPreview"><i class="fa-solid fa-image"></i> <br>
+ <span>Click here to Upload Photo /Logo </span>
+        <button class="delete-btn" id="deletePhotoBtn">Delete</button>
+    </div>
+    <h3> Business Details</h3>
+    <input type="text" id="company" placeholder="Company Name">
+    <input type="text" id="name" placeholder="Full Name">
+    <input type="text" id="title" placeholder="Job Title">
+    <input type="text" id="phone" placeholder="Phone Number">
+    <input type="text" id="email" placeholder="Email Address">
+    <input type="text" id="website" placeholder="Website URL">
+    <input type="text" id="address" placeholder="Address">
+    <input type="text" id="facebook" placeholder="Facebook Username">
+    <input type="text" id="whatsapp" placeholder="WhatsApp Number">
+    <input type="text" id="instagram" placeholder="Instagram Username">
+
+    <label for="bgColor" style="display:none;">Background Color:</label>
+    <input type="color" id="bgColor" value="#f5f5f5" style="display:none;">
+
+    <label for="fontColor" style="display: none; ">Font Color:</label>
+    <input type="color" id="fontColor" value="#000000" style="display: none; ">
+
+    <h3>Select/Upload Background</h3>
+
+ 
+    <label for="uploadBg"  style="display:none;">Upload Background Image:</label>
+    <input type="file" id="uploadBg" accept="image/*" style="display: none;">
+    <div class="image-preview" id="bgPreview" >
+        <span>Background Preview</span>
+        <button class="delete-btn" id="deleteBgBtn">Delete</button>
+    </div>
+ <select id="bgImage">
+        
+        <option value="https://static.vecteezy.com/system/resources/thumbnails/008/804/954/small/abstract-background-illustration-yellow-abstract-background-with-simple-shape-vector.jpg">Background 1</option>
+        <option value="https://t3.ftcdn.net/jpg/04/03/11/52/360_F_403115274_z14P5UiqhPQ14ZY2YERroLTjTQaEHuP7.jpg">Background 2</option>
+        <option value="https://d1csarkz8obe9u.cloudfront.net/posterpreviews/presentation-background-template-design-67e2017a395b1ee93341c510f9d9c41e_screen.jpg?ts=1696575688" selected>Background 3</option>
+       <option value="https://t3.ftcdn.net/jpg/06/27/75/60/360_F_627756062_r5NcHqjKPTDVJJdKOsyBLhAod7cQaCTv.jpg" selected>Background 4</option>
+    <option value="https://static.vecteezy.com/system/resources/thumbnails/013/277/783/small_2x/stylish-black-wavy-background-for-business-cards-presentations-banners-etc-vector.jpg" selected>Background 5</option>
+     <option value="https://t4.ftcdn.net/jpg/09/70/55/39/360_F_970553904_fHIqSFoIw2xcOznXFQdgpO1qMf3g2Pte.jpg" selected>Background 6</option>
+    <option value="https://static.vecteezy.com/system/resources/thumbnails/004/654/013/small/abstract-purple-luxury-papercut-background-free-vector.jpg" selected>Background 7</option> 
+    <option value="https://t3.ftcdn.net/jpg/06/33/10/70/360_F_633107016_xHAgkS9dVg4z4L0rmSpYMUXKXYRrGpP1.jpg" selected>Background 8</option>
+    <option value="https://t4.ftcdn.net/jpg/05/62/36/09/360_F_562360948_lhJcQwyk81IpPlwdmCzJIeGGvb4YtPJE.jpg" selected>Background 9</option> 
+     <option value="https://t4.ftcdn.net/jpg/05/60/60/21/360_F_560602150_CvSCsPph312pc2WlFyb9PyrumZDSwXJT.jpg" selected>Background 
+   10</option>
+      <option value="https://t3.ftcdn.net/jpg/03/03/56/26/360_F_303562603_xK6TiGeiAGd9pqs4TfERCVszi4vjqhJd.jpg" selected>Background 
+   11</option>
+    <option value="https://static.vecteezy.com/system/resources/thumbnails/015/396/178/small/dark-background-with-futuristic-orange-lines-color-combination-vector.jpg" selected>Background 
+   12</option>
+     <option value="https://t4.ftcdn.net/jpg/06/73/79/99/360_F_673799995_3O0JorZ9EE6QkAfZnedqO9T4ibJo84fK.jpg" selected>Background 
+   13</option>
+   
+    <option value="https://static.vecteezy.com/system/resources/thumbnails/046/157/678/small/abstract-white-and-wave-orange-yellow-background-with-space-vector.jpg" selected>Background 
+   14</option>
+    <option value="https://static.vecteezy.com/system/resources/thumbnails/025/685/644/small/abstract-orange-and-white-background-vector.jpg" selected>Background 
+   15</option>
+     <option value="https://media.istockphoto.com/id/1387073187/vector/orange-vector-cover-wallpaper.jpg?s=612x612&w=0&k=20&c=c-mVdVrioq3C4kcLxk4Y-bltcCUv3z0l5SzaaerfC-A=" selected>Background 
+   16</option>
+    </select>
+
+    <button id="generateBtn"><i class="fa-solid fa-print"></i> Print card</button>
+  
+<div id="cardContainer" class="card-container">
+ 
+    <button id="backBtn" class="back-btn">Back</button>
+    <div class="card-preview">
+        <canvas id="cardCanvas" width="1000" height="600"></canvas>
+     
+    </div>
+     <button id="downloadBtn">Download<i class="fa-solid fa-download"><br><br></i></button> 
+             <button id="addToCartBtn" class="rectangle-button">Add to cart <i class="fa-solid fa-cart-plus"></i></button>
+                     <div class="overlay" id="overlay"></div>
+    <div id="cartAlert">
+        <p>Item added to cart!</p>
+
+    </div>
+   
+</div>
+
+  <script>
+    // Get elements
+    const generateBtn = document.getElementById('generateBtn');
+    const backBtn = document.getElementById('backBtn');
+    const cardContainer = document.getElementById('cardContainer');
+
+    // Show canvas on "Generate" button click
+    generateBtn.addEventListener('click', () => {
+        cardContainer.classList.add('active'); // Slide in the canvas
+    });
+
+    // Hide canvas on "Back" button click
+    backBtn.addEventListener('click', () => {
+        cardContainer.classList.remove('active'); // Slide out the canvas
+    });
+</script>
+    <!-- Crop Modal -->
+    <div class="overlay" id="overlay"></div>
+    <div class="modal" id="cropModal">
+        <h3>Crop Your Image</h3>
+        <img id="cropImage">
+        <button id="cropBtn">Crop & Upload</button>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
+  import { getStorage, ref as storageRef, uploadBytesResumable, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-storage.js";
+  import { getDatabase, set, get, ref as dbRef } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-database.js";
+  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyBDrzrgLslaJvnXbo1e90irCEtdcm9ZsCU",
+    authDomain: "logins-13661.firebaseapp.com",
+    databaseURL: "https://logins-13661-default-rtdb.firebaseio.com",
+    projectId: "logins-13661",
+    storageBucket: "logins-13661.appspot.com",
+    messagingSenderId: "451535349483",
+    appId: "1:451535349483:web:d3c9867fd2bffbbdca40ae",
+    measurementId: "G-EWZC4FFTTG"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const storage = getStorage(app);
+  const database = getDatabase(app);  
+  const auth = getAuth();
+
+        let uploadedImage = null; // For profile photo
+        let uploadedBgImage = null; // For background photo
+        let selectedBgImage = null; // For selected background image from dropdown
+        let cropper;
+        let croppingTarget = '';
+
+        // Variables for touch gestures
+        let photoScale = 1; // Initial scale of the photo
+        let photoX = 260; // Initial X position of the photo
+        let photoY = 50; // Initial Y position of the photo
+        let startTouchDistance = 0; // For pinch-to-zoom
+        let startTouchX = 0; // For touch move
+        let startTouchY = 0; // For touch move
+
+    const icons = {
+    whatsapp: "https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg",
+    facebook: "https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg",
+    instagram: "https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png",
+    phone: "https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6/svgs/solid/phone.svg", // Example phone icon
+    email: "https://cdn-icons-png.flaticon.com/512/561/561127.png", // Example email icon
+    address: "https://cdn-icons-png.flaticon.com/512/684/684908.png", // Example address icon
+    website: "https://cdn-icons-png.flaticon.com/512/1006/1006771.png" // Example website icon
+};
+
+        const iconImages = {};
+        for (let key in icons) {
+            iconImages[key] = new Image();
+            iconImages[key].crossOrigin = "anonymous";
+            iconImages[key].src = icons[key];
+        }
+
+        // Function to detect if a color is dark or light
+        function isDarkColor(r, g, b) {
+            // Calculate luminance using the formula for relative luminance
+            const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
+            return luminance < 0.5; // If luminance is less than 0.5, it's dark
+        }
+
+        // Function to get the dominant color from an image
+        function getDominantColor(image) {
+            const canvas = document.createElement("canvas");
+            const ctx = canvas.getContext("2d");
+            canvas.width = 1;
+            canvas.height = 1;
+            ctx.drawImage(image, 0, 0, 1, 1);
+            const [r, g, b] = ctx.getImageData(0, 0, 1, 1).data;
+            return { r, g, b };
+        }
+
+        // Function to set font color based on background
+        function setFontColorBasedOnBackground(image) {
+            const { r, g, b } = getDominantColor(image);
+            const fontColorInput = document.getElementById("fontColor");
+            if (isDarkColor(r, g, b)) {
+                fontColorInput.value = "#ffffff"; // White font for dark background
+            } else {
+                fontColorInput.value = "#000000"; // Black font for light background
+            }
+        }
+
+        // Function to open the cropper
+        function openCropper(event, target) {
+            croppingTarget = target;
+            const file = event.target.files[0];
+            if (file) {
+                const objectURL = URL.createObjectURL(file);
+                const cropImage = document.getElementById("cropImage");
+                cropImage.src = objectURL;
+                document.getElementById("overlay").style.display = "block";
+                document.getElementById("cropModal").style.display = "block";
+
+                setTimeout(() => {
+                    if (cropper) cropper.destroy();
+                    cropper = new Cropper(cropImage, {
+                        aspectRatio: croppingTarget === 'photo' ? 1 : 16 / 9,
+                        viewMode: 1
+                    });
+                }, 100);
+            }
+        }
+
+        // Event listeners for file inputs
+        document.getElementById("photo").addEventListener("change", function(event) {
+            openCropper(event, 'photo');
+        });
+
+        document.getElementById("uploadBg").addEventListener("change", function(event) {
+            openCropper(event, 'bg');
+        });
+
+        // Crop button handler
+        document.getElementById("cropBtn").addEventListener("click", function() {
+            if (cropper) {
+                const canvas = cropper.getCroppedCanvas({ width: croppingTarget === 'photo' ? 200 : 350, height: croppingTarget === 'photo' ? 200 : 200 });
+                const img = new Image();
+                img.src = canvas.toDataURL("image/png");
+                
+                if (croppingTarget === 'photo') {
+                    uploadedImage = img;
+                    document.getElementById("photoPreview").innerHTML = `<img src="${img.src}" alt="Profile Photo">`;
+                } else {
+                    uploadedBgImage = img;
+                    document.getElementById("bgPreview").innerHTML = `<img src="${img.src}" alt="Background Image">`;
+                    setFontColorBasedOnBackground(img); // Set font color based on the new background
+                }
+                generateCard();
+
+                document.getElementById("overlay").style.display = "none";
+                document.getElementById("cropModal").style.display = "none";
+            }
+        });
+        // Generate card button handler
+        document.getElementById("generateBtn").addEventListener("click", generateCard);
+
+        // Download card button handler
+        document.getElementById("downloadBtn").addEventListener("click", function () {
+            setTimeout(downloadCard, 500);
+        });
+
+
+function generateCard() {
+    const canvas = document.getElementById("cardCanvas");
+    const ctx = canvas.getContext("2d");
+
+    // Increase resolution by scaling
+    const scaleFactor = 2; // You can adjust this as needed
+    const baseWidth = 500; // Base width of the canvas
+    const baseHeight = 300; // Base height of the canvas
+    canvas.width = baseWidth * scaleFactor;
+    canvas.height = baseHeight * scaleFactor;
+    ctx.scale(scaleFactor, scaleFactor);
+
+    const company = document.getElementById("company").value || "Tech Corp";
+    const name = document.getElementById("name").value || "John Doe";
+    const title = document.getElementById("title").value || "Web Developer";
+    const phone = document.getElementById("phone").value || "";
+    const email = document.getElementById("email").value || "";
+    const website = document.getElementById("website").value || "";
+    const address = document.getElementById("address").value || "";
+    const facebook = document.getElementById("facebook").value || "";
+    const whatsapp = document.getElementById("whatsapp").value || "";
+    const instagram = document.getElementById("instagram").value || "";
+    const bgColor = document.getElementById("bgColor").value;
+    const fontColor = document.getElementById("fontColor").value;
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    // Draw background image or color
+    if (uploadedBgImage && uploadedBgImage.complete) {
+        drawBackgroundImage(ctx, uploadedBgImage, baseWidth, baseHeight);
+    } else if (selectedBgImage && selectedBgImage.complete) {
+        drawBackgroundImage(ctx, selectedBgImage, baseWidth, baseHeight);
+    } else {
+        ctx.fillStyle = bgColor;
+        ctx.fillRect(0, 0, baseWidth, baseHeight);
+    }
+
+    ctx.fillStyle = fontColor;
+    ctx.font = "bold 18px Arial";
+    ctx.fillText(company, 20, 25);
+    ctx.beginPath();
+    ctx.moveTo(20, 35);
+    ctx.lineTo(330, 35);
+    ctx.strokeStyle = fontColor;
+    ctx.stroke();
+
+    // Draw name and title with bold text
+    ctx.font = "bold 14px Arial";
+    ctx.fillText(name, 20, 60); // Name position
+    ctx.font = "bold italic 12px Arial";
+    ctx.fillText(title, 20, 75); // Title position (directly below name)
+
+    // Draw icons for phone, email, address, and website
+    let iconY = 90; // Start icons below the title
+    const iconSize = 15;
+    const iconSpacing = 20;
+
+    function drawIcon(icon, text, y) {
+        if (text.trim() !== "") { // Only draw if text is not empty
+            if (iconImages[icon].complete) {
+                ctx.drawImage(iconImages[icon], 20, y, iconSize, iconSize);
+            }
+            ctx.font = "bold 12px Arial"; // Set text to bold
+            ctx.fillText(text, 40, y + 12); // Adjust text position
+            return true; // Icon and text were drawn
+        }
+        return false; // Icon and text were not drawn
+    }
+
+    // Draw icons only if the corresponding input is not empty
+    if (drawIcon("phone", phone, iconY)) iconY += iconSpacing;
+    if (drawIcon("email", email, iconY)) iconY += iconSpacing;
+    if (drawIcon("address", address, iconY)) iconY += iconSpacing;
+    if (drawIcon("website", website, iconY)) iconY += iconSpacing;
+
+    if (uploadedImage && uploadedImage.complete) {
+        // Draw the photo with scaling and positioning
+        const photoWidth = 100 * photoScale;
+        const photoHeight = 100 * photoScale;
+        ctx.save(); // Save the current canvas state
+        ctx.translate(photoX + photoWidth / 2, photoY + photoHeight / 2); // Move the origin to the center of the image
+        ctx.scale(photoScale, photoScale); // Apply scaling
+        ctx.drawImage(uploadedImage, 50, 1, 100, 100); // Draw the image centered
+        ctx.restore(); // Restore the canvas state
+    }
+
+    // Draw social media icons
+    let socialIconY = iconY + 55; // Adjust spacing after the last icon
+    let startX = 20;
+
+    function drawSocialIcon(icon, text, x) {
+        if (text.trim() !== "") { // Only draw if text is not empty
+            if (iconImages[icon].complete) {
+                ctx.drawImage(iconImages[icon], x, socialIconY - 12, iconSize, iconSize);
+            }
+            ctx.font = "bold 12px Arial"; // Set text to bold
+            ctx.fillText(text, x + 20, socialIconY);
+            return true; // Icon and text were drawn
+        }
+        return false; // Icon and text were not drawn
+    }
+
+    // Draw social media icons only if the corresponding input is not empty
+    if (drawSocialIcon("whatsapp", whatsapp, startX)) startX += 120;
+    if (drawSocialIcon("facebook", facebook, startX)) startX += 110;
+    if (drawSocialIcon("instagram", instagram, startX)) startX += 110;
+}
+
+// Helper function to draw the background image to fill the canvas completely
+function drawBackgroundImage(ctx, image, baseWidth, baseHeight) {
+    const imageAspectRatio = image.width / image.height;
+    const canvasAspectRatio = baseWidth / baseHeight;
+
+    let drawWidth, drawHeight, offsetX, offsetY;
+
+    if (imageAspectRatio > canvasAspectRatio) {
+        // Image is wider than the canvas
+        drawHeight = baseHeight;
+        drawWidth = image.width * (baseHeight / image.height);
+        offsetX = (baseWidth - drawWidth) / 2;
+        offsetY = 0;
+    } else {
+        // Image is taller than the canvas
+        drawWidth = baseWidth;
+        drawHeight = image.height * (baseWidth / image.width);
+        offsetX = 0;
+        offsetY = (baseHeight - drawHeight) / 2;
+    }
+
+    // Draw the image to fill the canvas completely
+    ctx.drawImage(image, offsetX, offsetY, drawWidth, drawHeight);
+}
+        // Function to download the card
+        function downloadCard() {
+            const canvas = document.getElementById("cardCanvas");
+            const link = document.createElement("a");
+            link.download = "business_card.png";
+          link.href = canvas.toDataURL("image/png", 1.0); // 1.0 ensures max quality
+
+            link.click();
+        }
+
+        // Event listener for background image dropdown
+        document.getElementById("bgImage").addEventListener("change", function() {
+            const selectedBgUrl = this.value;
+            if (selectedBgUrl) {
+                selectedBgImage = new Image();
+                selectedBgImage.crossOrigin = "anonymous";
+                selectedBgImage.src = selectedBgUrl;
+                selectedBgImage.onload = function() {
+                    document.getElementById("bgPreview").innerHTML = `<img src="${selectedBgUrl}" alt="Background Image">`;
+                    setFontColorBasedOnBackground(selectedBgImage); // Set font color based on the new background
+                    generateCard(); // Regenerate the card once the image is loaded
+                };
+            } else {
+                selectedBgImage = null;
+                document.getElementById("bgPreview").innerHTML = "<span>Background Preview</span>";
+                generateCard(); // Regenerate the card if no image is selected
+            }
+            uploadedBgImage = null; // Clear the uploaded background image
+        });
+document.getElementById('addToCartBtn').addEventListener('click', addToCart);
+
+    window.onload = function() {
+    const bgImageSelect = document.getElementById("bgImage");
+    bgImageSelect.value = "https://t3.ftcdn.net/jpg/04/03/11/52/360_F_403115274_z14P5UiqhPQ14ZY2YERroLTjTQaEHuP7.jpg"; // Set default background image URL
+    selectedBgImage = new Image();
+    selectedBgImage.crossOrigin = "anonymous";
+    selectedBgImage.src = bgImageSelect.value;
+    selectedBgImage.onload = function() {
+        document.getElementById("bgPreview").innerHTML = `<img src="${selectedBgImage.src}" alt="Background Image">`;
+        setFontColorBasedOnBackground(selectedBgImage); // Set font color based on the default background
+        generateCard(); // Generate the card with the default background
+    };
+};
+
+        // Add click event listeners to preview images
+        document.getElementById("photoPreview").addEventListener("click", function() {
+            document.getElementById("photo").click();
+        });
+
+        document.getElementById("bgPreview").addEventListener("click", function() {
+            document.getElementById("uploadBg").click();
+        });
+
+        // Add delete button functionality
+        document.getElementById("deletePhotoBtn").addEventListener("click", function() {
+            uploadedImage = null;
+            document.getElementById("photoPreview").innerHTML = "<span>Photo Preview</span>";
+            document.getElementById("deletePhotoBtn").style.display = "none";
+            generateCard();
+        });
+
+        document.getElementById("deleteBgBtn").addEventListener("click", function() {
+            uploadedBgImage = null;
+            document.getElementById("bgPreview").innerHTML = "<span>Background Preview</span>";
+            document.getElementById("deleteBgBtn").style.display = "none";
+            generateCard();
+        });
+        
+  
+let alertTimeout;
+let alertStartTime = 0;
+let alertTimeLeft = 3000; // 3 seconds for the alert to auto-dismiss
+
+
+
+function resumeAlertCountdown() {
+  startAlertTimeout(); // Restart the countdown with the remaining time
+}
+async function addToCart() {
+    try {
+        showCartAlert("Uploading card image...");
+
+        // 🟢 Upload the image only when clicking "Add to Cart"
+        const uploadedImageUrl = await uploadCanvasToFirebase();
+        if (!uploadedImageUrl) {
+            showCartAlert("Failed to upload image.", "fas fa-exclamation-circle");
+            return;
+        }
+
+        const user = auth.currentUser;
+        if (!user) {
+            window.location.href = "login.html";
+            return;
+        }
+
+        const userId = user.uid;
+        const cartRef = dbRef(database, 'carts/' + userId);
+        const snapshot = await get(cartRef);
+        const cartItems = snapshot.exists() ? snapshot.val().cart : [];
+
+        const newItem = {
+            shareableLink: uploadedImageUrl,  // ✅ Use uploaded image URL
+            title: "Business Card",
+            cost: 300,
+            catalogUrl: 'https://yourcataloglink.com',
+            designs: [{ itemImage: uploadedImageUrl }]
+        };
+
+        cartItems.push(newItem);
+        await set(cartRef, { cart: cartItems });
+
+        showCartAlert("Item successfully added to cart!");
+
+    } catch (error) {
+        console.error('Error adding item to cart:', error);
+        showCartAlert("Error adding item to cart.", "fas fa-exclamation-circle");
+    }
+}
+function showCartAlert(message, iconClass = "") {
+  console.log('Displaying cart alert message:', message); // Debugging: Log when cart alert is triggered
+
+  const cartAlert = document.getElementById('cartAlert');
+  const overlay = document.getElementById('overlay');
+
+  if (cartAlert && overlay) {
+    // Add the icon to the message if an icon class is provided
+    const iconHtml = iconClass ? `<i class="${iconClass}"></i> ` : '';
+    cartAlert.innerHTML = iconHtml + message; // Set the message with the icon inside the cart alert
+    cartAlert.style.display = 'block'; // Show the cart alert
+    overlay.style.display = 'block'; // Show the overlay
+
+    // Start the countdown for hiding the alert
+    
+    // Pause the countdown when the user interacts with the overlay or alert
+    
+  } else {
+    console.error('Cart alert or overlay element not found');
+  }
+}
+
+async function uploadCanvasToFirebase() { 
+    return new Promise((resolve, reject) => {
+        const canvas = document.getElementById("cardCanvas");
+
+        canvas.toBlob(async (blob) => {
+            if (!blob) {
+                console.error("❌ Canvas blob creation failed.");
+                reject("Canvas blob creation failed.");
+                return;
+            }
+
+            console.log("📸 Canvas image created, preparing to upload...");
+
+            const storagePath = `images/${Date.now()}.png`;  // Store in /images/
+            const storageReference = storageRef(storage, storagePath);
+            const uploadTask = uploadBytesResumable(storageReference, blob);
+
+            console.log(`🚀 Upload started for: ${storagePath}`);
+
+            uploadTask.on('state_changed',
+                (snapshot) => {
+                    const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                    console.log(`⬆️ Upload progress: ${progress.toFixed(2)}%`);
+                },
+                (error) => {
+                    console.error("❌ Upload failed", error);
+                    reject(error);
+                },
+                async () => {
+                    try {
+                        const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
+                        console.log(`✅ Upload successful! Image URL: ${downloadURL}`);
+                        resolve(downloadURL);
+                    } catch (error) {
+                        console.error("❌ Failed to get download URL", error);
+                        reject(error);
+                    }
+                }
+            );
+        }, 'image/png');
+    });
+}
+    </script>
+   
+</body>
+</html>

@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content=" Experience high-quality personalized products that reflect your unique style. Start personalizing your items today with fum.studio!
+">
+<title>Product Catalog</title>
+
+
+
+          <link rel="stylesheet" href="css/Itempage.css">     
+   <link rel= "Shortcut icon" type="x-icon" href= "https://i.postimg.cc/XqrhcVpD/20240702-095704.png"> 
+   
+      <link rel="stylesheet" href="css/catalog.css
+    ">
+
+        <link href="https://fonts.google.com/share?selection.family=Jersey+25|Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+<link rel= "Shortcut icon" type="x-icon" href= "https://i.postimg.cc/XqrhcVpD/20240702-095704.png "> 
+
+
+  <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9RJSDSSVMM"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-9RJSDSSVMM');
+</script>
+  
+  <!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-MNW5B4W9');</script>
+<!-- End Google Tag Manager -->
+
+      <!-- link pages -->
+            <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+          <script>
+        $(function(){
+            $("#navbar").load("navbar.html");
+        });
+    </script>
+    <script>
+        $(function(){
+            $("#footer").load("footer.html");
+        });
+    </script>
+ <script>
+        $(function(){
+            $("#Whatsapp_button").load("whatsApp_button.html");
+        });
+    </script>
+
+</head>
+<body>
+
+<div class="container">
+
+
+
+    <!-- Nav -->
+    <nav class="main-nav">
+<h1 alt="Microsoft" class="logo">
+<i class="fa fa-chevron-left back-button" aria-hidden="true" onclick="goBack()"></i>
+<script>
+
+function goBack() {
+    window.history.back();
+}
+
+</script>   &nbsp; Order History</h1>
+         <div id="navbar"></div>
+                      <!-- Advertisement Section -->
+
+
+    <a href="cart_page.html" id="cartLink">
+    <div class="cart-container">
+        <i class="fas fa-shopping-cart cart-icon"></i>
+        <span id="totalItemCount" class="item-count">0</span>
+    </div>
+    </a>
+
+      <div class="menu-btn">
+ 
+    <i class="fas fa-bars fa-2x"></i>   </nav> 
+  </div>
+        
+
+
+</div>
+
+    <style>
+
+        .cart-list {
+            margin-top: 20px;
+            display: flex;
+            flex-wrap: wrap;
+
+                                    margin-top: 17%;
+        }
+        .cart-item {
+            display: flex;
+            flex-wrap: wrap;
+            background-color: #f1f1f1;
+            padding: 10px;
+
+            cursor: pointer;
+            transition: background-color 0.3s;
+            text-align: center;
+            width: 360px;
+            margin-left: auto;
+            margin-right: auto;
+
+
+        }
+        .cart-item:hover {
+            background-color: #ddd;
+        }
+        .cart-item img {
+            width: 50px;
+            height: 50px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+        }
+        .cart-item .dates {
+            display: flex;
+            flex-direction: column; /* Stack the dates vertically */
+            align-items: center; /* Center the dates */
+            margin-top: 10px;
+        }
+        .cart-item .dates p {
+            margin: 50px 50px; /* Space out the dates */
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <div id="cartListContainer" class="cart-list">
+        <!-- List of archived cart IDs will appear here -->
+    </div>
+
+
+
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-app.js";
+    import { getDatabase, ref as dbRef, get } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-database.js";
+    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-auth.js";
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyBDrzrgLslaJvnXbo1e90irCEtdcm9ZsCU",
+        authDomain: "logins-13661.firebaseapp.com",
+        databaseURL: "https://logins-13661-default-rtdb.firebaseio.com",
+        projectId: "logins-13661",
+        storageBucket: "logins-13661.appspot.com",
+        messagingSenderId: "451535349483",
+        appId: "1:451535349483:web:d3c9867fd2bffbbdca40ae",
+        measurementId: "G-DWP16WX2H7"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+    const auth = getAuth(app);
+
+    // Check if the user is logged in
+    onAuthStateChanged(auth, (user) => {
+        if (!user) {
+            // If no user is logged in, redirect to login page
+            window.location.href = "login.html"; // Replace with your actual login page URL
+        } else {
+            // Load the archived carts if the user is logged in
+            loadArchivedCarts(user.uid);
+        }
+    });
+
+    // Load the list of archived cart IDs from Firebase
+async function loadArchivedCarts(userId) {
+    const archivedCartsRef = dbRef(db, 'archivedCarts/' + userId);
+    const snapshot = await get(archivedCartsRef);
+
+    const cartListContainer = document.getElementById('cartListContainer');
+    cartListContainer.innerHTML = ''; // Clear previous content
+
+    if (snapshot.exists()) {
+        const archivedCarts = snapshot.val();
+
+        // Convert object to an array and sort by timestamp in descending order (newest first)
+        const sortedCarts = Object.keys(archivedCarts)
+            .map(cartId => ({
+                cartId,
+                timestamp: archivedCarts[cartId].timestamp,
+                ...archivedCarts[cartId]
+            }))
+            .sort((a, b) => {
+                const dateA = new Date(a.timestamp); // Convert the timestamp to Date object
+                const dateB = new Date(b.timestamp); // Convert the timestamp to Date object
+                return dateB - dateA; // Sort in descending order (newest first)
+            });
+
+        // Iterate over the sorted array and create the cart items
+        sortedCarts.forEach(cart => {
+            const cartId = cart.cartId; // Extract the cartId
+            const cartTitle = cart.title; // Extract the cart title
+            const cartTimestamp = cart.timestamp;
+            const cartDesigns = cart.designs || [];
+
+            // Format the timestamp (remove seconds)
+            const formattedDate = formatTimestamp(cartTimestamp);
+
+            // Create the cart item container
+            const cartItem = document.createElement('div');
+            cartItem.classList.add('cart-item');
+
+            // Create the cart item link
+            const cartLink = document.createElement('a');
+            cartLink.href = '#'; // You can update the URL as needed
+
+            // Add the title to the cart item
+            const cartTitleElement = document.createElement('h4');
+            cartTitleElement.textContent = cartTitle || ''; // Display the title
+
+            // Create the cart images container
+            const cartImagesContainer = document.createElement('div');
+            cartImagesContainer.classList.add('cart-images');
+
+            // Add images if there are designs
+            cartDesigns.forEach(design => {
+                const cartImage = document.createElement('img');
+                cartImage.src = design.itemImage || ''; // Use the item image for the design
+                cartImage.alt = 'Design Image';
+                cartImage.classList.add('cart-item-image');
+                cartImagesContainer.appendChild(cartImage);
+            });
+
+            // Append title and images to the cart link
+            cartLink.appendChild(cartTitleElement);
+            cartLink.appendChild(cartImagesContainer);
+
+            // Append the cart link to the cart item
+            cartItem.appendChild(cartLink);
+
+            // Add an event listener for clicking on the cart item
+            cartItem.onclick = () => viewCart(cartId);
+
+            // Append the cart item to the list container
+            cartListContainer.appendChild(cartItem);
+        });
+    } else {
+        cartListContainer.innerHTML = '<p>No archived carts found.</p>';
+    }
+}
+
+// Function to handle the opening of the cart and displaying its details
+async function viewCart(cartId) {
+    const cartRef = dbRef(db, 'archivedCarts/' + cartId);
+    const snapshot = await get(cartRef);
+
+    if (snapshot.exists()) {
+        const cart = snapshot.val();
+        const cartDetailsContainer = document.getElementById('cartDetailsContainer');
+        cartDetailsContainer.innerHTML = ''; // Clear previous content
+
+        // Display the cart title
+        const cartTitleElement = document.createElement('h4');
+        cartTitleElement.textContent = cart.title || 'No title available';
+        cartDetailsContainer.appendChild(cartTitleElement);
+
+        // Display the cart designs (images)
+        const cartImagesContainer = document.createElement('div');
+        cartImagesContainer.classList.add('cart-images');
+        cart.designs.forEach(design => {
+            const cartImage = document.createElement('img');
+            cartImage.src = design.itemImage || ''; // Use the item image for the design
+            cartImage.alt = 'Design Image';
+            cartImage.classList.add('cart-item-image');
+            cartImagesContainer.appendChild(cartImage);
+        });
+
+        cartDetailsContainer.appendChild(cartImagesContainer);
+    } else {
+        alert('Cart not found!');
+    }
+}
+
+    // Function to format the timestamp and remove seconds
+// Function to format the timestamp to "M/D/YYYY, h:mm:ss AM/PM"
+function formatTimestamp(timestamp) {
+    const date = new Date(timestamp); // Convert the timestamp string to a Date object
+
+    // Get the day, month, year, hours, minutes, and seconds
+    const day = date.getDate();
+    const month = date.getMonth() + 1; // Add 1 because months are 0-indexed
+    const year = date.getFullYear();
+    let hours = date.getHours();
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+    const seconds = String(date.getSeconds()).padStart(2, '0');
+    let period = 'AM';
+
+    // Convert 24-hour format to 12-hour format
+    if (hours >= 12) {
+        period = 'PM';
+        if (hours > 12) {
+            hours -= 12; // Convert 13-23 hours to 1-11 PM
+        }
+    } else if (hours === 0) {
+        hours = 12; // Midnight hour should be 12 AM
+    }
+
+    // Return the formatted date as "M/D/YYYY, h:mm:ss AM/PM"
+    return `${month}/${day}/${year}, ${hours}:${minutes}:${seconds} ${period}`;
+}
+    // Function to handle when a user clicks a cart ID
+    function viewCart(cartId) {
+        window.location.href = `http://localhost:7700/viewcart_id.html?cartId=${cartId}`;
+    }
+</script>
+
+<script type="module" src="js/cart.js"></script>
+  <script src="js/main.js"></script>
+ </body>
+</html>

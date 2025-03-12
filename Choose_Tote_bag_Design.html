@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Design Gallery</title>
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            padding: 20px;
+        }
+        .design-container {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin: 10px;
+            padding: 20px;
+            box-sizing: border-box;
+            text-align: center;
+        }
+        .image-wrapper {
+            display: flex;
+            gap: 10px; /* Space between images */
+            justify-content: center;
+            margin-bottom: 15px;
+        }
+        .image-container {
+            position: relative;
+            flex: 1; /* Each image takes equal space */
+        }
+        .image-container img {
+            max-width: 100%;
+            border-radius: 8px;
+        }
+        .image-container .image-text {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: rgba(0, 0, 0, 0.7);
+            color: #fff;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        .design-container h2 {
+            font-size: 24px;
+            margin: 10px 0;
+        }
+        .design-container p {
+            font-size: 16px;
+            color: #555;
+        }
+        .design-container .price {
+            font-size: 20px;
+            color: #333;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        .design-container a {
+            text-decoration: none;
+        }
+        .design-container button {
+            background-color:#575EB3;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .design-container button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Responsive adjustments */
+        /* For small screens (2 by 2) */
+        @media (max-width: 768px) {
+            .design-container {
+                width: calc(50% - 20px); /* 2 designs per row */
+            }
+        }
+
+        /* For desktop screens (3 by 3) */
+        @media (min-width: 769px) {
+            .design-container {
+                width: calc(33.33% - 20px); /* 3 designs per row */
+            }
+        }
+
+        /* For very small screens (1 by 1) */
+        @media (max-width: 480px) {
+            .design-container {
+                width: 100%; /* 1 design per row */
+            }
+            .image-wrapper {
+                flex-direction: column; /* Stack images vertically on very small screens */
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Design 1 -->
+        <div class="design-container">
+            <div class="image-wrapper">
+                <div class="image-container">
+                    <img src="https://firebasestorage.googleapis.com/v0/b/myhost-a7ee9.appspot.com/o/images%2F1.jpg?alt=media&token=13f0dce4-c024-4925-88e4-869589123c30" alt="Design 1 Photo 1">
+                    <div class="image-text">Front design</div>
+                </div>
+                <div class="image-container">
+                    <img src="https://firebasestorage.googleapis.com/v0/b/myhost-a7ee9.appspot.com/o/images%2F2.jpg?alt=media&token=a861e0db-1eb8-430b-b862-8dba242deff4" alt="Design 1 Photo 2">
+                    <div class="image-text">Back design</div>
+                </div>
+            </div>
+            <h2></h2>
+            <p>This is a beautiful design with a modern look. Perfect for any occasion.</p>
+            <p class="price">$99.99</p>
+            <a href="customize-design1.html">
+                <button>Customize <i class="fa-solid fa-paintbrush"></i></button>
+            </a>
+        </div>
+
+        <!-- Design 2 -->
+        <div class="design-container">
+            <div class="image-wrapper">
+                <div class="image-container">
+                    <img src="design2_photo1.jpg" alt="Design 2 Photo 1">
+                    <div class="image-text">Popular</div>
+                </div>
+                <div class="image-container">
+                    <img src="design2_photo2.jpg" alt="Design 2 Photo 2">
+                    <div class="image-text">Limited</div>
+                </div>
+            </div>
+            <h2>Design 2</h2>
+            <p>A classic design that never goes out of style. Ideal for traditional settings.</p>
+            <p class="price">$89.99</p>
+            <a href="customize-design2.html">
+                <button>Customize</button>
+            </a>
+        </div>
+
+        <!-- Design 3 -->
+        <div class="design-container">
+            <div class="image-wrapper">
+                <div class="image-container">
+                    <img src="design3_photo1.jpg" alt="Design 3 Photo 1">
+                    <div class="image-text">Exclusive</div>
+                </div>
+                <div class="image-container">
+                    <img src="design3_photo2.jpg" alt="Design 3 Photo 2">
+                    <div class="image-text">Trending</div>
+                </div>
+            </div>
+            <h2>Design 3</h2>
+            <p>Elegant and sophisticated, this design is perfect for formal events.</p>
+            <p class="price">$109.99</p>
+            <a href="customize-design3.html">
+                <button>Customize</button>
+            </a>
+        </div>
+
+        <!-- Design 4 -->
+        <div class="design-container">
+            <div class="image-wrapper">
+                <div class="image-container">
+                    <img src="design4_photo1.jpg" alt="Design 4 Photo 1">
+                    <div class="image-text">New!</div>
+                </div>
+                <div class="image-container">
+                    <img src="design4_photo2.jpg" alt="Design 4 Photo 2">
+                    <div class="image-text">Hot</div>
+                </div>
+            </div>
+            <h2>Design 4</h2>
+            <p>A minimalist design that focuses on simplicity and functionality.</p>
+            <p class="price">$79.99</p>
+            <a href="customize-design4.html">
+                <button>Customize</button>
+            </a>
+        </div>
+
+        <!-- Design 5 -->
+        <div class="design-container">
+            <div class="image-wrapper">
+                <div class="image-container">
+                    <img src="design5_photo1.jpg" alt="Design 5 Photo 1">
+                    <div class="image-text">New!</div>
+                </div>
+                <div class="image-container">
+                    <img src="design5_photo2.jpg" alt="Design 5 Photo 2">
+                    <div class="image-text">Sale</div>
+                </div>
+            </div>
+            <h2>Design 5</h2>
+            <p>This is a beautiful design with a modern look. Perfect for any occasion.</p>
+            <p class="price">$99.99</p>
+            <a href="customize-design5.html">
+                <button>Customize</button>
+            </a>
+        </div>
+
+        <!-- Design 6 -->
+        <div class="design-container">
+            <div class="image-wrapper">
+                <div class="image-container">
+                    <img src="design6_photo1.jpg" alt="Design 6 Photo 1">
+                    <div class="image-text">Popular</div>
+                </div>
+                <div class="image-container">
+                    <img src="design6_photo2.jpg" alt="Design 6 Photo 2">
+                    <div class="image-text">Limited</div>
+                </div>
+            </div>
+            <h2>Design 6</h2>
+            <p>A classic design that never goes out of style. Ideal for traditional settings.</p>
+            <p class="price">$89.99</p>
+            <a href="customize-design6.html">
+                <button>Customize</button>
+            </a>
+        </div>
+    </div>
+
+</body>
+</html>

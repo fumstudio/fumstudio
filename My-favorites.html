@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liked Pages</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            padding: 20px;
+        }
+        .page {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #fff;
+            text-decoration: none;
+            color: inherit;
+        }
+        .page-name {
+            font-size: 1.2rem;
+            margin: 10px 0;
+        }
+        .page-description {
+            font-size: 0.9rem;
+            color: #666;
+        }
+        .carousel {
+            display: none; /* Initially hidden */
+            position: relative;
+            width: 280px;
+            height: 200px;
+            overflow: hidden;
+            border: 1px solid #ccc;
+        }
+        .carousel img {
+            width: 100%;
+            height: auto;
+            position: absolute;
+            transition: opacity 1s ease-in-out;
+        }
+        .no-liked-pages {
+            font-size: 1.5rem;
+            color: #666;
+            text-align: center;
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Liked Pages</h1>
+    <div id="likedPagesContainer"></div>
+    <div id="noLikedPages" class="no-liked-pages hidden">You have not liked any pages yet.</div>
+
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.13.1/firebase-app.js';
+        import { getDatabase, ref, onValue } from 'https://www.gstatic.com/firebasejs/10.13.1/firebase-database.js';
+        import { getAuth } from 'https://www.gstatic.com/firebasejs/10.13.1/firebase-auth.js';
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyBDrzrgLslaJvnXbo1e90irCEtdcm9ZsCU",
+            authDomain: "logins-13661.firebaseapp.com",
+            databaseURL: "https://logins-13661-default-rtdb.firebaseio.com",
+            projectId: "logins-13661",
+            storageBucket: "logins-13661.appspot.com",
+            messagingSenderId: "451535349483",
+            appId: "1:451535349483:web:d3c9867fd2bffbbdca40ae",
+            measurementId: "G-DWP16WX2H7"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const database = getDatabase(app);
+        const auth = getAuth(app);
+        let userId;
+
+        auth.onAuthStateChanged((user) => {
+            if (user) {
+                userId = user.uid;
+                loadLikedPages();
+            } else {
+                alert("You must be logged in to view liked pages.");
+                window.location.href = 'index.html'; // Redirect to login page
+            }
+        });
+
+        const loadLikedPages = () => {
+            const likedRef = ref(database, `likedPages/${userId}`);
+            onValue(likedRef, (snapshot) => {
+                const data = snapshot.val();
+                const likedPagesContainer = document.getElementById('likedPagesContainer');
+                const noLikedPagesMessage = document.getElementById('noLikedPages');
+                
+                likedPagesContainer.innerHTML = ''; // Clear previous entries
+
+                if (!data || Object.keys(data).length === 0) {
+                    // No liked pages
+                    noLikedPagesMessage.classList.remove('hidden');
+                } else {
+                    noLikedPagesMessage.classList.add('hidden'); // Hide the no liked pages message
+                    for (const pageId in data) {
+                        const pageData = data[pageId];
+                        const pageElement = document.createElement('a'); // Create anchor tag for the page
+                        pageElement.className = 'page'; // Set class
+                        pageElement.href = pageData.link; // Set href to page link
+                        pageElement.target = '_blank'; // Open link in new tab
+
+                        // Create carousel for the page
+                        const carousel = document.createElement('div');
+                        carousel.className = 'carousel';
+                        const images = pageData.images || []; // Get images array
+                        images.forEach((image, index) => {
+                            const img = document.createElement('img');
+                            img.src = image;
+                            img.alt = `${pageData.name} image ${index + 1}`;
+                            img.style.opacity = index === 0 ? '1' : '0'; // Set first image visible
+                            carousel.appendChild(img);
+                        });
+                        pageElement.appendChild(carousel);
+
+                        const nameElement = document.createElement('div');
+                        nameElement.className = 'page-name';
+                        nameElement.textContent = pageData.name;
+                        pageElement.appendChild(nameElement);
+
+                        const descriptionElement = document.createElement('div');
+                        descriptionElement.className = 'page-description';
+                        descriptionElement.textContent = pageData.description;
+                        pageElement.appendChild(descriptionElement);
+
+                        likedPagesContainer.appendChild(pageElement);
+
+                        // Start carousel for this page
+                        startCarousel(carousel);
+                    }
+                }
+            });
+        };
+
+        const startCarousel = (carousel) => {
+            const images = carousel.querySelectorAll('img');
+            if (images.length === 0) return;
+
+            carousel.style.display = 'block'; // Show carousel
+            let currentImageIndex = 0;
+            setInterval(() => {
+                images[currentImageIndex].style.opacity = '0'; // Fade out current image
+                currentImageIndex = (currentImageIndex + 1) % images.length; // Move to the next image
+                images[currentImageIndex].style.opacity = '1'; // Fade in next image
+            }, 3000); // Change image every 3 seconds
+        };
+    </script>
+</body>
+</html>

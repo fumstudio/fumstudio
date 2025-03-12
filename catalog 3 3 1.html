@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content=" Experience high-quality personalized products that reflect your unique style. Start personalizing your items today with fum.studio!
+">
+<title>Product Catalog</title
+  <link rel="stylesheet" href="style.css
+    ">
+   <link rel="stylesheet" href="css/catalog.css">
+      <link rel="stylesheet" href="css/Product.css
+    ">
+          <link rel="stylesheet" href="css/Itempage.css">     
+   <link rel= "Shortcut icon" type="x-icon" href= "https://i.postimg.cc/XqrhcVpD/20240702-095704.png"> 
+   
+      <link rel="stylesheet" href="css/catalog.css
+    ">
+          <link rel="stylesheet" href="css/currency.css
+    ">
+        <link href="https://fonts.google.com/share?selection.family=Jersey+25|Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+<link rel= "Shortcut icon" type="x-icon" href= "https://i.postimg.cc/XqrhcVpD/20240702-095704.png "> 
+
+
+  <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9RJSDSSVMM"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-9RJSDSSVMM');
+</script>
+  
+  <!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-MNW5B4W9');</script>
+<!-- End Google Tag Manager -->
+
+      <!-- link pages -->
+            <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+          <script>
+        $(function(){
+            $("#navbar").load("navbar.html");
+        });
+    </script>
+    <script>
+        $(function(){
+            $("#footer").load("footer.html");
+        });
+    </script>
+ <script>
+        $(function(){
+            $("#Whatsapp_button").load("whatsApp_button.html");
+        });
+    </script>
+<style>
+  ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.profile-card {
+  position: relative;
+  width: 20em;
+
+}
+
+.profile-card h1 {
+  font-size: 1.5rem;
+}
+.profile-card p {
+  margin: 0.2em 0;
+  color: #b8b8b8;
+}
+.profile-card h2 {
+  margin-top: 16em;
+  margin-bottom: 0.8em;
+  font-size: 1.2rem;
+}
+.profile-card .popular + .popular {
+  margin-top: 1em;
+}
+.profile-card .popular {
+  position: relative;
+  cursor: pointer;
+  z-index: 0;
+}
+
+.profile-card .popular .content h3 {
+  font-size: 0.9rem;
+  color: #fff;
+  text-align: center;
+}
+.
+.profile-card .popular .content ul {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.2rem;
+}
+.profile-card .popular .content ul li i {
+  color: #d9d9d9;
+  font-size: 0.565rem;
+}
+.profile-card .menu-btn {
+  background: none;
+  border: none;
+  font-size: 1.3rem;
+  cursor: pointer;
+  position: absolute;
+  top: 1.6em;
+  right: 1em;
+  z-index: 556;
+}
+.profile-card .more {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 0;
+  z-index: 555;
+  overflow: hidden;
+  color: #fff;
+  padding: 0 1.5em;
+  transition: 0.5s ease-in;
+  background: rgba(0, 0, 0, 0.8);
+}
+.profile-card .more .tags {
+  display: flex;
+  align-items: center;
+  gap: 0.625em;
+  flex-wrap: wrap;
+}
+.profile-card .more .tags .tag {
+  background: #5e5e5e;
+  padding: 0.3125em 0.625em;
+  border-radius: 0.3125em;
+  font-size: 0.8rem;
+  text-transform: capitalize;
+}
+.profile-card .more h2 {
+  margin: 1em 0 0.5em;
+}
+.profile-card .more p {
+  margin: 1.5em 0;
+  color: #d6d6d6;
+  line-height: 1.4;
+}
+.profile-card .more .icons {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 1em;
+}
+.profile-card .more .icons svg {
+  width: 1.125rem;
+  color: #fff;
+}
+
+.profile-card ::-webkit-scrollbar {
+  width: 8px;
+}
+
+.profile-card ::-webkit-scrollbar-track {
+  background: #1e1e1e;
+}
+
+.profile-card ::-webkit-scrollbar-thumb {
+  background: #fff;
+}
+
+.profile-card ::-webkit-scrollbar-thumb:hover {
+  background: #bcbcbc;
+}
+
+.popular.opened img {
+  height: 12rem;
+}
+.popular.opened .content p {
+  height: auto;
+  margin-top: 10px;
+}
+
+.menu-btn.opened {
+  color: #fff;
+  background: #111;
+  padding: 0.2em 0.4em;
+}
+
+.overlay.opened {
+  height: 100%;
+}
+
+.more.opened {
+  padding: 4em 1.5em 1.5em 1.5em;
+  height: 100%;
+  overflow-y: scroll;
+}
+
+.wrapper .card.opened {
+  animation-play-state: paused;
+}
+
+.wrapper .outer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.wrapper .card {
+  background: #fff;
+  width: 140px;
+  opacity: 0;
+  pointer-events: none;
+  position: absolute;
+  justify-content: space-between;
+  box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.1);
+  animation: animate 15s linear infinite;
+  animation-delay: calc(3s * var(--delay));
+}
+.wrapper .card:last-child {
+  animation-delay: calc(-3s * var(--delay));
+}
+.wrapper .card a {
+  text-decoration: none;
+  padding: 7px 18px;
+  border-radius: 25px;
+  color: #fff;
+  background: linear-gradient(to bottom, #bea2e7 0%, #86b7e7 100%);
+  transition: all 0.3s ease;
+}
+.wrapper .card a:hover {
+  transform: scale(0.94);
+}
+.wrapper .card .img {
+  height: 16em;
+  width: 11em;
+  position: absolute;
+  top: 1.5em;
+  right: 5em;
+  border-radius: 1.2em;
+  box-shadow: 2px 4px 18px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+}
+.wrapper .card .img img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+
+.outer:hover .card {
+  animation-play-state: paused;
+}
+
+@keyframes animate {
+  0% {
+    opacity: 0;
+    transform: translateX(100%) scale(0.5);
+  }
+  5%, 20% {
+    opacity: 0.4;
+    transform: translateX(100%) scale(0.7);
+    pointer-events: none;
+  }
+  25%, 40% {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateX(0%) scale(1);
+  }
+  45%, 60% {
+    opacity: 0.4;
+    transform: translateX(-100%) scale(0.7);
+    pointer-events: none;
+  }
+  65%, 100% {
+    opacity: 0;
+    transform: translateX(-100%) scale(0.5);
+  }
+}
+.Photo-cards-container{
+  margin-top: 80px;
+}
+#footer{
+  margin-top: 100px;
+}
+
+</style>
+
+</head>
+<body>
+
+<div class="container">
+
+
+
+    <!-- Nav -->
+    <nav class="main-nav">
+<h1 alt="Microsoft" class="logo">
+                <i class="gift fas fa-gift"></i>&nbsp; Picmoments</h1>
+         <div id="navbar"></div>
+                      <!-- Advertisement Section -->
+      <a href="cart_page.html" id="cartLink">
+  <i class="fa fa-search" aria-hidden="true"></i>
+    </a>   
+    
+    <a href="cart_page.html" id="cartLink">
+    <div class="cart-container">
+        <i class="fas fa-shopping-cart cart-icon"></i>
+        <span id="totalItemCount" class="item-count">0</span>
+    </div>
+    </a>
+
+      <div class="menu-btn">
+ 
+    <i class="fas fa-bars fa-2x"></i>
+  </div>
+        
+
+
+</div>
+  <div id="ad_jewellery"></div>
+
+<div class='Photo-cards-container'>
+
+   
+ <div class="label-with-margin">
+<!-- partial:index.partial.html -->
+<div class="profile-card">
+  <div class="wrapper">
+    <div class="outer">
+      <div class="card" style="--delay:-1;">
+        <div class="content">
+          <div class="img">
+            <img src="https://firebasestorage.googleapis.com/v0/b/myhost-a7ee9.appspot.com/o/images%2FDSC09889%20(1)_103725.jpg?alt=media&token=003b03c1-d424-441a-8061-ad2caa5b2ff6" alt="">
+          </div>
+        </div>
+      </div>
+      <div class="card" style="--delay:0;">
+        <div class="content">
+          <div class="img">
+            <img src="https://firebasestorage.googleapis.com/v0/b/myhost-a7ee9.appspot.com/o/images%2FScreenshot_20250215-223839.jpg?alt=media&token=40aec9eb-c9b5-4130-b8a1-ebb524c665bb" alt="">
+          </div>
+        </div>
+      </div>
+      <div class="card" style="--delay:1;">
+        <div class="content">
+          <div class="img">
+            <img src="https://firebasestorage.googleapis.com/v0/b/myhost-a7ee9.appspot.com/o/images%2FIMG_20250214_083358_163~2.jpg?alt=media&token=a9aa4f6d-46d5-4063-b411-9db9493fbc43" alt="">
+          </div>
+        </div>
+      </div>
+      <div class="card" style="--delay:2;">
+        <div class="content">
+          <div class="img">
+            <img src="https://firebasestorage.googleapis.com/v0/b/myhost-a7ee9.appspot.com/o/images%2F1735375688568.jpg?alt=media&token=9bb71b82-d763-4c95-a20a-f21ccf79db2b" alt="">  </div>
+        </div>
+
+      </div>
+      <div class="card" style="--delay:2;">
+        <div class="content">
+          <div class="img">
+            <img src="https://firebasestorage.googleapis.com/v0/b/myhost-a7ee9.appspot.com/o/images%2FScreenshot_20250215-225144.jpg?alt=media&token=a10db783-090e-447f-b422-e958b7b58a0a" alt="">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <h2>Keep the best moments</h2>
+     </div>
+  </div>
+   <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #333;
+            color: #000000;
+     }
+        header {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            font-weight: bold;
+
+        }
+
+
+.gallery {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* Creates 3 equal columns */
+    gap: 20px; /* Space between grid items */
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 10px;
+    box-sizing: border-box;
+
+}
+.gallery-item {
+    display: flex;
+    flex-direction: column; /* Ensures the image and caption are stacked */
+    align-items: center; /* Centers the caption below the image */
+    width: 250px;
+    height: auto; /* Allow height to adjust dynamically */
+    flex-shrink: 0;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    background-color: floralwhite;
+    scroll-snap-align: start;
+    text-align: center;
+                 margin-bottom: 40%; /* Space between image and text */ 
+}
+/* For small screens, switch to a grid layout */
+@media (max-width: 768px) {
+    .gallery {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* Creates 3 equal columns */
+    gap: 20px; /* Space between grid items */
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 10px;
+    box-sizing: border-box;
+    }
+}
+
+
+.gallery-item img {
+    width: 100%;
+    aspect-ratio: 1 / 1; /* Forces a 1:1 aspect ratio */
+    object-fit: cover;
+    transition: transform 0.3s ease;
+    border-radius: 10px;
+
+}
+
+        .gallery-item:hover img {
+            transform: scale(1.1); /* Zoom effect on hover */
+        }
+
+
+.caption {
+    position: relative; /* No absolute positioning */
+    bottom: auto;
+    left: auto;
+    font-size: 1.2rem;
+    font-weight: bold;
+
+
+    text-align: center;
+    margin-top: 10px; /* Space between image and text */
+               margin-bottom: 100%; /* Space between image and text */ 
+    color: #000000 ;
+
+}
+
+
+        .gallery-item:hover img {
+            transform: scale(1.1); /* Zoom effect on hover */
+        }
+
+
+
+
+
+        /* Media query for smaller screens */
+        @media (max-width: 600px) {
+            header {
+                font-size: 1.5rem;
+            }
+
+            .gallery {
+                gap: 10px; /* Reduce gap on small screens */
+            }
+
+            .gallery-item {
+                width: 100px; /* Smaller image size for small screens */
+                height: 100px; /* Keep images square */
+            }
+
+            .caption {
+                font-size: 12px;
+            }
+        }
+    </style>
+
+
+<div class="gallery">
+    <div class="gallery-item">
+        <a href="https://www.example.com/1">
+            <img src="https://www.dpreview.com/files/p/articles/6269402639/canon_eosr8.jpeg" alt="Luxury Image 1">
+        </a>
+        <div class="caption">Book Media</div>
+    </div>
+    <div class="gallery-item">
+        <a href="https://www.example.com/2">
+            <img src="https://live.staticflickr.com/65535/49221403106_136e32162d_b.jpg" alt=" Image 2">
+        </a>
+        <div class="caption">PicMoments</div>
+    </div>
+    <div class="gallery-item">
+        <a href="https://www.example.com/3">
+            <img src="https://www.vitacost.com/images/modules/FreeShipping_525x525.png" alt=" Image 3">
+        </a>
+        <div class="caption"><span style="color:green;">Free Delivery</span>
+        10-12 business Days 
+        </div>
+    </div>
+            <div class="gallery-item">
+        <a href="https://www.example.com/4">
+            <img src="https://firebasestorage.googleapis.com/v0/b/myhost-a7ee9.appspot.com/o/images%2Fdf9fb4bc-9517-43e1-b1f6-96ed69f436e3.jpg?alt=media&token=cce05e61-69ab-4099-a5e1-150f79730687" alt=" Image 6">
+        </a>
+        <div class="caption">Click here to test your image</div>
+    </div>
+    <div class="gallery-item">
+        <a href="https://www.example.com/4">
+            <img src="https://ilysm.co.za/cdn/shop/products/be7ff04e-c5c4-4c62-a797-3fa5a6f5e125_2048x.jpg?v=1669222268" alt=" Image 4">
+        </a>
+        <div class="caption">Customize online,<span style="color:red;">step by step</span> </div>
+    </div>
+     <div class="gallery-item">
+        <a href="https://www.example.com/4">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/c/cd/Facebook_logo_%28square%29.png" alt=" Image 5">
+        </a>
+        <div class="caption">Check out our latest post!</div>
+    </div>
+
+</div>
+
+  
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+        }
+
+        .container {
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        .search input {
+            width: 300px;
+            padding: 8px;
+            margin: 10px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .catalog {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .catalog .item {
+            background-color: #fff;
+            padding: 5px;
+            width: 23%;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: transform 0.3s ease;
+            position: relative;
+        }
+
+        .catalog .item img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        .catalog .item:hover {
+            transform: scale(1.05);
+        }
+
+        /* Green color for free shipping */
+        .free-shipping {
+            color: green;
+            font-weight: bold;
+        }
+
+        /* Red color for original price */
+        .original-price {
+            color: red;
+            text-decoration: line-through;
+            font-weight: bold;
+        }
+
+        /* Flex container to align price and original price side by side */
+        .price-container {
+            display: flex;
+            gap:2px;
+            align-items: center;
+            margin-top: 10px;
+        }
+
+        .price-container p {
+            margin: 0;
+        }
+
+        @media (max-width: 768px) {
+            .catalog .item {
+                width: 45%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .catalog .item {
+                width: 45%;
+            }
+
+            .search input {
+                width: 80%;
+            }
+        }
+
+        /* Style for the link itself, remove default underline and color */
+        a.item-link {
+            text-decoration: none; /* Remove underline */
+            color: inherit; /* Use the inherited color, no change in text color */
+            display: block; /* Make the link behave like a block-level element */
+        }
+
+        /* Ensure the content inside the link is styled as needed */
+        .item-link .item-content {
+            display: block;
+            background-color: #fff;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        /* Hover effect for the item container */
+        .item-link:hover .item-content {
+            transform: scale(1.05); /* Scale the item up on hover */
+        }
+
+        /* Styling for the item image */
+        .item-link img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+        .pricing{  
+    color:#E58A52 ;
+              font-weight: bold;
+     }
+         .video-feature-box {
+        max-width: 600px;
+        margin: 0 auto;
+        
+        border-radius: 5px;
+        padding: 20px;
+        margin-top: -40px;
+        margin-bottom: 10px;
+    }
+    @media (min-width: 768px) {
+      .video-feature-box {
+        max-width: 1000px;
+    }
+        }
+
+    .video-feature-box h2 {
+        font-size: 24px;
+        margin-bottom: 10px;
+    }
+    .video-feature-box iframe {
+        width: 100%;
+        height: 200px;
+        border: none;
+        border-radius: 5px;
+    }
+        @media (min-width: 768px) {
+    .video-feature-box iframe  {
+      height: 500px;
+    }
+        }
+    .video-feature-box p {
+        font-size: 16px;
+    }
+    </style>
+<script type="module">
+    // Import Firebase modules
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-app.js";
+    import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-database.js";
+    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-auth.js";
+
+    // Firebase Configuration
+    const firebaseConfig = {
+        apiKey: "AIzaSyBDrzrgLslaJvnXbo1e90irCEtdcm9ZsCU",
+        authDomain: "logins-13661.firebaseapp.com",
+        databaseURL: "https://logins-13661-default-rtdb.firebaseio.com",
+        projectId: "logins-13661",
+        storageBucket: "logins-13661.appspot.com",
+        messagingSenderId: "451535349483",
+        appId: "1:451535349483:web:d3c9867fd2bffbbdca40ae",
+        measurementId: "G-DWP16WX2H7"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+    const auth = getAuth(app);
+
+    // Elements for catalog display
+    const catalogContainer = document.getElementById("catalog-container");
+
+    // Listen for changes in the database and update catalog
+    function loadCatalog() {
+        const catalogRef = ref(db, "catalog/");
+        onValue(catalogRef, (snapshot) => {
+            catalogContainer.innerHTML = ''; // Clear previous content
+            const catalogData = snapshot.val();
+            if (catalogData) {
+                Object.entries(catalogData).forEach(([key, item]) => {
+                    const itemElement = document.createElement("div");
+                    itemElement.classList.add("catalog-item", "item");
+                    itemElement.innerHTML = `
+<a href="${item.link}" target="_blank" class="item-link">
+            <img src="${item.image}" alt="${item.name}" width="100">
+            <h3>${item.name}</h3>
+            <p class="price-container">
+                      <span class="pricing price" data-price="${item.price}">ZAR ${item.price.toFixed(2)}</span>      
+                <span class="original-price price" data-price="${item.originalPrice}">
+                    ${item.originalPrice && !isNaN(parseFloat(item.originalPrice)) ? 'ZAR ' + parseFloat(item.originalPrice).toFixed(2) : ''}
+                </span>
+
+            </p>
+
+            <p>${item.details}</p>
+            ${item.freeShipping ? '<p class="free-shipping">Free Shipping</p>' : ''}
+        </a>`;
+                    catalogContainer.appendChild(itemElement);
+                });
+            }
+        });
+    }
+
+    // Check authentication state and load catalog
+    onAuthStateChanged(auth, (user) => {
+        if (user) {
+            console.log("User logged in:", user.email);
+        } else {
+            console.log("No user logged in.");
+        }
+        loadCatalog();
+    });
+
+    // Dynamically add the currency converter script if not already added
+    if (!document.querySelector('script[src="currency-converter.js"][type="module"]')) {
+        var script = document.createElement('script');
+        script.src = 'currency-converter.js';
+        script.type = 'module'; // Set the type to "module"
+        document.body.appendChild(script);
+    }
+</script>
+
+
+
+    
+    <!-- Search Input -->
+<br><br>
+<div class='video-feature-box' id='videoFeatureBox '>
+    <h2 style="margin-left:80px; background-color: navajowhite; border-radius: 8px; padding: 0px 10px; color: white;">How to make orders</h2>
+    <iframe width="560" height="315" src='https://www.youtube.com/embed/WdXXL4VpEeA' frameborder="0" allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture' allowfullscreen></iframe>
+      <p style="color: white; background-color: navajowhite; border-radius: 8px; padding: 0px 10px; ">Click the video to play</p>  
+</div>
+    <div class="catalog" id="catalog-container">
+        <!-- Catalog items will be displayed here -->
+    </div>
+
+
+    </div>
+    
+  </div>       
+  <div id="Whatsapp_button"></div>
+         <div id="footer"></div>
+
+<script type="module" src="js/cart.js"></script>
+  <script src="js/main.js"></script>
+ </body>
+</html>

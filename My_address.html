@@ -4,132 +4,202 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>My Address</title>
+<title>My_Address</title>
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+      
+<link rel= "Shortcut icon" type="x-icon" href= "https://i.postimg.cc/XqrhcVpD/20240702-095704.png "> 
+
+
+  <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9RJSDSSVMM"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-9RJSDSSVMM');
+</script>
   
+  <!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-MNW5B4W9');</script>
+<!-- End Google Tag Manager -->
+
 <style>
-body {
-    font-family: Arial, sans-serif;
+.container {
+  width: 90%;
+  max-width: 1100px;
+  margin: auto;
+  
 }
-.shipping-form {
-    max-width: 400px;
-    margin: 0 auto;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
-input[type="text"], input[type="email"] {
-    width: 100%;
-    padding: 8px;
+.shipping-option {
+    display: flex;
+    align-items: center;
+    border: 2px solid black;
+    padding: 10px;
     margin-bottom: 10px;
-    box-sizing: border-box;
-}
-.whatsapp-btn {
-    background-color: #4CAF50;
-    color: white;
-    padding: 10px 15px;
-    border: none;
-    border-radius: 5px;
     cursor: pointer;
-}
-.whatsapp-btn:hover {
-    background-color: #45a049;
+    background-color: #FF7A00;
+    transition: transform 0.2s;
 }
 
-i {
-  color:#000000;
+.shipping-option:active {
+    transform: scale(1.1);
+         box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Modify shadow for the clicked option */
+}
+
+    .shipping-option img {
+        width: 50px;
+        height: 50px;
+        margin-right: 10px;
+    }
+    .selected {
+        border-color: blue;
+    }
+    .form-container {
+        margin-top: 20px;
+
+    }
+    .form-container label {
+        display: block;
+        margin-bottom: 5px;
+    }
+    .form-container input {
+        width: 95%;
+        padding: 5px;
+        margin-bottom: 10px;
+        
+    }
+    .form-container button {
+      width: 100%;
+        padding: 5px 10px;
+        background-color: #FF7A00;
+        color: #fff;
+        border: none;
+        cursor: pointer;
+        margin-bottom: 10px;
+       border: 1px solid black;
+        margin-bottom: 10px;
+ /* Set the border style for the image */
+    border-radius: 3px;  /* Add border radius for a rounded border effect */
+
 }
 </style>
 </head>
 <body>
-<div class="shipping-form">
-    <h2><a href="A.html"><i class="fas fa-arrow-left"></i></a>&nbsp;Submit Address</h2>
-    <form id="shipping-form">
-        <label for="first-name">First Name:</label>
-        <input type="text" id="first-name" name="first-name" placeholder="Enter your first name" required>
-        
-        <label for="last-name">Last Name:</label>
-        <input type="text" id="last-name" name="last-name" placeholder="Enter your last name" required>
-        
-        <label for="phone">Phone Number:</label>
-        <input type="text" id="phone" name="phone" placeholder="Enter your phone number" required>
-        
-        <label for="street">Street:</label>
-        <input type="text" id="street" name="street" placeholder="Enter your street" required>
-        
-        <label for="building">Complex/Building:</label>
-        <input type="text" id="building" name="building" placeholder="Enter your complex or building">
-        
-        <label for="city">City:</label>
-        <input type="text" id="city" name="city" placeholder="Enter your city" required>
-        
-        <label for="suburb">Suburb:</label>
-        <input type="text" id="suburb" name="suburb" placeholder="Enter your suburb">
-        
-        <label for="zip-code">Post/Zip Code:</label>
-        <input type="text" id="zip-code" name="zip-code" placeholder="Enter your post/zip code">
-        
-        <label for="province">Province/State:</label>
-        <input type="text" id="province" name="province" placeholder="Enter your province/state">
-        
-        <label for="country">Country:</label>
-        <input type="text" id="country" name="country" placeholder="Enter your country" required>
-        
-        <button class="whatsapp-btn">Submit via WhatsApp</button>
+  <div class="shipping-form">
+          <h2 alt="Microsoft" class="logo">
+<i class="fas fa-arrow-left back-button" onclick="goBack()"></i>
+
+<script>
+function goBack() {
+    window.history.back();
+}
+</script>
+Help Center</h1>
+       <div id="navbar"></div>
+<div class="container">
+    <h1>Choose Shipping & Fill Form:</h1>
+    <h4></h4>
+        <p style=" color: dimgray;"> click on the package<p>
+    <form id="shippingForm">
+        <div class="shipping-option" id="shippingOption1">
+            <label>
+                <input type="radio" name="shippingOption" value="Option 1" style="display:none;">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQACgRWOcK4q-2W2jq74iDKxIlyBu2tpaJzvsqIl-rjJmrbcBSFcnxzlyMrLdosEuW9INQ&usqp=CAU" alt="Option 1">
+            </label>
+<span style="color: white;">7-9 Business days<br><span style="color: white;">Free Shipping</span></span>
+        </div>
+        <div class="shipping-option" id="shippingOption2">
+            <label>
+                <input type="radio" name="shippingOption" value="Option 2" style="display:none;">
+                <img src="https://pbs.twimg.com/profile_images/1393106689147166722/hxF67ahS_400x400.jpg" alt="Option 2">
+            </label>
+<span style="color: white;">3-5 Business days<br><span style="color: white;">R60</span></span>
+        </div>
+        <div class="form-container">
+            <label for="firstName">First Name:</label>
+            <input type="text" id="firstName" placeholder="Enter your first name" required>
+            
+            <label for="lastName">Last Name:</label>
+            <input type="text" id="lastName" placeholder="Enter your last name"required>
+            
+            <label for="phoneNumber">Phone Number:</label>
+            <input type="tel" id="phoneNumber" placeholder="Enter your phone number"required>
+            
+            <label for="city">City:</label>
+            <input type="text" id="city" placeholder="Enter your city"required>
+            
+            <label for="state">Province/State:</label>
+            <input type="text" id="state" placeholder="Enter your province/state " required>
+            
+            <label for="country">Country:</label>
+            <input type="text" id="country" placeholder="Enter your country" required>
+            
+            <button type="submit">Submit</button>
+        </div>
     </form>
 </div>
 
 <script>
-    const form = document.getElementById('shipping-form');
-    const whatsappBtn = document.querySelector(".whatsapp-btn");
 
-    // Load form data from local storage
-    for (let i = 0; i < form.elements.length; i++) {
-        const element = form.elements[i];
-        if (element.type !== "button") {
-            const savedValue = localStorage.getItem(element.id);
-            if (savedValue) {
-                element.value = savedValue;
-            }
-        }
-    }
+document.addEventListener('DOMContentLoaded', function() {
+  const shippingOptions = document.querySelectorAll('.shipping-option');
+  let selectedOptionValue = '';
+  let userData = {};
 
-    // Save form data to local storage on input change
-    form.addEventListener('input', function(event) {
-        if (event.target.type !== 'button') {
-            localStorage.setItem(event.target.id, event.target.value);
-        }
+  // Load saved data from local storage
+  const savedUserData = localStorage.getItem('userData');
+  if (savedUserData) {
+    userData = JSON.parse(savedUserData);
+    document.getElementById('firstName').value = userData.firstName;
+    document.getElementById('lastName').value = userData.lastName;
+    document.getElementById('phoneNumber').value = userData.phoneNumber;
+    document.getElementById('city').value = userData.city;
+    document.getElementById('state').value = userData.state;
+    document.getElementById('country').value = userData.country;
+  }
+
+  shippingOptions.forEach(option => {
+    option.addEventListener('click', function() {
+      shippingOptions.forEach(opt => {
+        opt.classList.remove('selected');
+      });
+      this.classList.add('selected');
+      selectedOptionValue = this.querySelector('input[name="shippingOption"]').value;
     });
+  });
 
-    whatsappBtn.addEventListener('click', function() {
-        const firstName = document.getElementById('first-name').value;
-        const lastName = document.getElementById('last-name').value;
-        const phone = document.getElementById('phone').value;
-        const street = document.getElementById('street').value;
-        const building = document.getElementById('building').value;
-        const city = document.getElementById('city').value;
-        const suburb = document.getElementById('suburb').value;
-        const zipCode = document.getElementById('zip-code').value;
-        const province = document.getElementById('province').value;
-        const country = document.getElementById('country').value;
+  document.getElementById('shippingForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+    // Get user input values
+    userData.firstName = document.getElementById('firstName').value;
+    userData.lastName = document.getElementById('lastName').value;
+    userData.phoneNumber = document.getElementById('phoneNumber').value;
+    userData.city = document.getElementById('city').value;
+    userData.state = document.getElementById('state').value;
+    userData.country = document.getElementById('country').value;
 
-        const message = `Shipping Address Information:
-Name: ${firstName} ${lastName}
-Phone Number: ${phone}
-Street: ${street}
-Complex/Building: ${building}
-City: ${city}
-Suburb: ${suburb}
-Post/Zip Code: ${zipCode}
-Province/State: ${province}
-Country: ${country}`;
+    // Save user data to local storage
+    localStorage.setItem('userData', JSON.stringify(userData));
 
-        const whatsappNumber = "0659860276";
-        const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
-        window.open(whatsappUrl, '_blank');
-    });
+    // Construct message for WhatsApp
+    const message = encodeURIComponent(`Selected Shipping Option: ${selectedOptionValue}\nFirst Name: ${userData.firstName}\nLast Name: ${userData.lastName}\nPhone Number: ${userData.phoneNumber}\nCity: ${userData.city}\nProvince/State: ${userData.state}\nCountry: ${userData.country}`);
+    
+    const phoneNumber = '0659860276';
+    
+    // Redirect to WhatsApp with the message
+    window.location.href = `https://wa.me/${phoneNumber}?text=${message}`;
+  });
+});
+
 </script>
-
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MNW5B4W9"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
 </body>
-
 </html>

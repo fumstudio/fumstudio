@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Currency Selection</title>
+</head>
+<body>
+<select id="currencySelect">
+  <option value="USD">USD</option>
+  <option value="EUR">EUR</option>
+  <option value="ZAR">ZAR</option>
+</select>
+  <script src="currency-converter.js"></script>
+
+<script>
+const currencySelect = document.getElementById('currencySelect');
+
+currencySelect.addEventListener('change', function() {
+  const selectedCurrency = currencySelect.value;
+  localStorage.setItem('selectedCurrency', selectedCurrency);
+});
+
+</script>
+</body>
+</html>
+

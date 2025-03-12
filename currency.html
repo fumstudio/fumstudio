@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>currencySelect</title>
+</head>
+<body>
+<select id="currencySelect">
+  <option value="USD">USD</option>
+  <option value="EUR">EUR</option>
+  <option value="ZAR">ZAR</option>
+</select>        
+<script>
+const currencySelect = document.getElementById('currencySelect');
+let storedCurrency = localStorage.getItem('selectedCurrency');
+
+if (storedCurrency) {
+  currencySelect.value = storedCurrency;
+}
+
+currencySelect.addEventListener('change', function() {
+  const selectedCurrency = currencySelect.value;
+  
+  if (selectedCurrency !== storedCurrency) {
+    storedCurrency = selectedCurrency;
+    localStorage.setItem('selectedCurrency', selectedCurrency);
+    location.reload();
+  }
+});
+
+window.addEventListener('beforeunload', function(event) {
+  const selectedCurrency = currencySelect.value;
+  localStorage.setItem('selectedCurrency', selectedCurrency);
+});
+</script>
+
+</body>
+
+</html>

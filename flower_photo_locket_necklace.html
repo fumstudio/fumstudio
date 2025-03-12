@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Keep your loved ones and happy memories close to your heart; they motivate you to succeed.
+">
+  <title>Steel flower photo locket</title>
+  
+  <!-- HTML -->
+  
+
+<link rel= "Shortcut icon" type="x-icon" href= "https://i.postimg.cc/XqrhcVpD/20240702-095704.png">
+
+
+ <link href="https://fonts.google.com/share?selection.family=Jersey+25|Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+
+   <!-- Custom Styles -->
+<link rel="stylesheet" href="css/catalog.css
+    "> 
+<link rel="stylesheet" href="css/style1.css">
+  <link rel="stylesheet" href="css/picture.css
+  
+    ">
+
+<link rel="stylesheet" href="css/Product.css
+    ">
+
+
+  <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9RJSDSSVMM"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-9RJSDSSVMM');
+</script>
+  
+  <!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-MNW5B4W9');</script>
+<!-- End Google Tag Manager -->
+
+      <!-- links -->
+            <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+     <script>
+        $(function(){
+            $("#navbar").load("navbar.html");
+        });
+    </script>
+ <script>
+        $(function(){
+            $("#Whatsapp_button").load("whatsApp_button.html");
+        });
+    </script>
+    <script>
+        $(function(){
+            $("#footer").load("footer.html");
+        });
+    </script>
+         <script>
+        $(function(){
+            $("#Steel_plated_photo_locket").load("Set_Steel_plated_photo_locket.html");
+        });
+    </script>
+        <script>
+        $(function(){
+            $("#tote_bag").load("Set_tote_bag.html");
+        });
+</script>
+
+      <!-- Product -->
+</head>
+
+<body>
+   
+</main>
+<div class="container2">
+ <div class="menu-btn">
+    <i class="fas fa-bars fa-2x"></i>
+  </div>
+
+
+    <!-- Nav -->
+    <nav class="main-nav">
+          <h1 alt="Microsoft" class="logo">
+            <i class="fas fa-arrow-left back-button" onclick="goBack()"></i>
+
+<script>
+function goBack() {
+    window.history.back();
+}
+</script>
+
+&nbsp;Flower Locket</h1>
+
+
+
+       <div id="navbar"></div>
+</div>
+  <div class="container5">
+    <div class="images5">
+        <div class="image5"><img src="https://i.postimg.cc/7ZWdvZWd/Untitled-design-13.jpg" alt="Image 1"></div>
+   <div class="image5"><img src="https://i.postimg.cc/qRfFRZ0G/Untitled-design-11.jpg" alt="Image 2"></div>
+        <div class="image5"><img src="https://i.postimg.cc/gJvT6q2b/Untitled-design-12.jpg" alt="Image 3"></div>
+  <div class="image5"><img src="https://iili.io/d1s8bZx.jpg" alt="Image 3"></div>
+
+</div>
+    <div class="arrow left" onclick="slide(-1)">&lt;</div>
+  <div class="arrow right" onclick="slide(1)">&gt;</div>
+</div>
+    </div>
+
+  <div class="counter"></div>
+
+  <script>
+   let currentIndex = 0;
+    const images = document.querySelectorAll('.image5');
+    const counter = document.querySelector('.counter');
+    let startX = 0;
+
+    function updateCounter() {
+      counter.textContent = `${currentIndex + 1} / ${images.length}`;
+    }
+
+    function slide(direction) {
+      currentIndex = currentIndex + direction;
+      if (currentIndex < 0) {
+        currentIndex = images.length - 1;
+      } else if (currentIndex >= images.length) {
+        currentIndex = 0;
+      }
+      const offset = -currentIndex * 100;
+      document.querySelector('.images5').style.transform = `translateX(${offset}%)`;
+      updateCounter();
+    }
+
+    document.querySelector('.container5').addEventListener('touchstart', (event) => {
+      startX = event.touches[0].clientX;
+    });
+
+    document.querySelector('.container5').addEventListener('touchend', (event) => {
+      const endX = event.changedTouches[0].clientX;
+      const diff = startX - endX;
+      if (diff > 50) {
+        slide(1); // Slide right
+      } else if (diff < -50) {
+        slide(-1); // Slide left
+      }
+    });
+
+    updateCounter(); // Initial counter update
+  </script>
+   
+ <div class="container slider-column">
+<div class="top-section">
+  
+<div class="icon-container">
+    <span id="heart" class="heart" onclick="toggleLike()">
+        <i id="heartIcon" class="far fa-heart"></i>
+    </span>
+  
+
+    <div id="share" class="share-icon">
+        <i class="fas fa-share"></i>
+
+    </div>
+</div>
+ <div class="numbers">
+<span id="likes">Likes: 2</span><span id="likeCount"></span>
+
+<script>
+    document.getElementById('likes').style.color = 'gray';
+</script>
+</div>
+<script>
+let liked = false;
+let likeCount = 0; // Set the initial like count here
+const userId = 'user841'; // Replace this with a dynamic unique identifier for each user
+const uniqueKey = `heartLikeStatus_${userId}`;
+
+// Restore like status from local storage
+function restoreLikeStatus() {
+    const storedLiked = localStorage.getItem(uniqueKey + '.liked');
+    const storedLikeCount = localStorage.getItem(uniqueKey + '.likeCount');
+
+    if (storedLiked === 'true') {
+        liked = true;
+        likeCount = parseInt(storedLikeCount, 10) || likeCount; // Use stored count or initial count
+        document.getElementById('heart').classList.add("liked");
+    } else {
+        likeCount = parseInt(storedLikeCount, 10) || likeCount; // Use stored count or initial count
+    }
+
+    // Increase the like count by 4 every page load
+    likeCount += 2;
+
+    // Update the displayed like count
+    document.getElementById('likeCount').textContent = likeCount;
+
+    // Save the updated like count to local storage
+    localStorage.setItem(uniqueKey + '.likeCount', likeCount);
+}
+
+// Toggle like status
+function toggleLike() {
+    liked = !liked;
+    likeCount += liked ? 1 : -1;
+    const heart = document.getElementById('heart');
+    heart.classList.toggle('liked', liked);
+    document.getElementById('likeCount').textContent = likeCount;
+
+    // Save state to local storage
+    localStorage.setItem(uniqueKey + '.liked', liked);
+    localStorage.setItem(uniqueKey + '.likeCount', likeCount);
+}
+
+// Restore like status on page load
+window.onload = restoreLikeStatus;
+</script>
+
+</div>
+<script>
+document.getElementById('share').addEventListener('click', function() {
+    // Replace the placeholder URL and description with the actual values you want to share
+    var url = encodeURIComponent('https://fumstudio.shop/flower_photo_locket_necklace.html');
+    var description = encodeURIComponent('Keep your loved ones and happy memories close to your heart; they motivate you to succeed.');
+    window.open('https://api.whatsapp.com/send?text=' + description + '%0A' + url, '_blank');
+});
+</script>
+
+<div class="top-section">
+    <div class="p-4">
+<span class="price" data-price="189.99">
+    ZAR 189.99</span>
+
+        <span class="free-shipping">Free Shipping ,SA</span>
+        <p>3-7 business days.</p>
+    <p>Keep your loved ones and happy memories close to your heart; they motivate you to succeed.</p>
+        </div>
+
+    <span class="clickable" onclick="toggleDetails()">Details</span>
+    <div class="details" id="details">
+        <p>Female,2 Pictures(1,5cm),color: Antique Ivory,pendant: 2.5cm round circle, necklace sizes: 50cm,box color: PINK</p>
+        
+    </div>
+  <br>
+     <button id="orderButton" onclick="submitImages()">ORDER NOW</button> 
+
+<script>
+function submitImages() {
+    const catalogLink = "view catalog https://fumstudio.shop/flower_photo_locket_necklace.html";
+    const message = catalogLink +
+        "\n\n* Hi, send us your chosen photos on WhatsApp.\n\n" +
+        "* The agent will review your orders and assist with payment.\n\n" +
+        "* Visit the website to make more orders and submit your address.\n\n" +
+        "*fumstudio.shop.*";
+
+    const whatsappNumber = '0659860276'; // Update this with your WhatsApp number
+    const formattedMessage = encodeURIComponent(message);
+    window.open(`https://wa.me/${whatsappNumber}?text=${formattedMessage}`, "_blank");
+}
+</script>
+</div>
+
+</section>
+ 
+<p id="like" class="like">You might also like</p>
+    <div class="scroll-indicator">
+
+<div class="container3">
+
+  <div class="product">
+ <div id="Steel_plated_photo_locket"></div>
+    </div>
+
+  <div class="product">
+ <div id="tote_bag"></div>
+</div>
+</div>
+</div>
+
+ </div>
+  
+ 
+
+    </div>
+ </div>
+ <div id="Whatsapp_button"></div>
+       <div id="footer"></div>
+       </div></div>
+ 
+<!-- partial -->
+  <script src='https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js'></script><script  src="js/script.js"></script>
+
+
+ <script src="js/main.js"></script>
+<script>
+  function toggleDetails() {
+        const details = document.getElementById('details');
+        if (details.style.display === 'none' || details.style.display === '') {
+            details.style.display = 'block';
+            details.scrollIntoView({ behavior: 'smooth' });
+            // Add small scrolling effect
+            window.scrollBy({
+                top: 200, // Scroll down by 200 pixels
+                behavior: 'smooth' // Smooth scroll
+            });
+        } else {
+            details.style.display = 'none';
+        }
+    }
+</script>
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MNW5B4W9"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+
+
+</body>
+</html>

@@ -1,0 +1,238 @@
+<!DOCTYPE html> 
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catalog Search</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+        }
+
+        .container {
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        .search input {
+            width: 300px;
+            padding: 8px;
+            margin: 10px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .catalog {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .catalog .item {
+            background-color: #fff;
+            padding: 5px;
+            width: 23%;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: transform 0.3s ease;
+            position: relative;
+        }
+
+        .catalog .item img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        .catalog .item:hover {
+            transform: scale(1.05);
+        }
+
+        /* Green color for free shipping */
+        .free-shipping {
+            color: green;
+            font-weight: bold;
+        }
+
+        /* Red color for original price */
+        .original-price {
+            color: red;
+            text-decoration: line-through;
+            font-weight: bold;
+        }
+
+        /* Flex container to align price and original price side by side */
+        .price-container {
+            display: flex;
+            gap:2px;
+            align-items: center;
+            margin-top: 10px;
+        }
+
+        .price-container p {
+            margin: 0;
+        }
+
+        @media (max-width: 768px) {
+            .catalog .item {
+                width: 45%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .catalog .item {
+                width: 45%;
+            }
+
+            .search input {
+                width: 80%;
+            }
+        }
+
+        /* Style for the link itself, remove default underline and color */
+        a.item-link {
+            text-decoration: none; /* Remove underline */
+            color: inherit; /* Use the inherited color, no change in text color */
+            display: block; /* Make the link behave like a block-level element */
+        }
+
+        /* Ensure the content inside the link is styled as needed */
+        .item-link .item-content {
+            display: block;
+            background-color: #fff;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        /* Hover effect for the item container */
+        .item-link:hover .item-content {
+            transform: scale(1.05); /* Scale the item up on hover */
+        }
+
+        /* Styling for the item image */
+        .item-link img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+        .pricing{  
+    color:#E58A52 ;
+              font-weight: bold;
+     }
+    </style>
+<script type="module">
+    // Import Firebase modules
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-app.js";
+    import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-database.js";
+    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-auth.js";
+
+    // Firebase Configuration
+    const firebaseConfig = {
+        apiKey: "AIzaSyBDrzrgLslaJvnXbo1e90irCEtdcm9ZsCU",
+        authDomain: "logins-13661.firebaseapp.com",
+        databaseURL: "https://logins-13661-default-rtdb.firebaseio.com",
+        projectId: "logins-13661",
+        storageBucket: "logins-13661.appspot.com",
+        messagingSenderId: "451535349483",
+        appId: "1:451535349483:web:d3c9867fd2bffbbdca40ae",
+        measurementId: "G-DWP16WX2H7"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+    const auth = getAuth(app);
+
+    // Elements for catalog display
+    const catalogContainer = document.getElementById("catalog-container");
+
+    // Listen for changes in the database and update catalog
+    function loadCatalog() {
+        const catalogRef = ref(db, "catalog/");
+        onValue(catalogRef, (snapshot) => {
+            catalogContainer.innerHTML = ''; // Clear previous content
+            const catalogData = snapshot.val();
+            if (catalogData) {
+                Object.entries(catalogData).forEach(([key, item]) => {
+                    const itemElement = document.createElement("div");
+                    itemElement.classList.add("catalog-item", "item");
+                    itemElement.innerHTML = `
+                        <a href="${item.link}" target="_blank"  class="item-link">
+                            <img src="${item.image}" alt="${item.name}" width="100">
+                            <h3>${item.name}</h3>
+                            <p class="price-container">
+                                <span class="original-price price" data-price="${item.originalPrice}">ZAR ${item.originalPrice.toFixed(2)}</span>
+                                <span class="pricing price" data-price="${item.price}">ZAR ${item.price.toFixed(2)}</span>
+                            </p>
+                            <p style="display:none">Categories: 
+                                ${item.category1 ? item.category1 : ''}
+                                ${item.category2 ? ', ' + item.category2 : ''}
+                                ${item.category3 ? ', ' + item.category3 : ''}
+                                ${item.category4 ? ', ' + item.category4 : ''}
+                                ${item.category5 ? ', ' + item.category5 : ''}
+                            </p>
+                            <p>${item.details}</p>
+                            ${item.freeShipping ? '<p class="free-shipping">Free Shipping</p>' : ''}
+                        </a>       
+                    `;
+                    catalogContainer.appendChild(itemElement);
+                });
+            }
+        });
+    }
+
+    // Check authentication state and load catalog
+    onAuthStateChanged(auth, (user) => {
+        if (user) {
+            console.log("User logged in:", user.email);
+        } else {
+            console.log("No user logged in.");
+        }
+        loadCatalog();
+    });
+
+    // Dynamically add the currency converter script if not already added
+    if (!document.querySelector('script[src="currency-converter.js"][type="module"]')) {
+        var script = document.createElement('script');
+        script.src = 'currency-converter.js';
+        script.type = 'module'; // Set the type to "module"
+        document.body.appendChild(script);
+    }
+</script>
+
+</head>
+<body>
+    <h1>Catalog Search</h1>
+    
+    <!-- Search Input -->
+    <input type="text" id="search-input" placeholder="Search for an item...">
+
+    <!-- Price Range Inputs -->
+    <input type="number" id="price-min" placeholder="Min Price" min="0" style="display:none">
+
+    <!-- Category Dropdown -->
+    <select id="category-select">
+        <option value="all">All Categories</option>
+        <!-- Categories will be dynamically added here -->
+    </select>
+
+    <div class="catalog" id="catalog-container">
+        <!-- Catalog items will be displayed here -->
+    </div>
+</body>
+</html>
