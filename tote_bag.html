@@ -136,9 +136,9 @@ function goBack() {
  
 
     <div class="product-info">
-         <span class="product-price price" data-price="179.99">
+         <span class="product-price price" data-price="180.00">
     
-</span>     <span class="price line-through" data-price="279.99">
+</span>     <span class="price line-through" data-price="220.00">
 </span>
 
     <button class="share-button" onclick="sharePhoto()" style="border: none; background: none; cursor: pointer;">
@@ -496,13 +496,7 @@ Object.entries(filteredItems).forEach(([key, item]) => {
                 </span>
 
             </p>
-            <p>Categories: 
-                ${item.category1 ? item.category1 : ''}
-                ${item.category2 ? ', ' + item.category2 : ''}
-                ${item.category3 ? ', ' + item.category3 : ''}
-                ${item.category4 ? ', ' + item.category4 : ''}
-                ${item.category5 ? ', ' + item.category5 : ''}
-            </p>
+          
             <p>${item.details}</p>
             ${item.freeShipping ? '<p class="free-shipping">Free Shipping</p>' : ''}
         </a>
