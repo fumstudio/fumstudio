@@ -387,7 +387,7 @@ background-color:  #2E2F33;
   gap: 10px;          /* Adds space between buttons */
   justify-content: center; /* Optional: Centers buttons horizontally within the container */
 margin-top: -40%;
-margin-left: 40%;
+margin-left: 90%;
 z-index: 10;
 }
 /* Media Query for Extra Small Screens (Mobile devices) */
