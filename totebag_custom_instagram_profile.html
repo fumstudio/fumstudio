@@ -1992,7 +1992,7 @@ document.getElementById('shareButtonNew').addEventListener('click', async () => 
     const newLogoRef = ref(database, 'logos/' + Date.now());
     await set(newLogoRef, logoDataNew);
 
-    const shareableUrlNew = `${window.location.origin}/totebag_customized_instagram_profile.html?logoId=${newLogoRef.key}`;
+    const shareableUrlNew = `${window.location.origin}/Instagram_totebag_customized.html?logoId=${newLogoRef.key}`;
     console.log('Shareable URL:', shareableUrlNew);
 
     // Set the global variable for the new URL
@@ -2166,7 +2166,7 @@ async function addToCart() {
             shareableLink: itemPageLink,
             title: "Tote bag",
             cost: 180,
-            catalogUrl: 'https://fumstudio.shop/tote_bag.html',
+            catalogUrl: 'https://fumstudio.shop/totebag.html',
             designs: [
                 {
                     itemImage: "https://firebasestorage.googleapis.com/v0/b/myhost-a7ee9.appspot.com/o/images%2FSparkle%20(5).jpg?alt=media&token=dc0b1263-915a-4b10-8815-536b684e5022",
