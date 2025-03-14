@@ -1201,12 +1201,7 @@ async function handleFileSelect() {
     const userId = user.uid;
     const userImageRef = dbRef(db, `uploads/${userId}/jewelryneklace`);
 
-    // Check if there's an existing image & delete its reference
-    const snapshot = await get(userImageRef);
-    if (snapshot.exists()) {
-      await remove(userImageRef);
-      console.log("✅ Old image reference deleted from Database");
-    }
+  
 
     // Upload new image
     const uniqueFileName = `${Date.now()}-${file.name}`;
