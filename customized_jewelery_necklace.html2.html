@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Customize jewelry necklace</title>
+  <title>Customized jewelry necklace</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js"></script>
   
    <style>
@@ -931,7 +931,7 @@ function goBack() {
 }
 
 </script>
- <h1 class="item-name">Custom jewelry necklace</h1>
+ <h1 class="item-name">Customized jewelry necklace</h1>
 </nav>
  <br>        <br>        <br>  <br> 
          <!-- Design Selector Button -->
@@ -1165,17 +1165,7 @@ moveX.addEventListener('input', applyTransform);
 moveY.addEventListener('input', applyTransform);
     rotateRange.addEventListener('input', applyTransform);
 
-// Modify the image container click behavior
-imageContainer.addEventListener('click', () => {
-  if (uploadedImageUrl) {
-    // If the image has been uploaded, open the URL in a new tab
-    window.open(uploadedImageUrl, '_blank');
-  } else {
-    // If no image is uploaded, trigger the file input dialog
-    console.log("Image container clicked");  // Debug message
-    fileInput.click();  // Trigger the file input dialog
-  }
-});
+
 
 
 let alertTimeout;
@@ -1356,88 +1346,7 @@ cancelDelete.addEventListener('click', function() {
 
 
 
-let startDistance = 0, initialScale = 1, isDragging = false;
-let startX = 0, startY = 0, initialX = 0, initialY = 0;
-let startAngle = 0, initialRotate = 0;
 
-function resetTransform() {
-  zoomRange.value = 1.5;
-  moveX.value = 0;
-  moveY.value = 0;
-  rotateRange.value = 0;
-  applyTransform();
-}
-
-function applyTransform() {
-  const imgElement = imageContainer.querySelector('img');
-  if (imgElement) {
-    imgElement.style.transform = `scale(${zoomRange.value}) translate(${moveX.value}px, ${moveY.value}px) rotate(${rotateRange.value}deg)`;
-    zoomValue.textContent = zoomRange.value;
-    moveXValue.textContent = moveX.value;
-    moveYValue.textContent = moveY.value;
-    rotateValue.textContent = rotateRange.value;
-  }
-}
-
-function handleTouchStart(e) {
-  if (e.touches.length === 2) {
-    const dx = e.touches[0].clientX - e.touches[1].clientX;
-    const dy = e.touches[0].clientY - e.touches[1].clientY;
-    startDistance = Math.sqrt(dx * dx + dy * dy);
-    
-    // Calculate initial angle between two touches
-    startAngle = Math.atan2(dy, dx) * (180 / Math.PI);
-    
-    const imgElement = imageContainer.querySelector('img');
-    initialScale = parseFloat(imgElement.style.transform.match(/scale\(([^)]+)\)/)[1]);
-    initialRotate = parseFloat(rotateRange.value);  // Store initial rotation value
-  } else if (e.touches.length === 1) {
-    const touch = e.touches[0];
-    startX = touch.clientX;
-    startY = touch.clientY;
-    initialX = parseFloat(moveX.value);
-    initialY = parseFloat(moveY.value);
-    isDragging = true;
-  }
-}
-
-function handleTouchMove(e) {
-  const imgElement = imageContainer.querySelector('img');
-  if (!imgElement) return;
-
-  if (e.touches.length === 2 && startDistance) {
-    const dx = e.touches[0].clientX - e.touches[1].clientX;
-    const dy = e.touches[0].clientY - e.touches[1].clientY;
-    const newDistance = Math.sqrt(dx * dx + dy * dy);
-    const scale = (newDistance / startDistance) * initialScale;
-    zoomRange.value = scale;
-
-    // Calculate current angle between the two touches
-    const currentAngle = Math.atan2(dy, dx) * (180 / Math.PI);
-    const angleDiff = currentAngle - startAngle;  // Difference in angles
-    rotateRange.value = initialRotate + angleDiff;  // Update rotation
-
-    applyTransform();
-  } else if (e.touches.length === 1 && isDragging) {
-    const touch = e.touches[0];
-    const deltaX = touch.clientX - startX;
-    const deltaY = touch.clientY - startY;
-    moveX.value = initialX + deltaX;
-    moveY.value = initialY + deltaY;
-    applyTransform();
-  }
-}
-
-function handleTouchEnd(e) {
-  if (e.touches.length === 0) {
-    isDragging = false;
-  }
-}
-
-// Add touch event listeners
-imageContainer.addEventListener('touchstart', handleTouchStart);
-imageContainer.addEventListener('touchmove', handleTouchMove);
-imageContainer.addEventListener('touchend', handleTouchEnd);
 
 
 // This function is called when sharing the image
