@@ -960,7 +960,13 @@ function videoAlert(message, iconClass = "") {
     console.error('Cart alert or overlay element not found');
   }
 }
-function handleFileSelect() {
+async function handleFileSelect() { 
+  const user = auth.currentUser;
+  if (!user) {
+    window.location.href = "login.html";
+    return;
+  }
+
   const file = fileInput.files[0];
 
   if (file && file.type.startsWith("video/")) {
@@ -969,7 +975,18 @@ function handleFileSelect() {
     return;
   }
 
-  if (file && !uploadedImageUrl) {
+  if (file) {
+    const userId = user.uid;
+    const userImageRef = dbRef(db, `uploads/${userId}/istagramprofiletotebag`);
+
+    // Check if there's an existing image & delete its reference
+    const snapshot = await get(userImageRef);
+    if (snapshot.exists()) {
+      await remove(userImageRef);
+      console.log("✅ Old image reference deleted from Database");
+    }
+
+    // Upload new image
     const uniqueFileName = `${Date.now()}-${file.name}`;
     const storagePath = storageRef(storage, `images/${uniqueFileName}`);
     const uploadTask = uploadBytesResumable(storagePath, file);
@@ -982,22 +999,32 @@ function handleFileSelect() {
         loadingScreen.style.display = "flex";
       },
       (error) => {
-        console.error("Upload failed:", error);
+        console.error("❌ Upload failed:", error);
         loadingScreen.style.display = "none";
       },
       async () => {
         const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
         uploadedImageUrl = downloadURL;
 
-        // Save the image info to Firebase Realtime Database
-        const imageRef = dbRef(db, "uploads/image");
-        await set(imageRef, { name: uniqueFileName, url: downloadURL });
+        // Save new image info in Firebase Realtime Database
+        await set(userImageRef, { name: uniqueFileName, url: downloadURL });
+
+        console.log(`✅ New image uploaded successfully: ${uniqueFileName}`);
 
         // Update UI
         const imgElement = document.createElement("img");
         imgElement.src = uploadedImageUrl;
         imageContainer.innerHTML = "";
         imageContainer.appendChild(imgElement);
+        imageContainer.style.cursor = "pointer";
+
+        // Add click event to open image in a new tab
+        imageContainer.onclick = () => {
+          if (uploadedImageUrl) {
+            window.open(uploadedImageUrl, "_blank");
+          }
+        };
+
         loadingScreen.style.display = "none";
         secondLoadingScreen.style.display = "flex";
 
@@ -1020,36 +1047,31 @@ function handleFileSelect() {
 async function deleteImage() {
   if (!isDeleteConfirmed) return;
 
-  try {
-    console.log("Attempting to delete image...");
-
-    // Retrieve the image name from Firebase Realtime Database
-    const imageRef = dbRef(db, "uploads/image");
-    const snapshot = await get(imageRef);
-
-    if (snapshot.exists()) {
-      const { name } = snapshot.val(); // Get stored image name
-
-      if (name) {
-        const storagePath = storageRef(storage, `images/${name}`);
-
-        // Delete the image from Firebase Storage
-        await deleteObject(storagePath)
-          .then(() => console.log("✅ Image deleted from Firebase Storage"))
-          .catch((error) => console.error("❌ Error deleting from Storage:", error));
-      }
-
-      // Remove image reference from Firebase Database
-      await remove(imageRef)
-        .then(() => console.log("✅ Image reference deleted from Firebase Database"))
-        .catch((error) => console.error("❌ Error deleting from Database:", error));
-    } else {
-      console.log("⚠️ No image found in Firebase Database.");
-    }
-  } catch (error) {
-    console.error("❌ Error during deletion process:", error);
+  const user = auth.currentUser;
+  if (!user) {
+    window.location.href = "login.html";
+    return;
   }
 
+  const userId = user.uid;
+  const userImageRef = dbRef(db, `uploads/${userId}/istagramprofiletotebag`);
+
+  // Retrieve image name from Firebase
+  const snapshot = await get(userImageRef);
+  if (snapshot.exists()) {
+    const { name } = snapshot.val();
+    const storagePath = storageRef(storage, `images/${name}`);
+
+    try {
+      await deleteObject(storagePath);
+      console.log(`✅ Image ${name} deleted from Storage`);
+    } catch (error) {
+      console.error("❌ Error deleting image:", error);
+    }
+
+    await remove(userImageRef);
+    console.log("✅ Image reference deleted from Database");
+  }
   // Reset UI
   imageContainer.innerHTML = '<i class="fas fa-image"></i><p>Click here to upload photo</p>';
   uploadedImageUrl = null;
@@ -1778,7 +1800,7 @@ async function handleFileSelect() {
         uploadedImageUrlNew = downloadURL;
 
         const userId = user.uid;
-        const imageRef = dbRef(db, `uploads/${userId}/newImage`);
+        const imageRef = dbRef(db, `uploads/${userId}/istagramprofiletotebagnew`);
         await set(imageRef, { name: uniqueFileName, url: downloadURL });
 
         console.log(`✅ Image uploaded successfully: ${uniqueFileName}`);
@@ -1829,7 +1851,7 @@ async function deleteImage() {
     console.log(`🗑️ Attempting to delete image for user ${user.uid}...`);
 
     const userId = user.uid;
-    const imageRef = dbRef(db, `uploads/${userId}/newImage`);
+    const imageRef = dbRef(db, `uploads/${userId}/istagramprofiletotebagnew`);
     const snapshot = await get(imageRef);
 
     if (snapshot.exists()) {
