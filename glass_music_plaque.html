@@ -493,13 +493,7 @@ Object.entries(filteredItems).forEach(([key, item]) => {
                 </span>
                 <span class="pricing price" data-price="${item.price}">ZAR ${item.price.toFixed(2)}</span>
             </p>
-            <p>Categories: 
-                ${item.category1 ? item.category1 : ''}
-                ${item.category2 ? ', ' + item.category2 : ''}
-                ${item.category3 ? ', ' + item.category3 : ''}
-                ${item.category4 ? ', ' + item.category4 : ''}
-                ${item.category5 ? ', ' + item.category5 : ''}
-            </p>
+          
             <p>${item.details}</p>
             ${item.freeShipping ? '<p class="free-shipping">Free Shipping</p>' : ''}
         </a>
