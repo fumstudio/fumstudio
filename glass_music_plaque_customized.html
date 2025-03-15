@@ -1,0 +1,1736 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Customize Music plaque</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"> 
+       <link rel="stylesheet" href="css/Designs2.css">
+
+  <!-- Preconnect and Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Bangers&family=Bungee+Inline&family=Cinzel:wght@400..900&family=Lilita+One&family=Monoton&family=Sarina&family=Satisfy&family=Staatliches&display=swap" rel="stylesheet">
+  
+  <!-- Additional Google Fonts and CSS -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto&family=Pacifico&family=Lobster&family=Quicksand&family=Poppins&family=Shrikhand&family=Chewy&display=swap" rel="stylesheet">
+  
+
+<style>
+
+  body {
+  overflow-x: hidden;  /* Prevents horizontal scrolling */
+  overflow-y: auto;    /* Allows vertical scrolling */
+  width: 100vw;        /* Ensures the body takes full viewport width */
+}
+html, body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+    .main-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+     
+}
+    .editor-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 22px;
+    }
+
+    }
+
+    .logo-settings label {
+      font-weight: bold;
+      margin-top: 10px;
+      
+    }
+        .logo-settings {
+    display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: -24vh;
+
+     
+    }
+    .logo-settings input[type="text"],
+    .logo-settings select {
+     margin: 10px;
+      padding: 10px; 
+      width: 200px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      font-size: 16px;
+
+
+    }
+    
+@media(min-width: 481px){
+    .logo-settings input[type="text"],
+    .logo-settings select {
+      width: 250px;
+margin-left: 88%;    
+/* Media Query for Small to Medium Screens (Tablets) */
+
+       }
+} 
+@media(min-width: 481px) and (max-width: 1024px) {
+    .logo-settings input[type="text"],
+    .logo-settings select {
+      width: 250px;
+margin-left: 55%;
+
+/* Take up more width on very small screens */
+
+  }
+}
+@media  (min-width: 481px) and(max-width: 1924px) {
+    .logo-settings input[type="text"],
+    .logo-settings select {
+      width: 250px;
+margin-left: 90%;
+
+/* Take up more width on very small screens */
+
+  }
+}
+    .color-picker {
+      display: flex;
+      gap: 10px;
+      margin-top: 10px;
+    }
+    .color-swatch {
+      width: 30px;
+      height: 30px;
+      border: 2px solid #ccc;
+      cursor: pointer;
+      border-radius: 50%;
+      transition: transform 0.3s;
+    }
+    .color-swatch:hover {
+      transform: scale(1.2);
+    }
+
+    .logo-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: bold;
+      width: 350px;
+      height: 450px; 
+      border-radius: 8px;
+
+      position: relative;
+     padding: 10px; 
+      background-image: url('https://firebasestorage.googleapis.com/v0/b/myhost-a7ee9.appspot.com/o/images%2F20250311_161123.jpg?alt=media&token=c7b9c368-cc74-4e3d-8cf5-7a0b92f44d70');
+      background-size: cover;
+      background-position: center;
+      transition: all 0.5s ease;
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+      text-align: center;
+       margin-top: -200px;
+         bottom: -110px;
+
+    }
+  #imageContainer{
+  width: 200px; /* Keep width for portrait appearance */
+  height: 280px; /* Adjust height for a portrait aspect */
+
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  background-color: #f0f0f0;
+  position: relative;
+  background-image: url('https://iconarchive.com/download/i107449/google/noto-emoji-animals-nature/horse.ico');
+  background-size: 80px 80px; /* Adjust background size to better fit the portrait orientation */
+  background-repeat: no-repeat;
+  background-position: center;
+  cursor: pointer; /* Makes the container clickable */
+  bottom: 320px;
+  margin-right:1%;
+}
+    
+
+/* Media Query for Small to Medium Screens (Tablets) */
+@media (min-width: 481px) {
+      .logo-container {
+margin-top: 20%;
+
+/* Take up more width on very small screens */
+
+  }
+}
+
+    
+/* Media Query for Small to Medium Screens (Tablets) */
+@media(max-width: 1024px) {
+       .main-container {
+margin-top: 20%;
+ margin-right: 50%;
+/* Take up more width on very small screens */
+
+  }
+}
+@media(max-width: 481px) {
+       .main-container {
+margin-top: 20%;
+margin-left: 50%;
+/* Take up more width on very small screens */
+
+  }
+}
+
+  
+    #loadingScreen, #secondLoadingScreen {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      color: white;
+      font-size: 24px;
+      justify-content: center;
+      align-items: center;
+      z-index: 1001;
+    }
+
+
+
+    #imageContainer img {
+      max-width: 100%;
+      max-height: 100%;
+      transform-origin: center;
+      transition: transform 0.3s ease;
+    }
+        .logo-text {
+      z-index: 2;
+      display: block;
+      word-wrap: break-word;
+      line-height: 1.2;
+   margin-top: 200px;
+      margin-left: -70px;
+
+      font-size: 14px;
+    }
+    .logo-text2 {
+      font-size: 14px;
+      margin-top: 20px;
+            margin-left: -70px;
+    }
+   
+
+  </style>
+
+
+  
+    <style>
+    #loadingScreenNew, #secondLoadingScreenNew {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      color: white;
+      font-size: 24px;
+      justify-content: center;
+      align-items: center;
+      z-index: 1001;
+    }
+
+
+
+
+    #imageContainerNew img {
+      max-width: 100%;
+      max-height: 100%;
+      transform-origin: center;
+      transition: transform 0.3s ease;
+    }
+
+#Alert {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    color: black;
+    padding: 24px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    z-index: 1001; 
+    width: 160px;
+    /* Ensure text doesn't stack */
+    
+    flex-wrap: wrap;
+    gap: 10px; /* Adds spacing between elements */
+    align-items: center;
+}
+
+    #overlay {
+                  display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 1000;
+    }
+
+
+.rectangle-button {
+  background-color: #EDEDEE; /* Vibrant orange */
+  color: #000000;
+  font-size: 16px;
+  font-weight: bold;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  display: inline-block;
+  text-transform: uppercase;
+  margin-top: 10px;
+  margin-left: 35px;
+         margin-bottom: 300px;
+}
+
+  </style>
+     <link rel="stylesheet" href="css/catalog.css">
+
+ 
+<body>
+<div class="container2">
+
+
+    <!-- Nav -->
+    
+<nav class="main-nav">
+  <!-- Navigation content -->
+
+
+<i class="fa fa-chevron-left back-button" aria-hidden="true" onclick="goBack()"></i>
+<script>
+
+function goBack() {
+    window.history.back();
+}
+
+</script>
+ <h1 class="item-name">Customized Music plaque</h1>
+</nav>
+ <br>        <br>        <br>  <br> 
+         <!-- Design Selector Button -->
+    </div>
+        <div class="overlay" id="overlay"></div>
+    <div id="Alert">
+
+
+    </div>
+
+
+
+<!-- Modal for confirmation -->
+<div id="confirmationModal" class="modal hidden">
+  <div class="modal-content-delete">
+    <p>Do you really want to delete this photo?</p>
+    <button id="confirmDelete" class="confirm-btn green-btn">Yes</button>
+    <button id="cancelDelete" class="cancel-btn red-btn">No</button>
+  </div>
+</div>
+<!-- Modal for confirmation -->
+<div id="confirmationModalNew" class="modal hidden">
+  <div class="modal-content-delete">
+    <p>Do really you want to delete this photo?</p>
+    <button id="confirmDeleteNew" class="confirm-btn green-btn">Yes</button>
+    <button id="cancelDeleteNew" class="cancel-btn red-btn">No</button>
+  </div>
+</div>
+  <div class="overlay" id="overlay"></div>
+<div id="video-alert">
+<i class="fas fa-times-circle red-icon"></i> You cannot upload videos. Please upload an image.
+</div>   
+     
+  <!-- Dark background overlay (hidden by default) -->
+  <div class="dark-overlay" id="dark-overlay"></div>
+
+  <!-- Font list container (hidden by default) -->
+  <div class="font-container" id="font-container">
+<label><strong>Choose a font:</strong></label>
+<!-- Font list container (hidden by default) -->
+
+          <ul class="font-list">
+            <li class="font-item roboto" onclick="setFont('roboto')">Roboto</li>
+            <li class="font-item pacifico" onclick="setFont('pacifico')">Pacifico</li>
+            <li class="font-item lobster" onclick="setFont('lobster')">Lobster</li>
+            <li class="font-item quicksand" onclick="setFont('quicksand')">Quicksand</li>
+            <li class="font-item poppins" onclick="setFont('poppins')">Poppins</li>
+            <li class="font-item shrikhand" onclick="setFont('shrikhand')">Shrikhand</li>
+            <li class="font-item chewy" onclick="setFont('chewy')">Chewy</li>
+            <li class="font-item bangers" onclick="setFont('bangers')">Bangers</li>
+            <li class="font-item cinzel" onclick="setFont('cinzel')">Cinzel</li>
+            <li class="font-item sarina" onclick="setFont('sarina')">Sarina</li>
+            <li class="font-item satisfy" onclick="setFont('satisfy')">Satisfy</li>
+            <li class="font-item staatliches" onclick="setFont('staatliches')">Staatliches</li>
+          </ul>
+        </div>
+
+ 
+
+
+    </div>
+
+
+     <div class="editor-container">
+ 
+  <div class="main-container">    
+  <div class="logo-container" id="logoContainer">
+    <div class="back">
+ 
+      <div class="overlay"></div>
+      <span id="logoTextPreview1" class="logo-text">Title of the song</span>
+      <span id="logoTextPreview2" class="logo-text2">Artist name</span>
+      <!-- Image container to upload an image by clicking -->
+
+    </div>
+  </div>
+
+      
+  <div id="imageContainer" style="cursor: pointer;">
+    <i class="fas fa-image"></i>
+    <p>Click here to upload photo.</p>
+    
+    <!-- File input (hidden) -->
+    
+    <input type="file" id="fileInput" style="display: none;">
+  </div>
+      </div>
+<script>
+  function forceClickButton() {
+    let attemptCount = 0;
+    const maxAttempts = 50; // Adjust as needed
+    const interval = setInterval(() => {
+      let button = document.getElementById("autoBreakButton");
+
+      if (button) {
+        try {
+          console.log("Attempting to click the button...");
+          button.click();
+          console.log("Button clicked successfully!");
+          clearInterval(interval); // Stop trying after success
+        } catch (error) {
+          console.error("Error clicking button:", error);
+        }
+      } else {
+        console.warn(`Button not found, retrying... (${attemptCount + 1}/${maxAttempts})`);
+      }
+
+      attemptCount++;
+      if (attemptCount >= maxAttempts) {
+        console.error("Max attempts reached. Button not found.");
+        clearInterval(interval);
+      }
+    }, 500); // Check every 500ms
+  }
+
+  document.addEventListener("DOMContentLoaded", forceClickButton);
+</script>
+      
+
+
+ <div class="logo-settings">               
+<input type="text" id="logoText" placeholder="Title of the song" value="I Said I love you" oninput="updateLogo()" maxlength="20" style="display: none;"/>
+
+
+<input type="text" id="secondaryText" placeholder="Artist name" value=" Babyface" oninput="updateLogo()" maxlength="25" style="display: none;"/>
+
+  <div class="container">    
+
+         <button id="addToCartBtn" type="button" class="rectangle-button" style="display: none;">Add to cart</button>   
+
+          
+<div id="controls">
+ 
+
+</div>
+<div id="secondLoadingScreen">Processing... Please wait</div>
+<div id="loadingScreen" style="display: none;">
+  Uploading... 0%
+</div>
+
+
+
+     
+ 
+
+    <!-- The link will be shown here -->
+<button id="shareButton" style="display:none;">Share Image</button>
+
+ 
+    <!-- Share Link Container -->
+    <div id="shareLinkContainer" style="display:none;">
+      <a id="shareLink" href="#" style="display:none;">Share this logo</a>
+    </div>
+
+
+  <!-- THE NAVBAR NER -->
+<script>
+  function forceClickButton() {
+    let attemptCount = 0;
+    const maxAttempts = 50; // Adjust as needed
+    const interval = setInterval(() => {
+      let button = document.getElementById("toggleBoldBtn");
+
+      if (button) {
+        try {
+          console.log("Attempting to click the button...");
+          button.click();
+          console.log("Button clicked successfully!");
+          clearInterval(interval); // Stop trying after success
+        } catch (error) {
+          console.error("Error clicking button:", error);
+        }
+      } else {
+        console.warn(`Button not found, retrying... (${attemptCount + 1}/${maxAttempts})`);
+      }
+
+      attemptCount++;
+      if (attemptCount >= maxAttempts) {
+        console.error("Max attempts reached. Button not found.");
+        clearInterval(interval);
+      }
+    }, 500); // Check every 500ms
+  }
+
+  document.addEventListener("DOMContentLoaded", forceClickButton);
+</script>
+    <div class="bottom-navbar">
+        <!-- Icon Buttons -->
+  <button id="resetButton" class="setting-btn hidden"><i class="fa-solid fa-rotate-right"></i></button>
+  <button id="deleteButton" class="setting-btn hidden"><i class="fas fa-trash"></i></button>
+
+  <div id="controls">
+    <button id="positionIcon" class="setting-btn hidden">
+      <span class="bar bar1"></span>
+      <span class="bar bar2"></span>
+      <span class="bar bar1"></span>
+    </button>
+
+   <button class="square-button" onclick="generateRandomLogo()" style="display:none;"><i class="fa-duotone fa-solid fa-wand-magic-sparkles"></i></button>       
+        <a href="#" id="colorIcon" style="display:none;">
+            <i class="fas fa-paint-brush icon"></i> <!-- Paint Brush Icon -->
+            <div id="colorContent" class="content-section">
+                <!-- Content for color icon -->
+           <div class="color-picker">
+<div class="color-swatch" style="background-color: #FFFFFF;" onclick="setTextColor('#FFFFFF')"></div>             
+<div class="color-swatch" style="background-color:#8808C1 ;" onclick="setTextColor('#8808C1')"></div>
+<div class="color-swatch" style="background-color: #4B6F44;" onclick="setTextColor('#4B6F44')"></div>
+<div class="color-swatch" style="background-color: #4F6F9F;" onclick="setTextColor('#4F6F9F')"></div>
+
+<div class="color-swatch" style="background-color: #A02A2A;" onclick="setTextColor('#A02A2A')"></div>
+
+            </div>
+    
+            </div>
+        </a>
+<button class="square-button" id="autoBreakButton" onclick="toggleAutoBreak()" style="display: none;">
+          <i class="fa-brands fa-autoprefixer"></i>
+        </button>
+        
+    <!-- Button to toggle the font list -->
+        <a href="#" id="fontIcon" style="display:none;">
+<i id="toggle-btn" class="fa-solid fa-font"></i></a>
+
+<script>// Toggle the visibility of the font list container and dark overlay
+document.getElementById('toggle-btn').addEventListener('click', function() {
+  const fontContainer = document.getElementById('font-container');
+  const darkOverlay = document.getElementById('dark-overlay');
+  const isVisible = fontContainer.style.display === 'block';
+
+  // Toggle visibility of the font list and dark overlay
+  if (isVisible) {
+    fontContainer.style.display = 'none';
+    darkOverlay.style.display = 'none';
+  } else {
+    fontContainer.style.display = 'block';
+    darkOverlay.style.display = 'block';
+  }
+});
+
+// Set font when a list item is clicked
+function setFont(font) {
+  // Change the font of the body (or label) text
+  document.body.style.fontFamily = font;
+
+  // Add 'selected' class to clicked item
+  const items = document.querySelectorAll('.font-list li');
+  items.forEach(item => item.classList.remove('selected')); // Remove 'selected' from all items
+  event.target.classList.add('selected'); // Add 'selected' to the clicked item
+
+  // Hide the font container and dark overlay immediately
+  document.getElementById('font-container').style.display = 'none';
+  document.getElementById('dark-overlay').style.display = 'none';
+}
+
+// Close font container when clicking on the dark overlay
+document.getElementById('dark-overlay').addEventListener('click', function() {
+  document.getElementById('font-container').style.display = 'none';
+  document.getElementById('dark-overlay').style.display = 'none';
+});</script>
+
+
+
+
+            <div id="positionContent" class="content-section ">
+                <!-- Content for position icon -->
+         <div class="slider-container">
+      <div class="range-display">
+        <label class="slider-label" for="zoomRange">Zoom</label>
+        <input type="range" id="zoomRange" class="slider" min="1" max="3" step="0.1" value="1.5">
+        <span id="zoomValue" class="range-value">1.5</span>
+      </div>
+
+      <div class="range-display">
+        <label class="slider-label" for="moveX">Left | Right</label>
+        <input type="range" id="moveX" class="slider" min="-100" max="100" step="1" value="0">
+        <span id="moveXValue" class="range-value">0</span>
+      </div>
+
+      <div class="range-display">
+        <label class="slider-label" for="moveY">Up | Down</label>
+        <input type="range" id="moveY" class="slider" min="-100" max="100" step="1" value="0">
+        <span id="moveYValue" class="range-value">0</span>
+     
+      </div>
+      
+        <div class="range-display">
+          <label class="slider-label" for="rotateRange">Rotate</label>
+          <input type="range" id="rotateRange" class="slider" min="-180" max="180" step="1" value="0">
+          <span id="rotateValue" class="range-value">0</span>        </div>
+        
+    </div>
+      
+            </div>
+       
+      <div class="square-button" id="toggleItalicBtn" style="display:none;"><em>T</em></div>
+    <div class="square-button" id="toggleBoldBtn" style="display:none;"><strong>B</strong></div>  
+   
+ 
+    </div>
+    </div>
+        </div>
+        
+
+
+    <!-- Section 2 -->
+
+
+     <!-- JavaScript -->
+    <script>// Function to toggle visibility of content under each icon inside the navbar
+function toggleContent(iconId, contentId, event) {
+    event.preventDefault(); // Prevent default anchor behavior (scroll to top)
+
+    const contentSection = document.getElementById(contentId);
+    const icon = document.getElementById(iconId);
+
+    // If the clicked content is already visible, hide it and remove highlight
+    if (contentSection.classList.contains('active')) {
+        contentSection.classList.remove('active');
+        icon.classList.remove('active-icon'); // Remove highlight
+    } else {
+        // Hide all other content sections and remove highlight from other icons
+        const allSections = document.querySelectorAll('.content-section');
+        allSections.forEach(section => section.classList.remove('active'));
+
+        const allIcons = document.querySelectorAll('.bottom-navbar a');
+        allIcons.forEach(icon => icon.classList.remove('active-icon')); // Remove highlight from all icons
+
+        // Show the clicked content section and highlight the icon
+        contentSection.classList.add('active');
+        icon.classList.add('active-icon'); // Add highlight to the clicked icon
+
+        // Scroll the content section into view (only if needed)
+        contentSection.scrollIntoView({
+            behavior: 'smooth', // Smooth scroll
+            block: 'center',    // Center the element vertically
+            inline: 'center'    // Center the element horizontally (optional)
+        });
+    }
+}
+
+// Prevent the content from closing when clicking inside it (stop event propagation)
+document.querySelectorAll('.content-section').forEach(content => {
+    content.addEventListener('click', function(event) {
+        event.stopPropagation(); // Prevent the click from propagating to the parent icon
+    });
+});
+
+
+// Event listeners for each icon
+document.getElementById('colorIcon').addEventListener('click', function(event) {
+    toggleContent('colorIcon', 'colorContent', event);
+});
+
+
+
+document.getElementById('positionIcon').addEventListener('click', function(event) {
+    toggleContent('positionIcon', 'positionContent', event);
+});
+
+
+
+
+
+
+
+
+
+      
+</script>
+    </div>
+  </div>
+</div>
+
+
+    </div>
+  </div>
+
+        <div class="overlay" id="overlay"></div>
+    <div id="cartAlert">
+        <p>Item added to cart!</p>
+
+    </div>
+
+   <style>
+
+
+#cartAlert {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            color: black;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+            z-index: 2000; 
+        }
+    #overlay {
+                  display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 1000;
+    }
+   /* From Uiverse.io by vinodjangid07 */ 
+
+  </style>
+  
+
+  
+ <script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
+  import { getStorage, ref as storageRef, uploadBytesResumable, getDownloadURL,deleteObject } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-storage.js";
+  import { getDatabase, ref, set, get, remove,ref as dbRef } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-database.js";
+  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js";
+
+  // Firebase configuration
+  const firebaseConfig = {
+    apiKey: "AIzaSyBDrzrgLslaJvnXbo1e90irCEtdcm9ZsCU",
+    authDomain: "logins-13661.firebaseapp.com",
+    databaseURL: "https://logins-13661-default-rtdb.firebaseio.com",  // Realtime Database URL
+    projectId: "logins-13661",
+    storageBucket: "logins-13661.appspot.com",
+    messagingSenderId: "451535349483",
+    appId: "1:451535349483:web:d3c9867fd2bffbbdca40ae",
+    measurementId: "G-EWZC4FFTTG"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const storage = getStorage(app);
+  const database = getDatabase(app);  // Initialize Realtime Database
+  const auth = getAuth();
+  const db = getDatabase();
+
+document.addEventListener('DOMContentLoaded', () => {
+    const fileInput = document.getElementById('fileInput');
+    const imageContainer = document.getElementById('imageContainer');
+    const deleteButton = document.getElementById('deleteButton');
+    const resetButton = document.getElementById('resetButton');
+    const loadingScreen = document.getElementById('loadingScreen');
+    const secondLoadingScreen = document.getElementById('secondLoadingScreen');
+    const zoomRange = document.getElementById('zoomRange');
+    const moveX = document.getElementById('moveX');
+    const moveY = document.getElementById('moveY');
+    const zoomValue = document.getElementById('zoomValue');
+    const moveXValue = document.getElementById('moveXValue');
+    const moveYValue = document.getElementById('moveYValue');
+    const rotateValue = document.getElementById('rotateValue');
+    const shareButton = document.getElementById('shareButton');
+    const linkContainer = document.getElementById('linkContainer');
+    const imageLink = document.getElementById('imageLink');
+
+
+let autoBreakEnabled = true;
+  let breakSize = 'words';
+  let currentColor = "#FFFFFF";
+  let currentFont = "roboto";
+  let currentText = "";
+  let secondaryText = "";
+  let uploadedImageUrl = null;
+
+
+    
+    // Firebase Authentication listener
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        console.log('User is logged in:', user.email);  // Logs the user's email
+        console.log('User ID:', user.uid);  // Logs the user's UID
+      } else {
+        console.log('No user is logged in');
+        window.location.href = 'login.html';  // Redirect to login if not authenticated
+      }
+    });
+
+// Handle file selection
+fileInput.addEventListener('change', handleFileSelect);
+resetButton.addEventListener('click', resetTransform);
+deleteButton.addEventListener('click', deleteImage);
+
+zoomRange.addEventListener('input', applyTransform);
+moveX.addEventListener('input', applyTransform);
+moveY.addEventListener('input', applyTransform);
+    rotateRange.addEventListener('input', applyTransform); 
+
+// Modify the image container click behavior
+
+
+function videoAlert(message, iconClass = "") {
+  console.log('Displaying cart alert message:', message); // Debugging: Log when cart alert is triggered
+
+  const cartAlert = document.getElementById('Alert');
+  const overlay = document.getElementById('overlay');
+
+  if (cartAlert && overlay) {
+    // Add the icon to the message if an icon class is provided
+    const iconHtml = iconClass ? `<i class="${iconClass}"></i> ` : '';
+    cartAlert.innerHTML = iconHtml + message; // Set the message with the icon inside the cart alert
+    cartAlert.style.display = 'block'; // Show the cart alert
+    overlay.style.display = 'block'; // Show the overlay
+
+    // Start the countdown for hiding the alert
+    startAlertTimeout();
+
+    // Pause the countdown when the user interacts with the overlay or alert
+    overlay.addEventListener('mousedown', pauseAlertCountdown);
+    cartAlert.addEventListener('mousedown', pauseAlertCountdown);
+    overlay.addEventListener('touchstart', pauseAlertCountdown);
+    cartAlert.addEventListener('touchstart', pauseAlertCountdown);
+
+    // Cancel the alert and hide immediately when the user clicks on the alert or overlay
+    overlay.addEventListener('click', cancelAndHideAlert);
+    cartAlert.addEventListener('click', cancelAndHideAlert);
+
+    // Resume countdown after the user stops interacting
+    overlay.addEventListener('mouseup', resumeAlertCountdown);
+    cartAlert.addEventListener('mouseup', resumeAlertCountdown);
+    overlay.addEventListener('touchend', resumeAlertCountdown);
+    cartAlert.addEventListener('touchend', resumeAlertCountdown);
+  } else {
+    console.error('Cart alert or overlay element not found');
+  }
+}
+async function handleFileSelect() { 
+  const user = auth.currentUser;
+  if (!user) {
+    window.location.href = "login.html";
+    return;
+  }
+
+  const file = fileInput.files[0];
+
+  if (file && file.type.startsWith("video/")) {
+    fileInput.value = "";
+    videoAlert('<i class="fas fa-times-circle red-icon"></i>You cannot upload videos. Please upload an image.');
+    return;
+  }
+
+  if (file) {
+    const userId = user.uid;
+    const userImageRef = dbRef(db, `uploads/${userId}/glassmusicplaque`);
+
+    // Check if there's an existing image & delete its reference
+
+    // Upload new image
+    const uniqueFileName = `${Date.now()}-${file.name}`;
+    const storagePath = storageRef(storage, `images/${uniqueFileName}`);
+    const uploadTask = uploadBytesResumable(storagePath, file);
+
+    uploadTask.on(
+      "state_changed",
+      (snapshot) => {
+        const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        loadingScreen.textContent = `Uploading... ${Math.round(progress)}%`;
+        loadingScreen.style.display = "flex";
+      },
+      (error) => {
+        console.error("❌ Upload failed:", error);
+        loadingScreen.style.display = "none";
+      },
+      async () => {
+        const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
+        uploadedImageUrl = downloadURL;
+
+        // Save new image info in Firebase Realtime Database
+        await set(userImageRef, { name: uniqueFileName, url: downloadURL });
+
+        console.log(`✅ New image uploaded successfully: ${uniqueFileName}`);
+
+        // Update UI
+        const imgElement = document.createElement("img");
+        imgElement.src = uploadedImageUrl;
+        imageContainer.innerHTML = "";
+        imageContainer.appendChild(imgElement);
+        imageContainer.style.cursor = "pointer";
+
+        // Add click event to open image in a new tab
+        imageContainer.onclick = () => {
+          if (uploadedImageUrl) {
+            window.open(uploadedImageUrl, "_blank");
+          }
+        };
+
+        loadingScreen.style.display = "none";
+        secondLoadingScreen.style.display = "flex";
+
+        setTimeout(() => {
+          secondLoadingScreen.style.display = "none";
+          applyTransform();
+        }, 5000);
+
+        fileInput.disabled = true;
+        deleteButton.classList.remove("hidden");
+        resetButton.classList.remove("hidden");
+        positionIcon.classList.remove("hidden");
+      }
+    );
+  } else {
+    alert("You can only upload one image. Please delete the existing image first.");
+  }
+}
+
+async function deleteImage() {
+  if (!isDeleteConfirmed) return;
+
+  const user = auth.currentUser;
+  if (!user) {
+    window.location.href = "login.html";
+    return;
+  }
+
+  const userId = user.uid;
+  const userImageRef = dbRef(db, `uploads/${userId}/glassmusicplaque`);
+
+  // Retrieve image name from Firebase
+  const snapshot = await get(userImageRef);
+  if (snapshot.exists()) {
+    const { name } = snapshot.val();
+    const storagePath = storageRef(storage, `images/${name}`);
+
+    try {
+      await deleteObject(storagePath);
+      console.log(`✅ Image ${name} deleted from Storage`);
+    } catch (error) {
+      console.error("❌ Error deleting image:", error);
+    }
+
+    await remove(userImageRef);
+    console.log("✅ Image reference deleted from Database");
+  }
+
+  // Reset UI
+  imageContainer.innerHTML = '<i class="fas fa-image"></i><p>Click here to upload photo</p>';
+  uploadedImageUrl = null;
+  fileInput.value = "";
+  fileInput.disabled = false;
+  deleteButton.classList.add("hidden");
+  resetButton.classList.add("hidden");
+  positionIcon.classList.add("hidden");
+
+  const positionContent = document.getElementById("positionContent");
+  if (positionContent?.classList.contains("active")) {
+    positionContent.classList.remove("active");
+    positionIcon.classList.remove("active-icon");
+  }
+
+  isDeleteConfirmed = false;
+}
+function resetTransform() {
+  zoomRange.value = 1.5;
+  moveX.value = 0;
+  moveY.value = 0;
+  rotateRange.value = 0;
+  applyTransform();
+}
+
+function applyTransform() {
+  const imgElement = imageContainer.querySelector('img');
+  if (imgElement) {
+    imgElement.style.transform = `scale(${zoomRange.value}) translate(${moveX.value}px, ${moveY.value}px) rotate(${rotateRange.value}deg)`;
+    zoomValue.textContent = zoomRange.value;
+    moveXValue.textContent = moveX.value;
+    moveYValue.textContent = moveY.value;
+    rotateValue.textContent = rotateRange.value;
+  }
+}
+
+
+const confirmationModal = document.getElementById('confirmationModal');
+const confirmDelete = document.getElementById('confirmDelete');
+const cancelDelete = document.getElementById('cancelDelete');
+
+
+
+
+let isDeleteConfirmed = false;
+
+// Show the modal when delete button is clicked
+deleteButton.addEventListener('click', function(event) {
+  event.preventDefault();  // Prevent immediate deletion
+  isDeleteConfirmed = false; // Reset the confirmation flag
+  confirmationModal.style.display = 'flex';  // Show the modal
+});
+
+// If 'Yes' is clicked, perform the delete action
+confirmDelete.addEventListener('click', function() {
+  isDeleteConfirmed = true;  // Set the flag to true when confirmed
+  confirmationModal.style.display = 'none';  // Hide the modal
+  deleteImage();  // Call the deleteImage function after confirmation
+});
+
+// If 'No' is clicked, close the modal without deleting
+cancelDelete.addEventListener('click', function() {
+  confirmationModal.style.display = 'none';  // Hide the modal
+});
+
+// Function to delete the image
+
+  function frontphotoalert(message, iconClass = "") {
+  console.log('Displaying cart alert message:', message); // Debugging: Log when cart alert is triggered
+
+  const cartAlert = document.getElementById('Alert');
+  const overlay = document.getElementById('overlay');
+
+  if (cartAlert && overlay) {
+    // Add the icon to the message if an icon class is provided
+    const iconHtml = iconClass ? `<i class="${iconClass}"></i> ` : '';
+    cartAlert.innerHTML = iconHtml + message; // Set the message with the icon inside the cart alert
+    cartAlert.style.display = 'block'; // Show the cart alert
+    overlay.style.display = 'block'; // Show the overlay
+
+    // Start the countdown for hiding the alert
+    startAlertTimeout();
+
+    // Pause the countdown when the user interacts with the overlay or alert
+    overlay.addEventListener('mousedown', pauseAlertCountdown);
+    cartAlert.addEventListener('mousedown', pauseAlertCountdown);
+    overlay.addEventListener('touchstart', pauseAlertCountdown);
+    cartAlert.addEventListener('touchstart', pauseAlertCountdown);
+
+    // Cancel the alert and hide immediately when the user clicks on the alert or overlay
+    overlay.addEventListener('click', cancelAndHideAlert);
+    cartAlert.addEventListener('click', cancelAndHideAlert);
+
+    // Resume countdown after the user stops interacting
+    overlay.addEventListener('mouseup', resumeAlertCountdown);
+    cartAlert.addEventListener('mouseup', resumeAlertCountdown);
+    overlay.addEventListener('touchend', resumeAlertCountdown);
+    cartAlert.addEventListener('touchend', resumeAlertCountdown);
+  } else {
+    console.error('Cart alert or overlay element not found');
+  }
+}
+let alertTimeout;
+let alertStartTime = 0;
+let alertTimeLeft = 3000; // 3 seconds for the alert to auto-dismiss
+function frontphotoalert(message, iconClass = "") {
+  console.log('Displaying cart alert message:', message); // Debugging: Log when cart alert is triggered
+
+  const cartAlert = document.getElementById('Alert');
+  const overlay = document.getElementById('overlay');
+
+  if (cartAlert && overlay) {
+    // Add the icon to the message if an icon class is provided
+    const iconHtml = iconClass ? `<i class="${iconClass}"></i> ` : '';
+    cartAlert.innerHTML = iconHtml + message; // Set the message with the icon inside the cart alert
+    cartAlert.style.display = 'block'; // Show the cart alert
+    overlay.style.display = 'block'; // Show the overlay
+
+    // Start the countdown for hiding the alert
+    startAlertTimeout();
+
+    // Pause the countdown when the user interacts with the overlay or alert
+    overlay.addEventListener('mousedown', pauseAlertCountdown);
+    cartAlert.addEventListener('mousedown', pauseAlertCountdown);
+    overlay.addEventListener('touchstart', pauseAlertCountdown);
+    cartAlert.addEventListener('touchstart', pauseAlertCountdown);
+
+    // Cancel the alert and hide immediately when the user clicks on the alert or overlay
+    overlay.addEventListener('click', cancelAndHideAlert);
+    cartAlert.addEventListener('click', cancelAndHideAlert);
+
+    // Resume countdown after the user stops interacting
+    overlay.addEventListener('mouseup', resumeAlertCountdown);
+    cartAlert.addEventListener('mouseup', resumeAlertCountdown);
+    overlay.addEventListener('touchend', resumeAlertCountdown);
+    cartAlert.addEventListener('touchend', resumeAlertCountdown);
+  } else {
+    console.error('Cart alert or overlay element not found');
+  }
+}
+
+
+// Start the timeout to hide the alert after a certain time
+function startAlertTimeout() {
+  alertStartTime = Date.now();
+  clearTimeout(alertTimeout); // Clear any existing timeouts first
+  alertTimeout = setTimeout(() => {
+    const cartAlert = document.getElementById('Alert');
+    const overlay = document.getElementById('overlay');
+    if (cartAlert && overlay) {
+      console.log("Hiding alert after timeout"); // Debugging: Confirming that timeout is firing
+      cartAlert.style.display = 'none'; // Hide the cart alert
+      overlay.style.display = 'none'; // Hide the overlay
+    } else {
+      console.error('Cart alert or overlay not found during timeout.');
+    }
+    alertTimeLeft = 3000; // Reset time to 5000 after timeout
+  }, alertTimeLeft); // Use current alertTimeLeft
+}
+
+// Pause the countdown without hiding the alert or overlay
+function pauseAlertCountdown() {
+  clearTimeout(alertTimeout); // Stop the countdown
+  console.log("Alert paused, countdown stopped.");
+}
+
+// Cancel and hide the alert immediately when the user clicks or taps on it
+function cancelAndHideAlert(event) {
+  const cartAlert = document.getElementById('Alert');
+  const overlay = document.getElementById('overlay');
+
+  // Hide the alert and overlay immediately
+  if (cartAlert && overlay) {
+    cartAlert.style.display = 'none';
+    overlay.style.display = 'none';
+    console.log("Alert canceled and hidden immediately.");
+  } else {
+    console.error('Cart alert or overlay not found when canceling.');
+  }
+
+  // Reset the countdown immediately when canceled
+  alertTimeLeft = 3000;
+  clearTimeout(alertTimeout); // Clear the current timeout
+  console.log("Countdown reset to 5000.");
+}
+
+// Resume the countdown when the user releases the mouse or touch
+function resumeAlertCountdown() {
+  startAlertTimeout(); // Restart the countdown from the current time left
+  console.log("Alert resumed, countdown restarted.");
+}
+
+// Get the current values from the input fields
+document.getElementById('shareButton').addEventListener('click', async () => {
+  
+          if (!uploadedImageUrl || uploadedImageUrl.trim() === '') {
+        console.log('No photo URL, showing cart alert');  // Debugging: Log when no image URL
+        // If there's no image URL, show the cart alert with an icon
+      frontphotoalert ('<i class="fas fa-times-circle red-icon"></i> Please upload front design photo.');      
+
+        // Add event listener for the "OK" button to close the modal
+
+        return; // Don't proceed with sharing
+    }
+  
+  
+
+  // Get the current values from the input fields
+currentText = document.getElementById('logoText').value || 'Your Logo';
+  secondaryText = document.getElementById('secondaryText').value || 'Secondary Text';
+
+const logoData = {
+    text: currentText,
+    secondaryText: secondaryText,
+    font: currentFont,
+    color: currentColor,
+    autoBreakEnabled: autoBreakEnabled,
+    breakSize: breakSize,
+          isItalic: isItalic || false,  // Whether text is italic
+      isBold: isBold || false,     // Whether text is bold
+    zoom: parseFloat(zoomRange.value), // Use the current zoom value
+    moveX: parseInt(moveX.value, 10), // Use the current moveX value
+    moveY: parseInt(moveY.value, 10),
+    // Use the current moveY value
+    
+   rotate: parseInt(rotateRange.value),
+    url: uploadedImageUrl || '' // Image URL if uploaded
+  };
+
+  try {
+    // Get the current user's UID
+    const user = auth.currentUser;
+    if (!user) {
+      alert("User is not authenticated. Please log in.");
+      return;
+    }
+
+    const userId = user.uid; // Get the user’s unique ID
+
+    // Save the logo data under the user's specific path
+    const newLogoRef = ref(database, 'logos/' + Date.now()); // Use a timestamp for unique logo ID
+    await set(newLogoRef, logoData);
+
+    // Generate the shareable link
+    const shareableUrl = `${window.location.origin}/Glass_Music_plaugue_view_design.html?logoId=${newLogoRef.key}`;
+    console.log('Shareable URL:', shareableUrl);
+    window.shareableUrl = shareableUrl;
+    // Update the link container and show the link
+    const shareLink = document.getElementById('shareLink');
+    const shareLinkContainer = document.getElementById('shareLinkContainer');
+    shareLink.href = shareableUrl;
+    shareLink.textContent = 'Click to view the logo';
+    shareLinkContainer.style.display = 'block'; // Show the link container
+  } catch (error) {
+    console.error('Error saving logo data to Firebase:', error.message || error);
+    alert('There was an error saving your logo. Please try again.');
+  }
+});
+
+const urlParams = new URLSearchParams(window.location.search);
+const logoId = urlParams.get('logoId');
+
+if (logoId) {
+  const logoRef = ref(database, 'logos/' + logoId);
+
+  get(logoRef).then((snapshot) => {
+    if (snapshot.exists()) {
+      const logoData = snapshot.val();
+      // Render the logo data on the page (e.g., display text and image)
+      document.getElementById('logoText').textContent = logoData.text;
+      document.getElementById('secondaryText').textContent = logoData.secondaryText;
+      // You can add more logic to render colors, fonts, or the image URL if available
+    } else {
+      console.error('Logo not found');
+      alert('Logo not found!');
+    }
+  }).catch((error) => {
+    console.error('Error fetching logo:', error);
+    alert('Error fetching logo!');
+  });
+}
+
+
+  // File upload handling (optional, if using image upload)
+  document.getElementById('fileInput').addEventListener('change', (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const storageRefPath = storageRef(storage, 'images/' + file.name);
+      const uploadTask = uploadBytesResumable(storageRefPath, file);
+      uploadTask.on('state_changed', (snapshot) => {
+        const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        console.log(`Upload is ${progress}% done`);
+      }, (error) => {
+        console.error('Upload failed:', error);
+      }, () => {
+        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+          uploadedImageUrl = downloadURL;
+          console.log('Image uploaded successfully:', uploadedImageUrl);
+        });
+      });
+    }
+  });
+  
+
+
+
+
+  // Function to generate a random logo
+  window.generateRandomLogo = function() {
+    const randomFonts = ["shrikhand", "chewy", "Lobster", "Quicksand"];
+    const randomColors = [" #A02A2A", " #4F6F9F", " #4B6F44", " #8808C1"];
+    const randomText = ["Awesome", "Creative", "Logo Design", "Fantastic", "Brand Name"];
+    const randomSecondaryText = ["Tagline", "By Us", "Est. 2024", "Your Brand", "Design Name"];
+
+    const logoTextValue = document.getElementById('logoText').value || randomText[Math.floor(Math.random() * randomText.length)];
+    const secondaryTextValue = document.getElementById('secondaryText').value || randomSecondaryText[Math.floor(Math.random() * randomSecondaryText.length)];
+
+    const randomFont = randomFonts[Math.floor(Math.random() * randomFonts.length)];
+    const randomColor = randomColors[Math.floor(Math.random() * randomColors.length)];
+
+    document.getElementById('logoText').value = logoTextValue;
+    document.getElementById('secondaryText').value = secondaryTextValue;
+    setFont(randomFont);
+    
+    setTextColor(randomColor);
+  };
+
+
+  let currentUserId = null;
+let isShared = false;
+
+let isItalic = false;  // This will track whether italic is enabled
+let isBold = false;     // Set this to true to make the font bold by default
+
+
+
+  function toggleItalic() {
+    isItalic = !isItalic;
+    updateLogo();
+    const toggleButton = document.getElementById('toggleItalicBtn');
+    toggleButton.innerText = isItalic ? 'T' : 'T';
+    toggleButton.style.fontStyle = isItalic ? 'normal' : 'italic';
+  }
+
+  function toggleBold() {
+    isBold = !isBold;
+    updateLogo();
+    const toggleButton = document.getElementById('toggleBoldBtn');
+    
+      toggleButton.innerText = isBold ? 'B' : 'B';
+
+    toggleButton.style.fontWeight = isBold ? 'normal' : 'bold';
+  }
+
+  document.getElementById('toggleItalicBtn').addEventListener('click', toggleItalic);
+  document.getElementById('toggleBoldBtn').addEventListener('click', toggleBold);
+
+  function adjustLogoTextFontSize(element) {
+    let textLength = element.textContent.length;
+    const containerWidth = element.offsetWidth;
+    const containerHeight = element.offsetHeight;
+
+    let baseFontSize = 10;
+
+    if (textLength <= 10) {
+      baseFontSize = 90;
+    } else if (textLength <= 20) {
+      baseFontSize = 40;
+    } else if (textLength <= 30) {
+      baseFontSize = 30;
+    } else if (textLength <= 50) {
+      baseFontSize = 20;
+    } else {
+      baseFontSize = 30;
+    }
+
+    let scaleFactor = Math.min(containerWidth / (textLength * 500), containerHeight / 100);
+    const adjustedFontSize = Math.max(baseFontSize * scaleFactor, 16);
+
+    element.style.fontSize = `${adjustedFontSize}px`;
+  }
+
+  function adjustSecondaryTextFontSize(element) {
+    const containerWidth = document.getElementById('logoContainer').offsetWidth;
+    const containerHeight = document.getElementById('logoContainer').offsetHeight;
+    let fontSize = 18;
+
+    const textLength = element.textContent.replace(/\s/g, '').length;
+    fontSize = Math.max(10, Math.min(16, 18 - textLength / 4));
+
+    element.style.fontSize = `${fontSize}px`;
+  }
+
+  function breakTextIntoChunks(text, breakSize) {
+    if (autoBreakEnabled === 'word') {
+      return breakTextByWords(text, breakSize);
+    } else if (autoBreakEnabled === 'character') {
+      return breakTextByCharacters(text, breakSize);
+    }
+    return text;
+  }
+
+  function breakTextByWords(text, breakSize) {
+    const words = text.split(/\s+/);
+    let chunks = [];
+    let currentChunk = '';
+
+    for (let word of words) {
+      if (word.length >= 13) {
+        while (word.length >= 13) {
+          chunks.push(word.substring(0, 13));
+          word = word.substring(13);
+        }
+        if (word.length > 0) {
+          currentChunk += word;
+        }
+      } else {
+        if (currentChunk.length + word.length + 1 <= breakSize) {
+          currentChunk += (currentChunk.length > 0 ? ' ' : '') + word;
+        } else {
+          chunks.push(currentChunk);
+          currentChunk = word;
+        }
+      }
+    }
+
+    if (currentChunk.length > 0) {
+      chunks.push(currentChunk);
+    }
+
+    return chunks.join('<br>');
+  }
+
+  function breakTextByCharacters(text, breakSize) {
+    const chars = text.split('');
+    let formattedText = '';
+    let chunk = '';
+
+    for (let i = 0; i < chars.length; i++) {
+      chunk += chars[i];
+
+      if ((i + 1) % 3 === 0 || i === chars.length - 1) {
+        formattedText += chunk + '<br>';
+        chunk = '';
+      }
+    }
+    return formattedText.trim();
+  }
+
+  // Function to set the font for logo text
+  function setFont(font) {
+    currentFont = font;
+    updateLogo();  // Update the logo with the selected font
+  }
+  // Function to set the font for logo text
+  window.setFont = function(font) {
+      currentFont = font;
+      updateLogo(); // Update the logo with the selected font
+          // Hide the font container and overlay when a font is selected
+      document.getElementById('font-container').style.display = 'none';
+      document.getElementById('dark-overlay').style.display = 'none';
+
+    }
+    
+    
+  window.updateLogo = function() {
+    let logoText = document.getElementById('logoText').value || '';
+    let secondaryText = document.getElementById('secondaryText').value || '';
+
+    logoText = logoText.substring(0, 150);
+    secondaryText = secondaryText.substring(0, 150);
+
+    const formattedText = breakTextIntoChunks(logoText, 25);
+  const formattedSecondaryText = secondaryText;
+
+    const logoTextPreview1 = document.getElementById('logoTextPreview1');
+    const logoTextPreview2 = document.getElementById('logoTextPreview2');
+
+    logoTextPreview1.innerHTML = formattedText;
+    logoTextPreview2.innerHTML = formattedSecondaryText;
+
+    logoTextPreview1.style.color = currentColor;
+    logoTextPreview2.style.color = currentColor;
+    logoTextPreview1.style.fontFamily = currentFont;
+    logoTextPreview2.style.fontFamily = currentFont;
+
+    if (isItalic) {
+      logoTextPreview1.style.fontStyle = 'italic';
+      logoTextPreview2.style.fontStyle = 'italic';
+    } else {
+      logoTextPreview1.style.fontStyle = 'normal';
+      logoTextPreview2.style.fontStyle = 'normal';
+    }
+
+    if (isBold) {
+      logoTextPreview1.style.fontWeight = 'bold';
+      logoTextPreview2.style.fontWeight = 'bold';
+    } else {
+      logoTextPreview1.style.fontWeight = 'normal';
+      logoTextPreview2.style.fontWeight = 'normal';
+    }
+
+    adjustLogoTextFontSize(logoTextPreview1);
+    adjustSecondaryTextFontSize(logoTextPreview2);
+
+    if (currentUserId) {
+      saveLogoData(currentUserId, logoText, secondaryText, currentFont, currentColor, autoBreakEnabled);
+    }
+  };
+
+  window.toggleAutoBreak = function() {
+    if (autoBreakEnabled === 'word') {
+      autoBreakEnabled = 'character';
+      document.getElementById('autoBreakButton').innerText = 'Auto Break: 1-3 Characters';
+    } else {
+      autoBreakEnabled = 'word';
+      document.getElementById('autoBreakButton').innerText = 'Auto Break: Every 2 Words';
+    }
+    updateLogo();
+  };
+
+
+
+  window.setTextColor = function(color) {
+    currentColor = color;
+    updateLogo();
+  };
+
+window.onload = function() {
+    // Get the URL parameters
+    const urlParams = new URLSearchParams(window.location.search);
+    const logoId = urlParams.get('logoId'); // Used for logo text and settings
+    const imageId = urlParams.get('logoId'); // Used for image URL and transformations
+  
+    // If logoId is present, load the logo data (text, font, color, etc.)
+    if (logoId) {
+      const dbRef = ref(database, 'logos/' + logoId);
+      get(dbRef).then((snapshot) => {
+        if (snapshot.exists()) {
+          const logoData = snapshot.val();
+  
+          // Set the logo text and settings
+          document.getElementById('logoText').value = logoData.text;
+          document.getElementById('secondaryText').value = logoData.secondaryText;
+     currentFont = logoData.font  || 'Roboto';
+          currentColor = logoData.color;
+          autoBreakEnabled = logoData.autoBreakEnabled; // Load auto break state
+          breakSize = logoData.breakSize; // Load break size
+          isItalic = logoData.isItalic || false; // Set italic state
+          isBold = logoData.isBold || false; // Set bold state Whether text is bold
+          // Update the logo (assumed to be a separate function)
+          updateLogo();
+        } else {
+          console.log("Logo not found.");
+        }
+      })
+    }
+  
+    // If imageId is present, load the image and transformations (zoom, move, etc.)
+    if (imageId) {
+      const imageRef = ref(database, 'logos/' + imageId);
+      get(imageRef).then((snapshot) => {
+        if (snapshot.exists()) {
+          const logoData = snapshot.val();
+  
+          // Set the image source and transformation values from Realtime Database
+          const imageContainer = document.getElementById('imageContainer');
+          const imgElement = document.createElement('img');
+          imgElement.src = logoData.url;
+          imageContainer.innerHTML = '';
+          imageContainer.appendChild(imgElement);
+  
+          // Load and display transformation values
+          zoomRange.value = logoData.zoom;
+          moveX.value = logoData.moveX;
+          moveY.value = logoData.moveY;
+              rotateRange.value = logoData.rotate;
+
+          document.getElementById('zoomValue').textContent = logoData.zoom;
+          document.getElementById('moveXValue').textContent = logoData.moveX;
+          document.getElementById('moveYValue').textContent = logoData.moveY;
+              document.getElementById('rotateValue').textContent = logoData.rotate;
+
+          // Apply transformations
+          applyTransform();
+        } else {
+          console.log("No image data found for this ID.");
+        }
+      })
+    }
+};
+let startDistance = 0, initialScale = 1, isDragging = false;
+let startX = 0, startY = 0, initialX = 0, initialY = 0;
+let startAngle = 0, initialRotate = 0;
+
+function resetTransform() {
+  zoomRange.value = 1.5;
+  moveX.value = 0;
+  moveY.value = 0;
+  rotateRange.value = 0;
+  applyTransform();
+}
+
+function applyTransform() {
+  const imgElement = imageContainer.querySelector('img');
+  if (imgElement) {
+    imgElement.style.transform = `scale(${zoomRange.value}) translate(${moveX.value}px, ${moveY.value}px) rotate(${rotateRange.value}deg)`;
+    zoomValue.textContent = zoomRange.value;
+    moveXValue.textContent = moveX.value;
+    moveYValue.textContent = moveY.value;
+    rotateValue.textContent = rotateRange.value;
+  }
+}
+
+
+
+const shareLink = document.getElementById('shareLink');
+const shareLinkContainer = document.getElementById('shareLinkContainer');
+
+
+// Function to generate a shareable URL
+async function generateShareableUrl() {
+    if (!uploadedImageUrl || uploadedImageUrl.trim() === '') {
+        console.log('No photo URL, showing cart alert');
+        frontphotoalert('<i class="fas fa-times-circle red-icon"></i> Please upload front design photo.');
+        return null;
+    }
+
+
+    // Get current values from input fields
+    const currentText = document.getElementById('logoText').value || 'Your Logo';
+    const secondaryText = document.getElementById('secondaryText').value || 'Secondary Text';
+
+    const logoData = {
+        text: currentText,
+        secondaryText: secondaryText,
+        font: currentFont,
+        color: currentColor,
+        autoBreakEnabled: autoBreakEnabled,
+        breakSize: breakSize,
+        isItalic: isItalic || false,
+        isBold: isBold || false,
+        zoom: parseFloat(zoomRange.value),
+        moveX: parseInt(moveX.value, 10),
+        moveY: parseInt(moveY.value, 10),
+        rotate: parseInt(rotateRange.value),
+        url: uploadedImageUrl || ''
+    };
+
+    try {
+        const user = auth.currentUser;
+        if (!user) {
+            alert("User is not authenticated. Please log in.");
+            return null;
+        }
+
+        const userId = user.uid;
+        const newLogoRef = ref(database, 'logos/' + Date.now());
+        await set(newLogoRef, logoData);
+
+        const shareableUrl = `${window.location.origin}/Glass_Music_plaugue_view_design.html?logoId=${newLogoRef.key}`;
+        console.log('Shareable URL:', shareableUrl);
+
+        // Update the share link
+        shareLink.href = shareableUrl;
+        shareLink.textContent = 'Click to view the logo';
+        shareLinkContainer.style.display = 'block';
+
+        return shareableUrl; // Return the generated URL
+    } catch (error) {
+        console.error('Error saving logo data to Firebase:', error.message || error);
+        alert('There was an error saving your logo. Please try again.');
+        return null;
+    }
+}
+function showCartAlert(message, iconClass = "") {
+  console.log('Displaying cart alert message:', message); // Debugging: Log when cart alert is triggered
+
+  const cartAlert = document.getElementById('Alert');
+  const overlay = document.getElementById('overlay');
+
+  if (cartAlert && overlay) {
+    // Add the icon to the message if an icon class is provided
+    const iconHtml = iconClass ? `<i class="${iconClass}"></i> ` : '';
+    cartAlert.innerHTML = iconHtml + message; // Set the message with the icon inside the cart alert
+    cartAlert.style.display = 'block'; // Show the cart alert
+    overlay.style.display = 'block'; // Show the overlay
+
+    // Start the countdown for hiding the alert
+    startAlertTimeout();
+
+    // Pause the countdown when the user interacts with the overlay or alert
+    overlay.addEventListener('mousedown', pauseAlertCountdown);
+    cartAlert.addEventListener('mousedown', pauseAlertCountdown);
+    overlay.addEventListener('touchstart', pauseAlertCountdown);
+    cartAlert.addEventListener('touchstart', pauseAlertCountdown);
+
+    // Cancel the alert and hide immediately when the user clicks on the alert or overlay
+    overlay.addEventListener('click', cancelAndHideAlert);
+    cartAlert.addEventListener('click', cancelAndHideAlert);
+
+    // Resume countdown after the user stops interacting
+    overlay.addEventListener('mouseup', resumeAlertCountdown);
+    cartAlert.addEventListener('mouseup', resumeAlertCountdown);
+    overlay.addEventListener('touchend', resumeAlertCountdown);
+    cartAlert.addEventListener('touchend', resumeAlertCountdown);
+  } else {
+    console.error('Cart alert or overlay element not found');
+  }
+}
+
+// Function to add item to cart
+async function addToCart() {
+    const user = auth.currentUser;
+    if (!user) {
+        alert("User is not authenticated. Please log in.");
+        return;
+    }
+                 showCartAlert('Item added to cart\n\n<i class="fa fa-check-circle green-icon"></i>');
+      
+  
+    // Generate the shareable URL
+    const shareableUrl = await generateShareableUrl();
+    if (!shareableUrl) {
+        console.error('Failed to generate shareable URL.');
+        return;
+    }
+
+    const userId = user.uid;
+    const cartRef = ref(database, 'carts/' + userId);
+    const snapshot = await get(cartRef);
+    const cartItems = snapshot.exists() ? snapshot.val().cart : [];
+
+    // Create a new cart item
+    const newItem = {
+        title: "Glass music plaque",
+        shareableLink: shareableUrl, // Use the generated URL
+        cost: 300,
+        catalogUrl: 'https://fumstudio.shop/glass_music_plaque.html',
+        designs: [
+            {
+                itemImage: "https://i.etsystatic.com/23679560/r/il/20255d/5688138185/il_fullxfull.5688138185_spni.jpg",
+            },
+        ]
+    };
+
+    // Add the new item to the user's cart
+    cartItems.push(newItem);
+    await set(cartRef, { cart: cartItems });
+window.location.href = "cart_page.html";
+    
+}
+document.getElementById('addToCartBtn').addEventListener('click', addToCart);
+
+
+});
+
+
+</script> 
+  
+</body>
+</html>
