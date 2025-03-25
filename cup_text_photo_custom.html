@@ -1345,72 +1345,117 @@ function videoAlertNew(message, iconClass = "") {
     console.error('Cart alert or overlay element not found');
   }
 }
-    function handleFileSelect() {
-      const file = fileInputNew.files[0];
-  // Check if the file is a video
-  if (file && file.type.startsWith('video/')) {
-    // Show the overlay and video alert
-
-    // Reset the file input to allow a new selection after showing the alert
-    fileInputNew.value = ''; // Reset file input
-
-    // Start the countdown for auto-dismissal
-    videoAlertNew ('<i class="fas fa-times-circle red-icon"></i>You cannot upload videos. Please upload an image.');
-
-
-
-    // Pause the countdown when the user interacts with the overlay or alert
-
-
-
     
-    return; // Exit the function if a video is selected
+async function handleFileSelect() {
+  const user = auth.currentUser;
+  if (!user) {
+    window.location.href = "login.html";
+    return;
   }
-  // Continue with the image upload if the file is an image and no image is uploaded yet
-  
-      
-      if (file && !uploadedImageUrlNew) {
-        const storageRefPath = storageRef(storage, 'images/' + file.name);
-        const uploadTask = uploadBytesResumable(storageRefPath, file);
 
-        uploadTask.on('state_changed', (snapshot) => {
-          const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-          loadingScreenNew.textContent = `Uploading... ${Math.round(progress)}%`;
-          loadingScreenNew.style.display = 'flex';
-        }, (error) => {
-          console.error('Upload failed:', error);
-          loadingScreenNew.style.display = 'none';
-        }, () => {
-          getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-            uploadedImageUrlNew = downloadURL;
-            const imgElement = document.createElement('img');
-            imgElement.src = uploadedImageUrlNew;
-            imageContainerNew.innerHTML = '';
-            imageContainerNew.appendChild(imgElement);
-            loadingScreenNew.style.display = 'none';
-            secondLoadingScreenNew.style.display = 'flex';
+  const file = fileInputNew.files[0];
 
-            setTimeout(() => {
-              secondLoadingScreenNew.style.display = 'none';
-              applyTransformNew();
-            }, 5000);
+  if (file && file.type.startsWith("video/")) {
+    fileInputNew.value = ""; // Reset file input
+    videoAlertNew('<i class="fas fa-times-circle red-icon"></i>You cannot upload videos. Please upload an image.');
+    return;
+  }
 
-            fileInputNew.disabled = true;
-            deleteButtonNew.classList.remove('hidden');
-            resetButtonNew.classList.remove('hidden');
-             positionIconNew.classList.remove('hidden');    
-             
-             
+  if (file && !uploadedImageUrlNew) {
+    const uniqueFileName = `${Date.now()}-${file.name}`;
+    const storagePath = storageRef(storage, `images/${uniqueFileName}`);
+    const uploadTask = uploadBytesResumable(storagePath, file);
 
-             
-          });
-        });
-      } else {
-        alert('You can only upload one image. Please delete the existing image first.');
+    uploadTask.on(
+      "state_changed",
+      (snapshot) => {
+        const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        loadingScreenNew.textContent = `Uploading... ${Math.round(progress)}%`;
+        loadingScreenNew.style.display = "flex";
+      },
+      (error) => {
+        console.error("❌ Upload failed:", error);
+        loadingScreenNew.style.display = "none";
+      },
+      async () => {
+        const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
+        uploadedImageUrlNew = downloadURL;
+
+        const userId = user.uid;
+        const imageRef = dbRef(db, `uploads/${userId}/cupnew`);
+        await set(imageRef, { name: uniqueFileName, url: downloadURL });
+
+        console.log(`✅ Image uploaded successfully: ${uniqueFileName}`);
+
+        // Update UI
+        const imgElement = document.createElement("img");
+        imgElement.src = uploadedImageUrlNew;
+        imageContainerNew.innerHTML = "";
+        imageContainerNew.appendChild(imgElement);
+        imageContainerNew.style.cursor = "pointer"; // Change cursor to indicate it's clickable
+
+        // Add event listener to open image in new tab
+        imageContainerNew.onclick = () => {
+          if (uploadedImageUrlNew) {
+            window.open(uploadedImageUrlNew, "_blank");
+          }
+        };
+
+        loadingScreenNew.style.display = "none";
+        secondLoadingScreenNew.style.display = "flex";
+
+        setTimeout(() => {
+          secondLoadingScreenNew.style.display = "none";
+          applyTransformNew();
+        }, 5000);
+
+        fileInputNew.disabled = true;
+        deleteButtonNew.classList.remove("hidden");
+        resetButtonNew.classList.remove("hidden");
+        positionIconNew.classList.remove("hidden");
       }
+    );
+  } else {
+    alert("You can only upload one image. Please delete the existing image first.");
+  }
+}
+
+async function deleteImage() {
+  const user = auth.currentUser;
+  if (!user) {
+    window.location.href = "login.html";
+    return;
+  }
+
+  if (!isDeleteConfirmed) return;
+
+  try {
+    console.log(`🗑️ Attempting to delete image for user ${user.uid}...`);
+
+    const userId = user.uid;
+    const imageRef = dbRef(db, `uploads/${userId}/cupnew`);
+    const snapshot = await get(imageRef);
+
+    if (snapshot.exists()) {
+      const { name } = snapshot.val();
+
+      if (name) {
+        const storagePath = storageRef(storage, `images/${name}`);
+
+        await deleteObject(storagePath)
+          .then(() => console.log("✅ Image deleted from Firebase Storage"))
+          .catch((error) => console.error("❌ Error deleting from Storage:", error));
+      }
+
+      await remove(imageRef)
+        .then(() => console.log("✅ Image reference deleted from Firebase Database"))
+        .catch((error) => console.error("❌ Error deleting from Database:", error));
+    } else {
+      console.log("⚠️ No image found in Firebase Database.");
     }
-
-
+  } catch (error) {
+    console.error("❌ Error during deletion process:", error);
+  }
 
     function resetTransform() {
       zoomRangeNew.value = 1.5;
@@ -1449,33 +1494,7 @@ cancelDeleteNew.addEventListener('click', function() {
   confirmationModalNew.style.display = 'none';  // Hide the modal
 });
 
-// Function to delete the image
-function deleteImage() {
-  if (!isDeleteConfirmed) {
-    return; // If not confirmed, do nothing
-  }
-  
 
-      imageContainerNew.innerHTML = '<i class="fas fa-image"></i><p>Click here to upload photo</p>';
-      uploadedImageUrlNew = null;
-      fileInputNew.value = '';
-      fileInputNew.disabled = false;
-      deleteButtonNew.classList.add('hidden');
-      resetButtonNew.classList.add('hidden');
-         positionIconNew.classList.add('hidden'); 
-         
-         // Close position content if open
-    const positionContentNew = document.getElementById('positionContentNew');
-    if (positionContentNew.classList.contains('active')) {
-        positionContentNew.classList.remove('active'); // Close content
-        positionIconNew.classList.remove('active-icon'); // Remove active highlight from the icon
-    }
-  // Reset the confirmation flag after deletion
-  isDeleteConfirmed = false;  // Optionally reset the flag if you want to require confirmation every time
-}
-  
-
-    
 
 
    
