@@ -1760,6 +1760,7 @@ async function addToCart() {
         });
 
         await set(cartRef, { cart: cartItems });
+      window.location.href = "cart_page.html";
     } catch (error) {
         console.error("Error adding to cart:", error);
     }
