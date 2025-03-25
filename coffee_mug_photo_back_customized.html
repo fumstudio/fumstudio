@@ -1,0 +1,1615 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>coffe_mug_photo_back</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"> 
+         <link rel="stylesheet" href="css/Designs.css">
+  
+  
+  <!-- Preconnect and Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Bangers&family=Bungee+Inline&family=Cinzel:wght@400..900&family=Lilita+One&family=Monoton&family=Sarina&family=Satisfy&family=Staatliches&display=swap" rel="stylesheet">
+  
+  <!-- Additional Google Fonts and CSS -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto&family=Pacifico&family=Lobster&family=Quicksand&family=Poppins&family=Shrikhand&family=Chewy&display=swap" rel="stylesheet">
+  
+  <style>
+ 
+body {
+  font-family: Arial, sans-serif;
+  background-color:#FFFFFF;
+  background-size: cover;
+  background-attachment: fixed;
+  color: #333;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center; /* Centers horizontally */
+  align-items: center; /* Centers vertically */
+  height: 70vh; /* Full viewport height */
+  overflow: hidden; /* Prevents scrolling */
+  
+
+  
+}
+
+
+
+    .main-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+
+}
+    .editor-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 22px;
+    }
+
+    }
+    .logo-settings {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+     margin-top: 0px;
+    }
+    .logo-settings label {
+      font-weight: bold;
+      margin-top: 10px;
+      
+    }
+    .logo-settings input[type="text"],
+    .logo-settings select {
+     margin: 10px;
+      padding: 10px; 
+      width: 300px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      font-size: 16px;
+    }
+    .color-picker {
+      display: flex;
+      gap: 10px;
+      margin-top: 10px;
+    }
+    .color-swatch {
+      width: 30px;
+      height: 30px;
+      border: 2px solid #ccc;
+      cursor: pointer;
+      border-radius: 50%;
+      transition: transform 0.3s;
+    }
+    .color-swatch:hover {
+      transform: scale(1.2);
+    }
+
+    .logo-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: bold;
+      width: 300px;
+      height: 300px; 
+      border-radius: 8px;
+
+      position: relative;
+     padding: 10px; 
+      background-image: url('https://firebasestorage.googleapis.com/v0/b/myhost-a7ee9.appspot.com/o/images%2FCOFFEE_MUG_-_WHITE_9ce776d7-ea33-4f18-b3d7-e6dc3e830488_671x659.webp?alt=media&token=f93de1c3-d2df-46e2-953f-620c85ebe72d');
+      background-size: cover;
+      background-position: center;
+      transition: all 0.5s ease;
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+      text-align: center;
+       margin-top: 100px;
+    }
+    
+    
+    #loadingScreen, #secondLoadingScreen {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      color: white;
+      font-size: 24px;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+
+    #secondLoadingScreen {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: rgba(0, 0, 0, 0.8);
+      color: white;
+      padding: 10px 20px;
+      border-radius: 5px;
+      font-size: 18px;
+      z-index: 1001;
+    }
+
+   
+
+    #imageContainer img {
+      max-width: 100%;
+      max-height: 100%;
+      transform-origin: center;
+      transition: transform 0.3s ease;
+    }
+  </style>
+
+
+  
+    <style>
+    #loadingScreenNew, #secondLoadingScreenNew {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      color: white;
+      font-size: 24px;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+
+    #secondLoadingScreenNew {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: rgba(0, 0, 0, 0.8);
+      color: white;
+      padding: 10px 20px;
+      border-radius: 5px;
+      font-size: 18px;
+      z-index: 1001;
+    }
+
+ #imageContainerNew {
+  width: 170px; /* Keep width for portrait appearance */
+  height: 210px; /* Adjust height for a portrait aspect */
+      border-radius: 8px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  background-color: #f0f0f0;
+  position: relative;
+  background-image: url('');
+  background-size: 80px 80px; /* Adjust background size to better fit the portrait orientation */
+  background-repeat: no-repeat;
+  background-position: center;
+  cursor: pointer; /* Makes the container clickable */
+  bottom: 250px;
+  margin-right:25%;
+}
+
+    #imageContainerNew img {
+      max-width: 100%;
+      max-height: 100%;
+      transform-origin: center;
+      transition: transform 0.3s ease;
+    }
+    .logo-text {
+      z-index: 2;
+      display: block;
+      word-wrap: break-word;
+      line-height: 1.2;
+      margin-top: 20px;
+      margin-right: 70px;
+      color:#000000;
+font-size: 24px;
+width: 200px;
+    }
+    .logo-text2 {
+      font-size: 10px;
+      margin-top: 0px;
+            z-index: 2;
+      display: block;
+      word-wrap: break-word;
+      line-height: 1.2;
+
+      margin-right: 70px;
+      color:#000000;
+    }
+.tells {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: bold;
+      width: 40px;
+      height: 40px; 
+      border-radius: 8px;
+
+      position: relative;
+     padding: 10px; 
+background-image: url('https://firebasestorage.googleapis.com/v0/b/myhost-a7ee9.appspot.com/o/images%2F4%20(3).png?alt=media&token=1de61a0b-3b06-4491-9ed0-90fdd13bf6ee');
+
+      background-size: cover;
+      background-position: center;
+      transition: all 0.5s ease;
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+      text-align: center;
+   margin-bottom: -170px;
+   margin-left: 70px;
+         z-index:5;
+
+}
+  </style>
+  
+  <!-- navbar bottom -->
+
+
+<body>
+        <div class="overlay" id="overlay"></div>
+    <div id="cartAlert">
+        <p>Item added to cart!</p>
+
+    </div>
+       
+<!-- Modal for confirmation -->
+<div id="confirmationModal" class="modal hidden">
+  <div class="modal-content">
+    <p>Do you want to delete this photo?</p>
+    <button id="confirmDelete" class="confirm-btn green-btn">Yes</button>
+    <button id="cancelDelete" class="cancel-btn red-btn">No</button>
+  </div>
+</div>
+<!-- Modal for confirmation -->
+<div id="confirmationModalNew" class="modal hidden">
+  <div class="modal-content">
+    <p>Do you want to delete this photo?</p>
+    <button id="confirmDeleteNew" class="confirm-btn green-btn">Yes</button>
+    <button id="cancelDeleteNew" class="cancel-btn red-btn">No</button>
+  </div>
+</div>
+  <div class="overlay" id="overlay"></div>
+<div id="video-alert">
+ <i class="fas fa-exclamation-circle"></i> You cannot upload videos. Please upload an image.
+</div>   
+     
+  <!-- Dark background overlay (hidden by default) -->
+  <div class="dark-overlay" id="dark-overlay"></div>
+
+  <!-- Font list container (hidden by default) -->
+
+ 
+  <div class="editor-container">
+
+              <div class="tells">    </div> 
+
+
+      <div class="editor-container">
+ 
+  <div class="main-container">    
+  <div class="logo-container" id="logoContainerNew">
+    <div class="back">
+  
+
+
+      <div class="overlay"></div>
+      <span id="logoTextPreview1New" class="logo-text" style="display:none;">First Name</span>
+      <span id="logoTextPreview2New" class="logo-text2" style="display:none;">Last name</span>
+      <!-- Image container to upload an image by clicking -->
+
+    </div>
+  </div>
+
+     
+  <div id="imageContainerNew" style="cursor: pointer;">
+    <i class="fas fa-image"></i>
+    <p>Click here to uploud photo</p>
+    <!-- File input (hidden) -->
+    <input type="file" id="fileInputNew" style="display: none;">
+  </div>
+    <div id="toggleButton" ><i id="toggleButton" class="fas fa-info-circle icon"></i> <!-- Info Icon --></div>
+      </div>
+  <div style="display: none;">    
+             <div class="button-container">
+
+               <button id="positionIconNew" class="setting-btn hidden">
+                 <span class="bar bar1"></span>
+                 <span class="bar bar2"></span>
+                 <span class="bar bar1"></span>
+
+
+
+
+               </button>
+
+
+               <button id="resetButtonNew" class="setting-btn hidden"><i class="fa-solid fa-rotate-right"></i></button>
+
+               <div id="buttonContainerNew">
+                 <button id="deleteButtonNew" class="setting-btn  hidden"><i class="fas fa-trash"></i></button>
+               </div>
+             </div>
+               <button id="addToCartBtn" type="button" class="button-animation">
+  <span class="fold" ></span>
+
+  <div class="points_wrapper">
+    <i class="point"></i>
+    <i class="point"></i>
+    <i class="point"></i>
+    <i class="point"></i>
+    <i class="point"></i>
+    <i class="point"></i>
+    <i class="point"></i>
+    <i class="point"></i>
+    <i class="point"></i>
+    <i class="point"></i>
+  </div>
+
+  <span class="inner"
+    ><svg
+      class="icon"
+      fill="none"
+      stroke="currentColor"
+      viewBox="0 0 24 24"
+      xmlns="http://www.w3.org/2000/svg"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      stroke-width="2.5"
+    >
+      <polyline
+        points="13.18 1.37 13.18 9.64 21.45 9.64 10.82 22.63 10.82 14.36 2.55 14.36 13.18 1.37"
+      ></polyline></svg
+    >Add to cart</span
+  >
+</button>     
+ 
+
+ <div class="logo-settings">               
+<label for="logoTextNew"></label>
+    <input type="text" id="logoTextNew" placeholder="First name" oninput="updateLogoNew()" maxlength="10" />
+
+    <label for="secondaryTextNew"></label>
+    <input type="text" id="secondaryTextNew" placeholder="Last name" oninput="updateLogoNew()" maxlength="10" /> 
+     </div> 
+    
+          
+<div id="controlsNew">
+ 
+  <div id="shareLinkContainerNew"  style="">
+    <p>Share this logo with others:</p>
+    <a id="shareLinkNew" href="" target="_blank" style="">Share Link</a>
+  </div>
+</div>
+<div id="secondLoadingScreenNew">Processing... Please wait</div>
+<div id="loadingScreenNew" style="display: none;">
+  Uploading... 0%
+</div>
+ 
+
+    <!-- The link will be shown here -->
+<button id="shareButtonNew" style="">Share Image</button>
+
+ 
+
+
+<!-- Button to toggle the font list -->
+
+
+
+   <!-- Dark background overlay (hidden by default) -->
+   <div class="dark-overlay" id="dark-overlay"></div>
+   
+   
+   <!-- Font list container (hidden by default) -->
+   <div class="font-list-container" id="font-list-container">
+     
+<label class="custom-label"><strong>Choose a font:</strong></label>
+     <ul class="font-options-list">
+       <li class="font-item roboto" onclick="setFontNew('roboto')">Roboto</li>
+       <li class="font-item pacifico" onclick="setFontNew('pacifico')">Pacifico</li>
+       <li class="font-item lobster" onclick="setFontNew('lobster')">Lobster</li>
+       <li class="font-item quicksand" onclick="setFontNew('quicksand')">Quicksand</li>
+       <li class="font-item poppins" onclick="setFontNew('poppins')">Poppins</li>
+       <li class="font-item shrikhand" onclick="setFontNew('shrikhand')">Shrikhand</li>
+       <li class="font-item chewy" onclick="setFontNew('chewy')">Chewy</li>
+       <li class="font-item bangers" onclick="setFontNew('bangers')">Bangers</li>
+       <li class="font-item cinzel" onclick="setFontNew('cinzel')">Cinzel</li>
+       <li class="font-item sarina" onclick="setFontNew('sarina')">Sarina</li>
+       <li class="font-item satisfy" onclick="setFontNew('satisfy')">Satisfy</li>
+       <li class="font-item staatliches" onclick="setFontNew('staatliches')">Staatliches</li>
+     </ul>
+   </div>
+
+  
+  <!-- THE NAVBAR NER -->
+
+    <div class="bottom-navbar">
+        <!-- Icon Buttons -->
+      
+   <button class="square-button" onclick="generateRandomLogoNew()" ><i class="fa-duotone fa-solid fa-wand-magic-sparkles"></i></button>       
+        <a href="#" id="colorIconNew">
+            <i class="fas fa-paint-brush icon"></i> <!-- Paint Brush Icon -->
+            <div id="colorContentNew" class="content-section">
+                <!-- Content for color icon -->
+           <div class="color-picker">
+<div class="color-swatch" style="background-color: #000000;" onclick="setTextColorNew('#000000')"></div>             
+<div class="color-swatch" style="background-color:#8808C1 ;" onclick="setTextColorNew('#8808C1')"></div>
+<div class="color-swatch" style="background-color: #4B6F44;" onclick="setTextColorNew('#4B6F44')"></div>
+<div class="color-swatch" style="background-color: #4F6F9F;" onclick="setTextColorNew('#4F6F9F')"></div>
+
+<div class="color-swatch" style="background-color: #A02A2A;" onclick="setTextColorNew('#A02A2A')"></div>
+
+
+    </div>
+    
+            </div>
+        </a>
+        <button class="square-button" id="autoBreakButtonNew" onclick="toggleAutoBreak()New"    style="display: none;"><i class="fa-brands fa-autoprefixer"></i></button>
+        
+        
+        <a href="#" id="fontIconNew">
+<i id="font-toggle-btn" class="fa-solid fa-font"></i></a>
+
+
+   <script>
+     // Toggle the visibility of the font list container and dark overlay
+     document.getElementById('font-toggle-btn').addEventListener('click', function() {
+       const fontListContainer = document.getElementById('font-list-container');
+       const darkOverlay = document.getElementById('dark-overlay');
+       const isVisible = fontListContainer.style.display === 'block';
+   
+       // Toggle visibility of the font list and dark overlay
+       if (isVisible) {
+         fontListContainer.style.display = 'none';
+         darkOverlay.style.display = 'none';
+       } else {
+         fontListContainer.style.display = 'block';
+         darkOverlay.style.display = 'block';
+       }
+     });
+   
+     // Set font when a list item is clicked
+     function setFontNew(font) {
+       // Change the font of the body (or label) text
+       document.body.style.fontFamily = font;
+   
+       // Add 'selected' class to clicked item
+       const items = document.querySelectorAll('.font-options-list li');
+       items.forEach(item => item.classList.remove('selected')); // Remove 'selected' from all items
+       event.target.classList.add('selected'); // Add 'selected' to the clicked item
+   
+       // Hide the font list container and dark overlay immediately
+       document.getElementById('font-list-container').style.display = 'none';
+       document.getElementById('dark-overlay').style.display = 'none';
+     }
+   
+     // Close font container when clicking on the dark overlay
+     document.getElementById('dark-overlay').addEventListener('click', function() {
+       document.getElementById('font-list-container').style.display = 'none';
+       document.getElementById('dark-overlay').style.display = 'none';
+     });
+   </script>
+  
+  
+
+
+
+            <div id="positionContentNew" class="content-section">
+                <!-- Content for position icon -->
+         <div class="slider-container">
+      <div class="range-display">
+        <label class="slider-label" for="zoomRangeNew">Zoom</label>
+        <input type="range" id="zoomRangeNew" class="slider" min="1" max="3" step="0.1" value="1.5">
+        <span id="zoomValueNew" class="range-value">1.5</span>
+      </div>
+
+      <div class="range-display">
+        <label class="slider-label" for="moveXNew">Left | Right</label>
+        <input type="range" id="moveXNew" class="slider" min="-100" max="100" step="1" value="0">
+        <span id="moveXValueNew" class="range-value">0</span>
+      </div>
+
+      <div class="range-display">
+        <label class="slider-label" for="moveYNew">Up | Down</label>
+        <input type="range" id="moveYNew" class="slider" min="-100" max="100" step="1" value="0">
+        <span id="moveYValueNew" class="range-value">0</span>
+      </div>
+      
+              <div class="range-display">
+          <label class="slider-label" for="rotateRangeNew">Rotate</label>
+          <input type="range" id="rotateRangeNew" class="slider" min="-180" max="180" step="1" value="0">
+          <span id="rotateValueNew" class="range-value">0</span>        </div>      
+    </div>
+      
+            </div>
+        </a>
+      <div class="square-button" id="toggleItalicBtnNew"><em>T</em></div>
+    <div class="square-button" id="toggleBoldBtnNew">B</div>  
+        <!-- Add More Icons -->
+       
+    </div>    </div>    </div>    </div>
+
+
+     <div id="overlay"></div>
+   
+     <!-- Details Container -->
+     <div id="detailsContainer">
+       <!-- Close Button (X) -->
+
+     <button id="closeButton">X</button>
+   
+       <h3>Details</h3>
+                <button id="downloadButton" style="display: none;">Photo</button>
+       <p><strong>First name:</strong> <span id="logoTextValue">N/A</span></p>
+       <p><strong>Last name:</strong> <span id="secondaryTextValue">N/A</span></p>
+       <p><strong>Font:</strong> <span id="fontValue">N/A</span></p>
+       <p><strong>Color:</strong> <span id="colorValue">N/A</span></p>
+       <p style="display: none;"><strong>Auto Break Enabled:</strong> <span id="autoBreakValue">N/A</span></p>
+       <p style="display: none;"><strong>Break Size:</strong> <span id="breakSizeValue">N/A</span></p>
+   
+       <p><strong>Italic:</strong> <span id="italicValue">N/A</span></p>
+       <p><strong>Bold:</strong> <span id="boldValue">N/A</span></p>
+     </div>
+   <style>
+    /* Fixed Button on Top */
+    #toggleButton {
+  margin-right: -70%;  
+margin-top: -80%;
+      padding: 10px 10px;
+
+      color: #000000;
+      border: none;
+      cursor: pointer;
+      font-size: 16px;
+z-index: 100;
+      border-radius: 8px;
+      transition: opacity 0.3s ease; /* Smooth transition for opacity */
+    }
+
+
+    /* Details Container Style */
+    #detailsContainer {
+      display: none;
+      background-color: white;
+      color: black;
+      left: 8px;
+      padding: 30px;
+      border-radius: 15px; /* Rounded corners for luxury look */
+      width: 250px;
+      margin-top: 0px; /* Add margin to avoid covering the button */
+      position: fixed;
+      top: 60px;
+justify-content: center;
+      align-items: center;
+      transform: translateX(-50%);
+      z-index: 9;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+      opacity: 0;
+      transform: scale(0.8);
+      transition: opacity 0.5s ease, transform 0.5s ease; /* Smooth transition for opacity and scale */
+    }
+
+    /* Dark Overlay */
+    #overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.7); /* Dark transparent background */
+      z-index: 8;
+    }
+
+    h3 {
+      color: #333;
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 20px;
+    }
+
+    p {
+      font-size: 16px;
+      color: #555;
+      margin-bottom: 10px;
+    }
+
+    /* X Button Style */
+    #closeButton {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: transparent;
+      border: none;
+      color: black;
+      font-size: 24px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: color 0.3s ease;
+    }
+
+
+  </style>
+     <script>
+       // JavaScript to toggle the visibility of the details container and overlay
+       const toggleButton = document.getElementById('toggleButton');
+       const detailsContainer = document.getElementById('detailsContainer');
+       const overlay = document.getElementById('overlay');
+       const closeButton = document.getElementById('closeButton');
+   
+       toggleButton.addEventListener('click', () => {
+         // Toggle visibility
+         if (detailsContainer.style.display === 'none' || detailsContainer.style.display === '') {
+           detailsContainer.style.display = 'block';
+           overlay.style.display = 'block';
+           toggleButton.style.display = 'none'; // Hide the toggle button when details are shown
+   
+           // Apply the animation to fade in and scale the details container
+           setTimeout(() => {
+             detailsContainer.style.opacity = '1';
+             detailsContainer.style.transform = 'scale(1)';
+           }, 10); // Small delay for the transition to apply correctly
+         } else {
+           detailsContainer.style.opacity = '0';
+           detailsContainer.style.transform = 'scale(0.8)';
+           toggleButton.style.display = 'block'; // Show the toggle button again when closed
+   
+           // Hide the details container after the transition
+           setTimeout(() => {
+             detailsContainer.style.display = 'none';
+             overlay.style.display = 'none';
+           }, 500); // Wait for the animation to finish
+         }
+       });
+   
+       // Close the details container when the close (X) button is clicked
+       closeButton.addEventListener('click', () => {
+         detailsContainer.style.opacity = '0';
+         detailsContainer.style.transform = 'scale(0.8)';
+         toggleButton.style.display = 'block'; // Show the toggle button again when closed
+   
+         // Hide the details container after the transition
+         setTimeout(() => {
+           detailsContainer.style.display = 'none';
+           overlay.style.display = 'none';
+         }, 500); // Wait for the animation to finish
+       });
+   
+       // Close the details container when the overlay is clicked
+       overlay.addEventListener('click', () => {
+         detailsContainer.style.opacity = '0';
+         detailsContainer.style.transform = 'scale(0.8)';
+         toggleButton.style.display = 'block'; // Show the toggle button again when closed
+   
+         // Hide the details container after the transition
+         setTimeout(() => {
+           detailsContainer.style.display = 'none';
+           overlay.style.display = 'none';
+         }, 500); // Wait for the animation to finish
+       });
+     </script>
+
+     <!-- JavaScript -->
+    <script>// Function to toggle visibility of content under each icon inside the navbar
+function toggleContent(iconId, contentId, event) {
+    event.preventDefault(); // Prevent default anchor behavior (scroll to top)
+
+    const contentSection = document.getElementById(contentId);
+    const icon = document.getElementById(iconId);
+
+    // If the clicked content is already visible, hide it and remove highlight
+    if (contentSection.classList.contains('active')) {
+        contentSection.classList.remove('active');
+        icon.classList.remove('active-icon'); // Remove highlight
+    } else {
+        // Hide all other content sections and remove highlight from other icons
+        const allSections = document.querySelectorAll('.content-section');
+        allSections.forEach(section => section.classList.remove('active'));
+
+        const allIcons = document.querySelectorAll('.bottom-navbar a');
+        allIcons.forEach(icon => icon.classList.remove('active-icon')); // Remove highlight from all icons
+
+        // Show the clicked content section and highlight the icon
+        contentSection.classList.add('active');
+        icon.classList.add('active-icon'); // Add highlight to the clicked icon
+
+        // Scroll the content section into view (only if needed)
+        contentSection.scrollIntoView({
+            behavior: 'smooth', // Smooth scroll
+            block: 'center',    // Center the element vertically
+            inline: 'center'    // Center the element horizontally (optional)
+        });
+    }
+}
+
+// Prevent the content from closing when clicking inside it (stop event propagation)
+document.querySelectorAll('.content-section').forEach(content => {
+    content.addEventListener('click', function(event) {
+        event.stopPropagation(); // Prevent the click from propagating to the parent icon
+    });
+});
+
+
+// Event listeners for each icon
+document.getElementById('colorIconNew').addEventListener('click', function(event) {
+    toggleContent('colorIconNew', 'colorContentNew', event);
+});
+
+
+
+document.getElementById('positionIconNew').addEventListener('click', function(event) {
+    toggleContent('positionIconNew', 'positionContentNew', event);
+});
+
+</script>
+    </div>
+  </div>
+</div>
+
+
+    </div>
+  </div>
+
+
+      </div>
+
+  
+ <script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
+  import { getStorage, ref as storageRef, uploadBytesResumable, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-storage.js";
+  import { getDatabase, ref, set, get } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-database.js";
+  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js";
+
+  // Firebase configuration
+  const firebaseConfig = {
+    apiKey: "AIzaSyBDrzrgLslaJvnXbo1e90irCEtdcm9ZsCU",
+    authDomain: "logins-13661.firebaseapp.com",
+    databaseURL: "https://logins-13661-default-rtdb.firebaseio.com",  // Realtime Database URL
+    projectId: "logins-13661",
+    storageBucket: "logins-13661.appspot.com",
+    messagingSenderId: "451535349483",
+    appId: "1:451535349483:web:d3c9867fd2bffbbdca40ae",
+    measurementId: "G-EWZC4FFTTG"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const storage = getStorage(app);
+  const database = getDatabase(app);  // Initialize Realtime Database
+  const auth = getAuth();
+
+   
+
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const fileInputNew = document.getElementById('fileInputNew');
+    const imageContainerNew = document.getElementById('imageContainerNew');
+    const deleteButtonNew = document.getElementById('deleteButtonNew');
+    const resetButtonNew = document.getElementById('resetButtonNew');
+    const loadingScreenNew = document.getElementById('loadingScreenNew');
+    const secondLoadingScreenNew = document.getElementById('secondLoadingScreenNew');
+    const zoomRangeNew = document.getElementById('zoomRangeNew');
+    const moveXNew = document.getElementById('moveXNew');
+    const moveYNew = document.getElementById('moveYNew');
+    const zoomValueNew = document.getElementById('zoomValueNew');
+    const moveXValueNew = document.getElementById('moveXValueNew');
+    const moveYValueNew = document.getElementById('moveYValueNew');
+    
+            const rotateValueNew = document.getElementById('rotateValueNew');
+    const shareButtonNew = document.getElementById('shareButtonNew');
+    const linkContainerNew = document.getElementById('linkContainerNew');
+    const imageLinkNew = document.getElementById('imageLinkNew');
+
+
+let autoBreakEnabledNew = true;
+  let breakSizeNew = 'words';
+  let currentColorNew = "#000000";
+  let currentFontNew = "shrikhand";
+  let currentTextNew = "Your Logo";
+  let secondaryTextNew = "Secondary Text";
+  let uploadedImageUrlNew = null;
+
+ let autoBreakEnabled = true;
+  let breakSize = 3;
+  let currentColor = "#000000";
+  let currentFont = "shrikhand";
+  let currentText = "Your Logo";
+  let secondaryText = "Secondary Text";
+  let uploadedImageUrl = null;
+  
+    // Firebase Authentication listener
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        console.log('User is logged in:', user.email);  // Logs the user's email
+        console.log('User ID:', user.uid);  // Logs the user's UID
+      } else {
+        console.log('No user is logged in');
+
+      }
+    });
+let alertTimeout;
+let alertStartTime = 0;
+let alertTimeLeft = 3000; // 3 seconds for the alert to auto-dismiss
+
+// Handle file selection
+    fileInputNew.addEventListener('change', handleFileSelect);
+    resetButtonNew.addEventListener('click', resetTransform);
+    deleteButtonNew.addEventListener('click', deleteImage);
+
+    zoomRangeNew.addEventListener('input', applyTransformNew);
+    moveXNew.addEventListener('input', applyTransformNew);
+    moveYNew.addEventListener('input', applyTransformNew);
+    rotateRangeNew.addEventListener('input', applyTransformNew);
+
+
+    imageContainerNew.addEventListener('click', () => {
+      console.log("Image container clicked");  // Debug message
+      fileInputNew.click();  // Trigger the file input dialog
+    });
+
+    function handleFileSelect() {
+      const file = fileInputNew.files[0];
+  // Check if the file is a video
+  if (file && file.type.startsWith('video/')) {
+    // Show the overlay and video alert
+    document.getElementById('overlay').style.display = 'block';
+    document.getElementById('video-alert').style.display = 'block';
+
+    // Reset the file input to allow a new selection after showing the alert
+    fileInputNew.value = ''; // Reset file input
+
+    // Start the countdown for auto-dismissal
+    startAlertTimeout();
+
+    // Pause the countdown when the user interacts with the overlay or alert
+    document.getElementById('overlay').addEventListener('mousedown', pauseAlertCountdown);
+    document.getElementById('video-alert').addEventListener('mousedown', pauseAlertCountdown);
+    document.getElementById('overlay').addEventListener('touchstart', pauseAlertCountdown);
+    document.getElementById('video-alert').addEventListener('touchstart', pauseAlertCountdown);
+
+    // Resume the countdown when the user releases the mouse or finger
+    document.getElementById('overlay').addEventListener('mouseup', resumeAlertCountdown);
+    document.getElementById('video-alert').addEventListener('mouseup', resumeAlertCountdown);
+    document.getElementById('overlay').addEventListener('touchend', resumeAlertCountdown);
+    document.getElementById('video-alert').addEventListener('touchend', resumeAlertCountdown);
+
+    return; // Exit the function if a video is selected
+  }
+
+  // Continue with the image upload if the file is an image and no image is uploaded yet
+  
+      
+      if (file && !uploadedImageUrlNew) {
+        const storageRefPath = storageRef(storage, 'images/' + file.name);
+        const uploadTask = uploadBytesResumable(storageRefPath, file);
+
+        uploadTask.on('state_changed', (snapshot) => {
+          const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          loadingScreenNew.textContent = `Uploading... ${Math.round(progress)}%`;
+          loadingScreenNew.style.display = 'flex';
+        }, (error) => {
+          console.error('Upload failed:', error);
+          loadingScreenNew.style.display = 'none';
+        }, () => {
+          getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+            uploadedImageUrlNew = downloadURL;
+            const imgElement = document.createElement('img');
+            imgElement.src = uploadedImageUrlNew;
+            imageContainerNew.innerHTML = '';
+            imageContainerNew.appendChild(imgElement);
+            loadingScreenNew.style.display = 'none';
+            secondLoadingScreenNew.style.display = 'flex';
+
+            setTimeout(() => {
+              secondLoadingScreenNew.style.display = 'none';
+              applyTransformNew();
+            }, 5000);
+
+            fileInputNew.disabled = true;
+            deleteButtonNew.classList.remove('hidden');
+            resetButtonNew.classList.remove('hidden');
+             positionIconNew.classList.remove('hidden');    
+             
+             
+
+             
+          });
+        });
+      } else {
+        alert('You can only upload one image. Please delete the existing image first.');
+      }
+    }
+
+
+function pauseAlertCountdown() {
+  clearTimeout(alertTimeout); // Stop the countdown
+  alertTimeLeft -= Date.now() - alertStartTime; // Subtract elapsed time
+}
+
+function resumeAlertCountdown() {
+  startAlertTimeout(); // Restart the countdown with the remaining time
+}
+
+    function resetTransform() {
+      zoomRangeNew.value = 1.5;
+      moveXNew.value = 0;
+      moveYNew.value = 0;
+      applyTransformNew();
+    }
+
+const confirmationModalNew = document.getElementById('confirmationModalNew');
+const confirmDeleteNew = document.getElementById('confirmDeleteNew');
+const cancelDeleteNew = document.getElementById('cancelDeleteNew');
+
+
+
+
+let isDeleteConfirmed= false;
+
+
+// Show the modal when delete button is clicked
+deleteButtonNew.addEventListener('click', function(event) {
+  event.preventDefault();  // Prevent immediate deletion
+  isDeleteConfirmed= false; // Reset the confirmation flag
+  confirmationModalNew.style.display = 'flex';  // Show the modal
+});
+
+// If 'Yes' is clicked, perform the delete action
+confirmDeleteNew.addEventListener('click', function() {
+  isDeleteConfirmed= true;  // Set the flag to true when confirmed
+  confirmationModalNew.style.display = 'none';  // Hide the modal
+  deleteImage();  // Call the deleteImage function after confirmation
+});
+
+// If 'No' is clicked, close the modal without deleting
+cancelDeleteNew.addEventListener('click', function() {
+  confirmationModalNew.style.display = 'none';  // Hide the modal
+});
+
+// Function to delete the image
+function deleteImage() {
+  if (!isDeleteConfirmed) {
+    return; // If not confirmed, do nothing
+  }
+  
+
+      imageContainerNew.innerHTML = '<i class="fas fa-image"></i><p>Click here to upload photo</p>';
+      uploadedImageUrlNew = null;
+      fileInputNew.value = '';
+      fileInputNew.disabled = false;
+      deleteButtonNew.classList.add('hidden');
+      resetButtonNew.classList.add('hidden');
+         positionIconNew.classList.add('hidden'); 
+         
+         // Close position content if open
+    const positionContentNew = document.getElementById('positionContentNew');
+    if (positionContentNew.classList.contains('active')) {
+        positionContentNew.classList.remove('active'); // Close content
+        positionIconNew.classList.remove('active-icon'); // Remove active highlight from the icon
+    }
+  // Reset the confirmation flag after deletion
+  isDeleteConfirmed = false;  // Optionally reset the flag if you want to require confirmation every time
+}
+  
+
+    
+
+
+   
+ const urlParams = new URLSearchParams(window.location.search); 
+const logoId = urlParams.get('logoId');
+
+if (logoId) {
+  const logoRef = ref(database, 'logos/' + logoId);
+
+  get(logoRef).then((snapshot) => {
+    if (snapshot.exists()) {
+      const logoDataNew = snapshot.val();
+      // Render the logo data on the page (e.g., display text and image)
+      document.getElementById('logoTextNew').textContent = logoDataNew.texNewt;
+      document.getElementById('secondaryTextNew').textContent = logoDataNew.secondaryTextNew;
+      // You can add more logic to render colors, fonts, or the image URL if available
+    } else {
+      console.error('Logo not found');
+      alert('Logo not found!');
+    }
+  }).catch((error) => {
+    console.error('Error fetching logo:', error);
+    alert('Error fetching logo data!');
+  });
+}
+
+
+      function applyTransformNew() {
+      const imgElement = imageContainerNew.querySelector('img');
+      if (imgElement) {
+        imgElement.style.transform = `scale(${zoomRangeNew.value}) translate(${moveXNew.value}px, ${moveYNew.value}px) rotate(${rotateRangeNew.value}deg)`;
+        zoomValueNew.textContent = zoomRangeNew.value;
+        moveXValueNew.textContent = moveXNew.value;
+        moveYValueNew.textContent = moveYNew.value;
+      rotateValueNew.textContent = rotateRangeNew.value;
+
+      }
+    }
+
+
+let isItalicNew = false;  // This will track whether italic is enabled
+let isBoldNew = true;     // Set this to true to make the font bold by default
+
+// Function to toggle italic style
+function toggleItalicNew() {
+  isItalicNew = !isItalicNew;  // Toggle italic state
+  updateLogoNew();  // Update the logo with the new italic setting
+  
+  // Toggle italic on the button's "T" text
+  const toggleButtonNew = document.getElementById('toggleItalicBtnNew');
+  
+  // Update button text for feedback (either T or T (Italic))
+  toggleButtonNew.innerText = isItalicNew ? 'T' : 'T';  // Show italic if true, normal if false
+  
+  // Apply italic or normal style to the button
+  toggleButtonNew.style.fontStyle = isItalicNew ? 'normal' : 'italic';  // If italic is enabled, button appears italic
+};
+
+// Function to toggle bold style
+function toggleBoldNew() {
+  isBoldNew = !isBoldNew;  // Toggle bold state
+  updateLogoNew();  // Update the logo with the new bold setting
+  
+  // Toggle bold on the button's "B" text
+  const toggleButtonNew = document.getElementById('toggleBoldBtnNew');
+  
+  // Apply bold or normal style to the letter "B" in the button text
+  if (isBoldNew) {
+    toggleButtonNew.style.fontWeight = 'normal';  // Apply bold style
+  } else {
+    toggleButtonNew.style.fontWeight = 'bold';  // Remove bold style
+  }
+}
+
+// Add event listeners for the buttons
+document.getElementById('toggleItalicBtnNew').addEventListener('click', toggleItalicNew);
+document.getElementById('toggleBoldBtnNew').addEventListener('click', toggleBoldNew);
+
+// Function to adjust the font size for logo text
+  function adjustLogoTextFontSize(element) {
+    let textLength = element.textContent.length;
+    const containerWidth = element.offsetWidth;
+    const containerHeight = element.offsetHeight;
+
+    let baseFontSize = 10;
+
+    if (textLength <= 10) {
+      baseFontSize = 90;
+    } else if (textLength <= 20) {
+      baseFontSize = 40;
+    } else if (textLength <= 30) {
+      baseFontSize = 30;
+    } else if (textLength <= 50) {
+      baseFontSize = 20;
+    } else {
+      baseFontSize = 30;
+    }
+
+    let scaleFactor = Math.min(containerWidth / (textLength * 500), containerHeight / 10);
+    const adjustedFontSize = Math.max(baseFontSize * scaleFactor, 20);
+
+    element.style.fontSize = `${adjustedFontSize}px`;
+  }
+
+// Separate function to adjust the font size of the secondary text
+function adjustSecondaryTextFontSize(element) {
+  const containerWidth = document.getElementById('logoContainerNew').offsetWidth;
+  const containerHeight = document.getElementById('logoContainerNew').offsetHeight;
+  let fontSize = 15;  // Typically smaller for secondary text
+
+  const textLength = element.textContent.replace(/\s/g, '').length;
+  fontSize = Math.max(10, Math.min(15, 15 - textLength / 4));
+
+  element.style.fontSize = `${fontSize}px`;
+}
+
+// Function to break text into chunks based on word or character mode
+function breakTextIntoChunks(text, breakSizeNew) {
+  if (autoBreakEnabledNew === 'word') {
+    return breakTextByWords(text, breakSizeNew);
+  } else if (autoBreakEnabledNew === 'character') {
+    return breakTextByCharacters(text, breakSizeNew);
+  }
+  return text;
+}
+
+// Break text by words
+function breakTextByWords(text, breakSizeNew) {
+  const words = text.split(/\s+/); 
+  
+  let chunks = [];
+  let currentChunk = '';
+
+  for (let word of words) {
+    if (word.length >= 13) {
+      // If word has 13 or more letters, break it into smaller chunks
+      while (word.length >= 13) {
+        chunks.push(word.substring(0, 13)); // Take the first 13 letters
+        word = word.substring(13); // Take the remaining part of the word
+      }
+      if (word.length > 0) {
+        currentChunk += word; // Add the remainder of the word
+      }
+    } else {
+      // Add the word to the current chunk
+      if (currentChunk.length + word.length + 1 <= breakSize) {
+        currentChunk += (currentChunk.length > 0 ? ' ' : '') + word;
+      } else {
+        chunks.push(currentChunk);
+        currentChunk = word; // Start a new chunk with the current word
+      }
+    }
+  }
+
+  // If there's any leftover text in the current chunk, push it to the chunks array
+  if (currentChunk.length > 0) {
+    chunks.push(currentChunk);
+  }
+
+  return chunks.join('<br>'); // Join chunks with a line break for display
+}
+
+// Break text by characters
+function breakTextByCharacters(text, breakSizeNew) {
+  const chars = text.split(''); // Split text into individual characters
+  let formattedText = '';
+  let chunk = '';
+
+  for (let i = 0; i < chars.length; i++) {
+    chunk += chars[i]; // Add character to current chunk
+
+    // Add line break after every 1 to 3 characters
+    if ((i + 1) % 3 === 0 || i === chars.length - 1) {
+      formattedText += chunk + '<br>';
+      chunk = ''; // Reset chunk after breaking
+    }
+  }
+  return formattedText.trim(); // Remove trailing space
+}
+
+// Function to update the logo with user input
+
+// Function to toggle between word break mode and character break mode
+window.toggleAutoBreakNew = function() {
+  if (autoBreakEnabledNew === 'word') {
+    autoBreakEnabledNew = 'character'; // Switch to character break mode
+    document.getElementById('autoBreakButtonNew').innerText = 'Auto Break: 1-3 Characters';
+  } else {
+    autoBreakEnabledNew = 'word'; // Switch to word break mode
+    document.getElementById('autoBreakButtonNew').innerText = 'Auto Break: Every 2 Words';
+  }
+  updateLogoNew(); // Update the logo based on the new mode
+};
+
+
+  // Function to set text color
+  window.setTextColorNew = function(colorNew) {
+    currentColorNew = colorNew;
+    updateLogoNew();
+  };
+
+
+
+// Function to generate a random logo
+window.generateRandomLogoNew = function() {
+    const randomFonts = ["shrikhand", "chewy", "Lobster", "Quicksand"];
+    const randomColors = [" #A02A2A", " #4F6F9F", " #4B6F44", " #8808C1"];
+    const randomText = ["Awesome", "Creative", "Logo Design", "Fantastic", "Brand Name"];
+    const randomSecondaryText = ["Tagline", "By Us", "Est. 2024", "Your Brand", "Design Name"];
+
+
+  const logoTextValue = document.getElementById('logoTextNew').value || randomText[Math.floor(Math.random() * randomText.length)];
+  const secondaryTextValue = document.getElementById('secondaryTextNew').value || randomSecondaryText[Math.floor(Math.random() * randomSecondaryText.length)];
+
+  const randomFont = randomFonts[Math.floor(Math.random() * randomFonts.length)];
+  const randomColor = randomColors[Math.floor(Math.random() * randomColors.length)];
+
+  document.getElementById('logoTextNew').value = logoTextValue;
+  document.getElementById('secondaryTextNew').value = secondaryTextValue;
+  
+  setTextColorNew(randomColor);
+setFontNew(randomFont);
+};
+
+// Function to set the font for logo text
+    function setFontNew(fontNew) {
+      currentFontNew = fontNew;
+      updateLogoNew();  // Update the logo with the selected font
+    }
+    
+    // Function to set the font for logo text
+  window.setFontNew = function(fontNew) {
+    currentFontNew = fontNew;
+    updateLogoNew();  // Update the logo with the selected font
+  
+      // Hide the font container and overlay when a font is selected
+      document.getElementById('font-list-container').style.display = 'none';
+      document.getElementById('dark-overlay').style.display = 'none';
+    }
+    
+// Global variables for shareable URLs
+let shareableUrl = '';
+let shareableUrlNew = '';
+
+
+
+document.getElementById('shareButtonNew').addEventListener('click', async () => {
+  const currentTextNew = document.getElementById('logoTextNew').value || 'Your Logo';
+  const secondaryTextNew = document.getElementById('secondaryTextNew').value || 'Secondary Text';
+
+  const logoDataNew = {
+    textNew: currentTextNew,
+    secondaryTextNew: secondaryTextNew,
+    fontNew: currentFontNew,
+    colorNew: currentColorNew,
+    autoBreakEnabledNew: autoBreakEnabledNew,
+    breakSizeNew: breakSizeNew,
+          isItalicNew: isItalicNew || false,  // Whether text is italic
+      isBoldNew: isBoldNew || false,     // Whether text is bold
+    zoomNew: parseFloat(zoomRangeNew.value),
+    moveXNew: parseInt(moveXNew.value, 10),
+    moveYNew: parseInt(moveYNew.value, 10),
+       rotateNew: parseInt(rotateRangeNew.value),
+    urlNew: uploadedImageUrlNew || ''
+  };
+
+  try {
+    const user = auth.currentUser;
+    if (!user) {
+      alert("User is not authenticated. Please log in.");
+      return;
+    }
+
+    const userId = user.uid;
+    const newLogoRef = ref(database, 'logos/' + Date.now());
+    await set(newLogoRef, logoDataNew);
+
+    const shareableUrlNew = `${window.location.origin}/Codetwo.html?logoId=${newLogoRef.key}`;
+    console.log('Shareable URL:', shareableUrlNew);
+
+    // Set the global variable for the new URL
+    window.shareableUrlNew = shareableUrlNew;
+
+    // Update UI to show the link to the user
+    const shareLinkNew = document.getElementById('shareLinkNew');
+    const shareLinkContainerNew = document.getElementById('shareLinkContainerNew');
+    shareLinkNew.href = shareableUrlNew;
+    shareLinkNew.textContent = 'Click to view the second logo';
+    shareLinkContainerNew.style.display = 'block';
+  } catch (error) {
+    console.error('Error saving logo data to Firebase:', error.message || error);
+    alert('There was an error saving your logo. Please try again.');
+  }
+});
+
+// Function to generate a unique ID for each item
+function generateItemId() {
+    return 'item-' + Math.random().toString(36).substr(2, 9); // Generate a random ID for uniqueness
+}
+
+// Function to handle the "Add to Cart" logic
+// Function to generate a unique ID for each item
+function generateItemId() {
+    return 'item-' + Math.random().toString(36).substr(2, 9); // Generate a random ID for uniqueness
+}
+
+// Function to handle the "Add to Cart" logic
+// Function to generate a unique ID for each item
+function generateItemId() {
+    return 'item-' + Math.random().toString(36).substr(2, 9); // Generate a random ID for uniqueness
+}
+
+// Function to handle the "Add to Cart" logic
+async function addToCart() {
+    // Show the loading spinner before the Firebase call and cart addition
+
+    // Trigger the share buttons to generate new URLs
+    console.log("Generating new URLs for both logos...");
+
+
+    await document.getElementById('shareButtonNew').click();  // Trigger second logo URL generation
+
+    // Wait until both URLs are generated
+    const waitForUrls = new Promise((resolve) => {
+        const interval = setInterval(() => {
+            if (window.shareableUrl && window.shareableUrlNew) {
+                clearInterval(interval);
+                resolve();
+            }
+        }, 100); // Check every 100ms if both URLs are available
+    });
+
+    await waitForUrls; // Wait until both URLs are available
+
+    // Get the current user
+    const user = auth.currentUser;
+    if (!user) {
+        document.getElementById('loadingOverlay').style.display = 'none'; // Hide spinner if no user
+        return; // Return if the user is not authenticated
+    }
+
+    const userId = user.uid;
+    
+    // Generate a new item ID
+    const newItemId = generateItemId();
+
+    // Create the new cart item using window.shareableLink and window.shareableLinkNew
+    const newItem = {
+        id: newItemId, // Unique item ID
+        shareableLink: window.shareableUrl, // Link to the page with the item (using unique item ID from the window)
+        shareableLinkNew: window.shareableUrlNew, // Another link for the item (could be different if needed)
+    };
+
+
+
+// Create the link to pass to the second page with query parameters
+const itemPageLink = `itemPage.html?link1=${encodeURIComponent(newItem.shareableLink)}&link2=${encodeURIComponent(newItem.shareableLinkNew)}`;
+
+    // Add the new item to the Firebase database under the items node
+    const itemRef = ref(database, `items/${newItem.id}`); // Reference to the new item ID
+    await set(itemRef, newItem); // Save the item to Firebase with all properties
+
+    // Fetch the current cart for the user
+    const cartRef = ref(database, 'carts/' + userId);
+    const snapshot = await get(cartRef);
+    const cartItems = snapshot.exists() ? snapshot.val().cart : [];
+
+
+// Push the item into the cart with these shareable links
+cartItems.push({
+    shareableLink: itemPageLink, // Link to the item in the catalog
+    title: "Key Holder", // Item title
+    cost: 300, // Price of the item
+    catalogUrl: 'https://example.com/new-design1', // Link to the item details page
+    designs: [
+        {
+            itemImage: "https://example.com/new-design1", // Example image URL for the design
+        },
+        {
+            itemImage: "https://example.com/new-design2", // Another design image URL
+        }
+    ]
+});
+
+// Optionally, you can log the link to check it
+console.log(itemPageLink);
+    // Save the updated cart back to Firebase
+    await set(cartRef, { cart: cartItems });
+
+
+}
+document.getElementById('addToCartBtn').addEventListener('click', addToCart);
+
+// Show cart alert function
+function showCartAlert(message, iconClass = "") {
+    console.log('Displaying cart alert message:', message); // Debugging: Log when cart alert is triggered
+
+    const cartAlert = document.getElementById('cartAlert');
+    const overlay = document.getElementById('overlay');
+
+    if (cartAlert && overlay) {
+        // Add the icon to the message if an icon class is provided
+        const iconHtml = iconClass ? `<i class="${iconClass}"></i> ` : '';
+        cartAlert.innerHTML = iconHtml + message; // Set the message with the icon inside the cart alert
+        cartAlert.style.display = 'block'; // Show the cart alert
+        overlay.style.display = 'block'; // Show the overlay
+
+        // Start the countdown for hiding the alert
+        startAlertTimeout();
+
+        // Pause the countdown when the user interacts with the overlay or alert
+        overlay.addEventListener('mousedown', pauseAlertCountdown);
+        cartAlert.addEventListener('mousedown', pauseAlertCountdown);
+        overlay.addEventListener('touchstart', pauseAlertCountdown);
+        cartAlert.addEventListener('touchstart', pauseAlertCountdown);
+
+        // Resume the countdown when the user releases the mouse or finger
+        overlay.addEventListener('mouseup', resumeAlertCountdown);
+        cartAlert.addEventListener('mouseup', resumeAlertCountdown);
+        overlay.addEventListener('touchend', resumeAlertCountdown);
+        cartAlert.addEventListener('touchend', resumeAlertCountdown);
+    } else {
+        console.error('Cart alert or overlay element not found');
+    }
+}
+
+// Add event listener to the "Add to Cart" button
+document.getElementById('addToCartBtn').addEventListener('click', addToCart);
+
+// Show cart alert function
+function showCartAlert(message, iconClass = "") {
+    console.log('Displaying cart alert message:', message); // Debugging: Log when cart alert is triggered
+
+    const cartAlert = document.getElementById('cartAlert');
+    const overlay = document.getElementById('overlay');
+
+    if (cartAlert && overlay) {
+        // Add the icon to the message if an icon class is provided
+        const iconHtml = iconClass ? `<i class="${iconClass}"></i> ` : '';
+        cartAlert.innerHTML = iconHtml + message; // Set the message with the icon inside the cart alert
+        cartAlert.style.display = 'block'; // Show the cart alert
+        overlay.style.display = 'block'; // Show the overlay
+
+        // Start the countdown for hiding the alert
+        startAlertTimeout();
+
+        // Pause the countdown when the user interacts with the overlay or alert
+        overlay.addEventListener('mousedown', pauseAlertCountdown);
+        cartAlert.addEventListener('mousedown', pauseAlertCountdown);
+        overlay.addEventListener('touchstart', pauseAlertCountdown);
+        cartAlert.addEventListener('touchstart', pauseAlertCountdown);
+
+        // Resume the countdown when the user releases the mouse or finger
+        overlay.addEventListener('mouseup', resumeAlertCountdown);
+        cartAlert.addEventListener('mouseup', resumeAlertCountdown);
+        overlay.addEventListener('touchend', resumeAlertCountdown);
+        cartAlert.addEventListener('touchend', resumeAlertCountdown);
+    } else {
+        console.error('Cart alert or overlay element not found');
+    }
+}
+
+// Start the timeout to hide the alert after a certain time
+function startAlertTimeout() {
+  alertStartTime = Date.now();
+  alertTimeout = setTimeout(() => {
+    const cartAlert = document.getElementById('cartAlert');
+    const overlay = document.getElementById('overlay');
+    if (cartAlert && overlay) {
+      console.log("Hiding alert after timeout"); // Debugging: Confirming that timeout is firing
+      cartAlert.style.display = 'none'; // Hide the cart alert
+      overlay.style.display = 'none'; // Hide the overlay
+    } else {
+      console.error('Cart alert or overlay not found during timeout.');
+    }
+  }, alertTimeLeft);
+}
+
+window.updateLogoNew = function() {
+  let logoTextNew = document.getElementById('logoTextNew').value || '';
+  let secondaryTextNew = document.getElementById('secondaryTextNew').value || '';
+
+
+  // Handle text breaking and truncation
+  const formattedText = breakTextIntoChunks(logoTextNew, 25);
+  const formattedSecondaryText = breakTextIntoChunks(secondaryTextNew, 25);
+
+  const logoTextPreview1 = document.getElementById('logoTextPreview1New');
+  const logoTextPreview2 = document.getElementById('logoTextPreview2New');
+
+  logoTextPreview1.innerHTML = formattedText;
+  logoTextPreview2.innerHTML = formattedSecondaryText;
+
+  logoTextPreview1.style.color = currentColorNew;
+  logoTextPreview2.style.color = currentColorNew;
+  logoTextPreview1.style.fontFamily = currentFontNew;
+  logoTextPreview2.style.fontFamily = currentFontNew;
+
+  // Apply italic and bold styling based on the flags
+  if (isItalicNew) {
+    logoTextPreview1.style.fontStyle = 'italic';
+    logoTextPreview2.style.fontStyle = 'italic';
+  } else {
+    logoTextPreview1.style.fontStyle = 'normal';
+    logoTextPreview2.style.fontStyle = 'normal';
+  }
+
+  if (isBoldNew) {
+    logoTextPreview1.style.fontWeight = 'bold';
+    logoTextPreview2.style.fontWeight = 'bold';
+  } else {
+    logoTextPreview1.style.fontWeight = 'normal';
+    logoTextPreview2.style.fontWeight = 'normal';
+  }
+
+  adjustLogoTextFontSize(logoTextPreview1);
+  adjustSecondaryTextFontSize(logoTextPreview2);
+}
+
+window.onload = function() {
+  // Get the URL parameters
+  const urlParams = new URLSearchParams(window.location.search);
+  const logoId = urlParams.get('logoId'); // Used for logo text and settings
+  const imageId = urlParams.get('logoId'); // Used for image URL and transformations
+
+  // If logoId is present, load the logo data (text, font, color, etc.)
+  if (logoId) {
+    const dbRef = ref(database, 'logos/' + logoId);  // Corrected the reference to use 'logoId'
+    get(dbRef).then((snapshot) => {
+      if (snapshot.exists()) {
+        const logoDataNew = snapshot.val();
+
+        document.getElementById('logoTextValue').textContent = logoDataNew.textNew || 'N/A';
+        document.getElementById('secondaryTextValue').textContent = logoDataNew.secondaryTextNew || 'N/A';
+        document.getElementById('fontValue').textContent = logoDataNew.fontNew || 'N/A'; // "shrikhand" will show here
+        document.getElementById('colorValue').textContent = logoDataNew.colorNew || 'N/A'; // "#000000" will show here
+        document.getElementById('autoBreakValue').textContent = logoDataNew.autoBreakEnabledNew ? 'Yes' : 'No'; // true -> "Yes"
+        document.getElementById('breakSizeValue').textContent = logoDataNew.breakSizeNew || 'N/A'; // "words" will show here
+        document.getElementById('italicValue').textContent = logoDataNew.isItalicNew ? 'Yes' : 'No'; // false if not set
+        document.getElementById('boldValue').textContent = logoDataNew.isBoldNew ? 'Yes' : 'No'; // true -> "Yes"
+
+        // Set the logo text and settings
+        document.getElementById('logoTextNew').value = logoDataNew.textNew;
+        document.getElementById('secondaryTextNew').value = logoDataNew.secondaryTextNew;
+        currentFontNew = logoDataNew.fontNew || 'Roboto';
+        currentColorNew = logoDataNew.colorNew;
+        autoBreakEnabledNew = logoDataNew.autoBreakEnabledNew; // Load auto break state
+        breakSizeNew = logoDataNew.breakSizeNew; // Load break size
+        isItalicNew = logoDataNew.isItalicNew || false; // Set italic state
+        isBoldNew = logoDataNew.isBoldNew || false; // Set bold state
+        // Update the logo (assumed to be a separate function)
+        updateLogoNew();
+      } else {
+        console.log("Logo not found.");
+      }
+    });
+  }
+
+  // If imageId is present, load the image and transformations (zoom, move, etc.)
+  if (imageId) {
+    const imageRef = ref(database, 'logos/' + imageId); // Corrected the reference to use 'imageId'
+    get(imageRef).then((snapshot) => {
+      if (snapshot.exists()) {
+        const logoDataNew = snapshot.val();
+
+        // Set the image source and transformation values from Realtime Database
+        const imageContainerNew = document.getElementById('imageContainerNew');
+        const imgElement = document.createElement('img');
+        imgElement.src = logoDataNew.urlNew;
+        imageContainerNew.innerHTML = '';
+        imageContainerNew.appendChild(imgElement);
+
+        // Load and display transformation values
+        zoomRangeNew.value = logoDataNew.zoomNew;
+        moveXNew.value = logoDataNew.moveXNew;
+        moveYNew.value = logoDataNew.moveYNew;
+            rotateRangeNew.value = logoDataNew.rotateNew;
+        document.getElementById('zoomValueNew').textContent = logoDataNew.zoomNew;
+        document.getElementById('moveXValueNew').textContent = logoDataNew.moveXNew;
+        document.getElementById('moveYValueNew').textContent = logoDataNew.moveYNew;
+              document.getElementById('rotateValueNew').textContent = logoDataNew.rotateNew;
+        // Apply transformations
+        applyTransformNew();
+      } else {
+        console.log("No image data found for this ID.");
+      }
+    });
+  }
+
+  // Event listeners to apply transformations when sliders are adjusted
+  document.getElementById('zoomRangeNew').addEventListener('input', applyTransformNew);
+  document.getElementById('moveXNew').addEventListener('input', applyTransformNew);
+  document.getElementById('moveYNew').addEventListener('input', applyTransformNew);
+  
+      rotateRangeNew.addEventListener('input', applyTransformNew);
+
+};
+});
+</script> 
+  
+</body>
+</html>
