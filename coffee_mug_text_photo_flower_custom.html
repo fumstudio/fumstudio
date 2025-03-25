@@ -969,7 +969,7 @@ const logoData = {
     await set(newLogoRef, logoData);
 
     // Generate the shareable link
-    const shareableUrl = `${window.location.origin}/Cup_text_front_custom.html?logoId=${newLogoRef.key}`;
+    const shareableUrl = `${window.location.origin}/coffee_mug_text_front_custom.html?logoId=${newLogoRef.key}`;
     console.log('Shareable URL:', shareableUrl);
     window.shareableUrl = shareableUrl;
     // Update the link container and show the link
@@ -1577,7 +1577,7 @@ document.getElementById('shareButtonNew').addEventListener('click', async () => 
     const newLogoRef = ref(database, 'logos/' + Date.now());
     await set(newLogoRef, logoDataNew);
 
-    const shareableUrlNew = `${window.location.origin}/Cup_photo_back_custom.html?logoId=${newLogoRef.key}`;
+    const shareableUrlNew = `${window.location.origin}/coffee_mug_photo_back_custom.html?logoId=${newLogoRef.key}`;
     console.log('Shareable URL:', shareableUrlNew);
 
     // Set the global variable for the new URL
@@ -1749,9 +1749,9 @@ async function addToCart() {
 
         cartItems.push({
             shareableLink: itemPageLink,
-            title: "Coffee Mug",
+            title: "Coffee mug",
             cost: 180,
-            catalogUrl: 'https://fumstudio.shop/cup_text_photo_custom.html',
+            catalogUrl: 'https://fumstudio.shop/coffee_mug_text_photo_flower.html',
             designs: [
                 {
                     itemImage: "https://firebasestorage.googleapis.com/v0/b/myhost-a7ee9.appspot.com/o/images%2F20250325_094627.png?alt=media&token=42aba72e-d0d5-45f2-ae74-7114478aca03",
