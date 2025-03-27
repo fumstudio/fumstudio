@@ -1564,7 +1564,7 @@ document.getElementById('shareButtonNew').addEventListener('click', async () => 
     const newLogoRef = ref(database, 'logos/' + Date.now());
     await set(newLogoRef, logoDataNew);
 
-    const shareableUrlNew = `${window.location.origin}/coffee_mug_text_back_customized.html?logoId=${newLogoRef.key}`;
+    const shareableUrlNew = `${window.location.origin}/coffee_mug_photo_back_customized.html?logoId=${newLogoRef.key}`;
     console.log('Shareable URL:', shareableUrlNew);
 
     // Set the global variable for the new URL
