@@ -853,10 +853,10 @@ document.getElementById('positionIconNew').addEventListener('click', function(ev
   
 
   
- <script type="module">
+<script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
-  import { getStorage, ref as storageRef, uploadBytesResumable, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-storage.js";
-  import { getDatabase, ref, set, get } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-database.js";
+  import { getStorage, ref as storageRef, uploadBytesResumable, getDownloadURL,deleteObject } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-storage.js";
+  import { getDatabase, ref, set, get, remove,ref as dbRef } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-database.js";
   import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js";
 
   // Firebase configuration
@@ -876,7 +876,7 @@ document.getElementById('positionIconNew').addEventListener('click', function(ev
   const storage = getStorage(app);
   const database = getDatabase(app);  // Initialize Realtime Database
   const auth = getAuth();
-
+  const db = getDatabase();
    
 document.addEventListener('DOMContentLoaded', () => {
     const fileInput = document.getElementById('fileInput');
