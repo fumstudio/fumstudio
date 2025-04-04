@@ -513,7 +513,8 @@ imageContainer.addEventListener('click', () => {
         fileInput.click(); // Open file selector only if no image is present
     }
 });
-
+let originalImageBlob = null; // Store the original image blob
+    
 // Event listener for the delete button to clear the image and reset input
 deleteButton.addEventListener('click', () => {
     // Clear the image container
@@ -524,6 +525,7 @@ deleteButton.addEventListener('click', () => {
     // Reset the file input so that user can upload the image again
     fileInput.value = ''; // Reset the file input field
     uploadedImageUrl = ''; // Clear the uploaded image URL variable
+      originalImageBlob = null; // Clear original image  
 });
 
 
@@ -531,22 +533,43 @@ cropCancel.addEventListener('click', () => {
     cropModal.style.display = 'none';
     cropper.destroy();
 });
+    
 
+    
+// Modified re-crop button to use original image
 reCropButton.addEventListener('click', () => {
-    cropImage.src = imageContainer.style.backgroundImage.replace('url("', '').replace('")', '');
-    cropModal.style.display = 'flex';
-    cropper = new Cropper(cropImage, {
-        aspectRatio: 1,
-        viewMode: 1,
-        autoCropArea: 1,
-    });
+    if (originalImageBlob) {
+        const reader = new FileReader();
+        reader.onload = (event) => {
+            cropImage.src = event.target.result;
+            cropModal.style.display = 'flex';
+            cropper = new Cropper(cropImage, {
+                aspectRatio: 1,
+                viewMode: 1,
+                autoCropArea: 1,
+            });
+        };
+        reader.readAsDataURL(originalImageBlob);
+    } else {
+        // Fallback to current image if original not available
+        const currentImage = imageContainer.style.backgroundImage.replace('url("', '').replace('")', '');
+        if (currentImage) {
+            cropImage.src = currentImage;
+            cropModal.style.display = 'flex';
+            cropper = new Cropper(cropImage, {
+                aspectRatio: 1,
+                viewMode: 1,
+                autoCropArea: 1,
+            });
+        }
+    }
 });
 
-// File input change event just selects the file for cropping
+// Modified file input to store original image
 fileInput.addEventListener('change', (e) => {
     const file = e.target.files[0];
     if (file) {
-        // Display the image in the crop modal for cropping
+        originalImageBlob = file; // Store original file
         const reader = new FileReader();
         reader.onload = (event) => {
             cropImage.src = event.target.result;
@@ -561,6 +584,43 @@ fileInput.addEventListener('change', (e) => {
     }
 });
 
+
+cropConfirm.addEventListener('click', () => {
+    const croppedCanvas = cropper.getCroppedCanvas();
+    const croppedImageUrl = croppedCanvas.toDataURL();
+    imageContainer.style.backgroundImage = `url(${croppedImageUrl})`;
+    cropModal.style.display = 'none';
+    cropper.destroy();
+    buttonContainer.style.display = 'block';
+    uploadText.style.display = 'none';
+
+    // Convert the cropped canvas to a Blob
+    croppedCanvas.toBlob((blob) => {
+        uploadedImageBlob = blob;
+        
+        // Zoom the cropped image by 10%
+        const zoomFactor = 1.1;
+        const zoomedCanvas = document.createElement('canvas');
+        const ctx = zoomedCanvas.getContext('2d');
+        zoomedCanvas.width = croppedCanvas.width * zoomFactor;
+        zoomedCanvas.height = croppedCanvas.height * zoomFactor;
+        ctx.drawImage(croppedCanvas, 0, 0, zoomedCanvas.width, zoomedCanvas.height);
+        imageContainer.style.backgroundImage = `url(${zoomedCanvas.toDataURL()})`;
+        imageContainer.style.backgroundSize = 'cover';
+        imageContainer.style.backgroundPosition = 'center';
+    });
+});
+
+ // Function to show loading state
+function showLoading() {
+    uploadText.innerHTML = '<i class="fas fa-spinner fa-spin"></i><br>Loading photo...';
+}
+
+// Function to reset to upload prompt
+function resetToUploadPrompt() {
+    uploadText.innerHTML = '<i class="fas fa-image"></i><br>Click here to upload photo';
+}
+   
 // Function to upload the image to Firebase with a custom name
 async function uploadImageToFirebase(file, uniqueFileName) {
     const storageReference = storageRef(storage, 'images/' + uniqueFileName);
@@ -713,40 +773,7 @@ function showCartAlert(message, iconClass = "") {
   }
 }
 
-// Event listener for the crop confirm button
-cropConfirm.addEventListener('click', () => {
-    const croppedCanvas = cropper.getCroppedCanvas();
-    const croppedImageUrl = croppedCanvas.toDataURL(); // Get the data URL of the cropped image
-    imageContainer.style.backgroundImage = `url(${croppedImageUrl})`;
-    cropModal.style.display = 'none';
-    cropper.destroy();
-    buttonContainer.style.display = 'block';
-    uploadText.style.display = 'none'; // Hide the upload text
 
-    // Convert the cropped canvas to a Blob
-    croppedCanvas.toBlob((blob) => {
-        // Store the Blob for later upload
-        uploadedImageBlob = blob;
-        
-        
-    // Zoom the cropped image by 10% (scale factor of 1.1)
-    const zoomFactor = 1.1; // 10% zoom
-    const zoomedCanvas = document.createElement('canvas');
-    const ctx = zoomedCanvas.getContext('2d');
-
-    // Set the zoomed canvas dimensions
-    zoomedCanvas.width = croppedCanvas.width * zoomFactor;
-    zoomedCanvas.height = croppedCanvas.height * zoomFactor;
-
-    // Draw the cropped image onto the zoomed canvas
-    ctx.drawImage(croppedCanvas, 0, 0, zoomedCanvas.width, zoomedCanvas.height);
-
-    // Set the zoomed image as the background of the container
-    imageContainer.style.backgroundImage = `url(${zoomedCanvas.toDataURL()})`;
-    imageContainer.style.backgroundSize = 'cover'; // Ensure the image covers the container
-    imageContainer.style.backgroundPosition = 'center'; // Center the image    
-    });
-});
 
 addToCartBtn.addEventListener('click', async () => {
     // Check if the user is logged in
