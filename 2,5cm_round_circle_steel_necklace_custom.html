@@ -565,6 +565,7 @@ reCropButton.addEventListener('click', () => {
         // Fallback to current image if original not available
         const currentImage = imageContainer.style.backgroundImage.replace('url("', '').replace('")', '');
         if (currentImage) {
+              showLoading();
             cropImage.src = currentImage;
             cropModal.style.display = 'flex';
             cropper = new Cropper(cropImage, {
@@ -580,6 +581,7 @@ reCropButton.addEventListener('click', () => {
 fileInput.addEventListener('change', (e) => {
     const file = e.target.files[0];
     if (file) {
+          showLoading();
         originalImageBlob = file; // Store original file
         const reader = new FileReader();
         reader.onload = (event) => {
