@@ -912,6 +912,7 @@ async function loadImage(imageId) {
             imageContainer.style.backgroundSize = "cover";
             imageContainer.style.backgroundPosition = "center";
             imageContainer.style.cursor = "pointer"; // Show pointer to indicate it's clickable
+               updateHeadingText(true); // Keep "customized" when loaded
 
             // Hide the upload text
             const uploadText = document.getElementById("uploadText");
