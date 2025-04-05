@@ -622,15 +622,18 @@ cropConfirm.addEventListener('click', () => {
     });
 });
 
- // Function to show loading state
+// Function to show loading state
 function showLoading() {
     uploadText.innerHTML = '<i class="fas fa-spinner fa-spin"></i><br>Loading photo...';
+    updateHeadingText(true); // Update heading when loading
 }
 
 // Function to reset to upload prompt
 function resetToUploadPrompt() {
-    uploadText.innerHTML = '<i class="fas fa-image"></i><br>Click here to upload photo';
+    uploadText.innerHTML = '<i class="fas fa-image"></i><br>Click to upload photo';
+    updateHeadingText(false); // Revert heading when done
 }
+
    
 // Function to upload the image to Firebase with a custom name
 async function uploadImageToFirebase(file, uniqueFileName) {
