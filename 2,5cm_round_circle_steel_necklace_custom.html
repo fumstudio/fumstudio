@@ -550,6 +550,7 @@ cropCancel.addEventListener('click', () => {
 // Modified re-crop button to use original image
 reCropButton.addEventListener('click', () => {
     if (originalImageBlob) {
+         showLoading();
         const reader = new FileReader();
         reader.onload = (event) => {
             cropImage.src = event.target.result;
@@ -626,15 +627,26 @@ cropConfirm.addEventListener('click', () => {
 
 // Function to show loading state
 function showLoading() {
-    uploadText.innerHTML = '<i class="fas fa-spinner fa-spin"></i><br>Loading photo...';
-    updateHeadingText(true); // Update heading when loading
+    console.log("Showing loading state"); // Debug log
+    if (uploadText) {
+        uploadText.style.display = 'block';
+        uploadText.style.visibility = 'visible'; // Ensure it's visible
+        uploadText.innerHTML = '<i class="fas fa-spinner fa-spin"></i><br>Loading photo...';
+    }
+    updateHeadingText(true);
 }
 
 // Function to reset to upload prompt
 function resetToUploadPrompt() {
-    uploadText.innerHTML = '<i class="fas fa-image"></i><br>Click to upload photo';
-    updateHeadingText(false); // Revert heading when done
+    console.log("Resetting to upload prompt"); // Debug log
+    if (uploadText) {
+        uploadText.style.display = 'block';
+        uploadText.style.visibility = 'visible'; // Ensure it's visible
+        uploadText.innerHTML = '<i class="fas fa-image"></i><br>Click to upload photo';
+    }
+    updateHeadingText(false);
 }
+
 
    
 // Function to upload the image to Firebase with a custom name
