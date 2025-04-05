@@ -914,41 +914,60 @@ if (imageId) {
 }
 
 // Function to load the image from Firebase
-// Function to load the image from Firebase
 async function loadImage(imageId) {
     try {
+        console.log("Starting to load image");
+        showLoading();
         const imageRef = ref(database, `sharedImages/${imageId}`);
         const snapshot = await get(imageRef);
 
         if (snapshot.exists()) {
             const imageUrl = snapshot.val().url;
-
-            // Display the image as the background of the container
-            const imageContainer = document.getElementById("imageContainer");
+            console.log("Image URL retrieved:", imageUrl);
             imageContainer.style.backgroundImage = `url('${imageUrl}')`;
             imageContainer.style.backgroundSize = "cover";
             imageContainer.style.backgroundPosition = "center";
-            imageContainer.style.cursor = "pointer"; // Show pointer to indicate it's clickable
-               updateHeadingText(true); // Keep "customized" when loaded
+            imageContainer.style.cursor = "pointer";
+            uploadText.style.display = "none";
+            updateHeadingText(true);
 
-            // Hide the upload text
-            const uploadText = document.getElementById("uploadText");
-            if (uploadText) uploadText.style.display = "none";
-
-            // Add click event to the container to redirect to the image URL
             imageContainer.addEventListener("click", () => {
-                window.open(imageUrl, "_blank"); // Open the image URL in a new tab
+                window.open(imageUrl, "_blank");
             });
-
-            console.log("Image loaded successfully:", imageUrl);
         } else {
-            console.log("Image not found.");
+            console.log("Image not found in database");
+            resetToUploadPrompt();
             alert("Image not found.");
         }
     } catch (error) {
         console.error("Error loading image:", error);
+        resetToUploadPrompt();
     }
 }
+
+// Initialize
+document.addEventListener('DOMContentLoaded', () => {
+    console.log("DOM fully loaded");
+    resetToUploadPrompt();
+    const imageId = new URLSearchParams(window.location.search).get("imageId");
+    if (imageId) {
+        console.log("Loading image with ID:", imageId);
+        loadImage(imageId);
+    }
+});
+
+// Check if Font Awesome is loaded
+function checkFontAwesome() {
+    if (typeof FontAwesome === 'undefined') {
+        console.warn("Font Awesome not loaded - loading spinner won't appear");
+        // Load Font Awesome dynamically if needed
+        const faScript = document.createElement('script');
+        faScript.src = 'https://kit.fontawesome.com/your-code.js';
+        faScript.crossOrigin = 'anonymous';
+        document.head.appendChild(faScript);
+    }
+}
+checkFontAwesome();
 
 </script>
 
