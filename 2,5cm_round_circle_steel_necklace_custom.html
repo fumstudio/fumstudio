@@ -887,6 +887,18 @@ addToCartBtn.addEventListener('click', async () => {
         cartItems.push(newItem);
         await set(cartRef, { cart: cartItems });
 
+        
+// After successful upload and adding to cart, clear the inputs
+        function clearInputs() {
+            // Clear container 1
+            imageContainer.style.backgroundImage = '';
+            fileInput.value = '';
+            uploadedImageBlob = null;
+            if (uploadText) uploadText.style.display = 'block';
+            if (buttonContainer) buttonContainer.style.display = 'none';
+            
+        }
+                
         // Hide the processing overlay
         hideProcessingOverlay();
 
