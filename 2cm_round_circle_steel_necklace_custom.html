@@ -505,15 +505,25 @@ const reCropButton = document.getElementById('reCropButton');
 const addToCartBtn = document.getElementById('addToCartBtn');
 const uploadText = document.getElementById('uploadText');
 
-
-
 // Event Listeners
 imageContainer.addEventListener('click', () => {
     if (!imageContainer.style.backgroundImage || imageContainer.style.backgroundImage === 'none') {
         fileInput.click(); // Open file selector only if no image is present
     }
 });
+    const itemNameHeading = document.querySelector('.item-nam'); // Get the heading element
 
+// Function to update heading text
+function updateHeadingText(isLoading) {
+    if (itemNameHeading) {
+        itemNameHeading.textContent = isLoading 
+            ? "Customized Round steel necklace" 
+            : "2cm Round steel necklace custom";
+    }
+}
+
+let originalImageBlob = null; // Store the original image blob
+    
 // Event listener for the delete button to clear the image and reset input
 deleteButton.addEventListener('click', () => {
     // Clear the image container
@@ -524,6 +534,7 @@ deleteButton.addEventListener('click', () => {
     // Reset the file input so that user can upload the image again
     fileInput.value = ''; // Reset the file input field
     uploadedImageUrl = ''; // Clear the uploaded image URL variable
+      originalImageBlob = null; // Clear original image  
 });
 
 
@@ -531,22 +542,46 @@ cropCancel.addEventListener('click', () => {
     cropModal.style.display = 'none';
     cropper.destroy();
 });
+    
 
+    
+// Modified re-crop button to use original image
 reCropButton.addEventListener('click', () => {
-    cropImage.src = imageContainer.style.backgroundImage.replace('url("', '').replace('")', '');
-    cropModal.style.display = 'flex';
-    cropper = new Cropper(cropImage, {
-        aspectRatio: 1,
-        viewMode: 1,
-        autoCropArea: 1,
-    });
+    if (originalImageBlob) {
+         showLoading();
+        const reader = new FileReader();
+        reader.onload = (event) => {
+            cropImage.src = event.target.result;
+            cropModal.style.display = 'flex';
+            cropper = new Cropper(cropImage, {
+                aspectRatio: 1,
+                viewMode: 1,
+                autoCropArea: 1,
+            });
+        };
+        reader.readAsDataURL(originalImageBlob);
+    } else {
+        // Fallback to current image if original not available
+        const currentImage = imageContainer.style.backgroundImage.replace('url("', '').replace('")', '');
+        if (currentImage) {
+              showLoading();
+            cropImage.src = currentImage;
+            cropModal.style.display = 'flex';
+            cropper = new Cropper(cropImage, {
+                aspectRatio: 1,
+                viewMode: 1,
+                autoCropArea: 1,
+            });
+        }
+    }
 });
 
-// File input change event just selects the file for cropping
+// Modified file input to store original image
 fileInput.addEventListener('change', (e) => {
     const file = e.target.files[0];
     if (file) {
-        // Display the image in the crop modal for cropping
+          showLoading();
+        originalImageBlob = file; // Store original file
         const reader = new FileReader();
         reader.onload = (event) => {
             cropImage.src = event.target.result;
@@ -560,6 +595,56 @@ fileInput.addEventListener('change', (e) => {
         reader.readAsDataURL(file);
     }
 });
+
+
+cropConfirm.addEventListener('click', () => {
+    const croppedCanvas = cropper.getCroppedCanvas();
+    const croppedImageUrl = croppedCanvas.toDataURL();
+    imageContainer.style.backgroundImage = `url(${croppedImageUrl})`;
+    cropModal.style.display = 'none';
+    cropper.destroy();
+    buttonContainer.style.display = 'block';
+    uploadText.style.display = 'none';
+
+    // Convert the cropped canvas to a Blob
+    croppedCanvas.toBlob((blob) => {
+        uploadedImageBlob = blob;
+        
+        // Zoom the cropped image by 10%
+        const zoomFactor = 1.1;
+        const zoomedCanvas = document.createElement('canvas');
+        const ctx = zoomedCanvas.getContext('2d');
+        zoomedCanvas.width = croppedCanvas.width * zoomFactor;
+        zoomedCanvas.height = croppedCanvas.height * zoomFactor;
+        ctx.drawImage(croppedCanvas, 0, 0, zoomedCanvas.width, zoomedCanvas.height);
+        imageContainer.style.backgroundImage = `url(${zoomedCanvas.toDataURL()})`;
+        imageContainer.style.backgroundSize = 'cover';
+        imageContainer.style.backgroundPosition = 'center';
+    });
+});
+
+// Function to show loading state
+function showLoading() {
+    console.log("Showing loading state"); // Debug log
+    if (uploadText) {
+        uploadText.style.display = 'block';
+        uploadText.style.visibility = 'visible'; // Ensure it's visible
+        uploadText.innerHTML = '<i class="fas fa-spinner fa-spin"></i><br>Loading photo...';
+    }
+    updateHeadingText(true);
+}
+
+// Function to reset to upload prompt
+function resetToUploadPrompt() {
+    console.log("Resetting to upload prompt"); // Debug log
+    if (uploadText) {
+        uploadText.style.display = 'block';
+        uploadText.style.visibility = 'visible'; // Ensure it's visible
+        uploadText.innerHTML = '<i class="fas fa-image"></i><br>Click here to upload photo';
+    }
+    updateHeadingText(false);
+}
+
 
 // Function to upload the image to Firebase with a custom name
 async function uploadImageToFirebase(file, uniqueFileName) {
@@ -713,40 +798,6 @@ function showCartAlert(message, iconClass = "") {
   }
 }
 
-// Event listener for the crop confirm button
-cropConfirm.addEventListener('click', () => {
-    const croppedCanvas = cropper.getCroppedCanvas();
-    const croppedImageUrl = croppedCanvas.toDataURL(); // Get the data URL of the cropped image
-    imageContainer.style.backgroundImage = `url(${croppedImageUrl})`;
-    cropModal.style.display = 'none';
-    cropper.destroy();
-    buttonContainer.style.display = 'block';
-    uploadText.style.display = 'none'; // Hide the upload text
-
-    // Convert the cropped canvas to a Blob
-    croppedCanvas.toBlob((blob) => {
-        // Store the Blob for later upload
-        uploadedImageBlob = blob;
-        
-        
-    // Zoom the cropped image by 10% (scale factor of 1.1)
-    const zoomFactor = 1.1; // 10% zoom
-    const zoomedCanvas = document.createElement('canvas');
-    const ctx = zoomedCanvas.getContext('2d');
-
-    // Set the zoomed canvas dimensions
-    zoomedCanvas.width = croppedCanvas.width * zoomFactor;
-    zoomedCanvas.height = croppedCanvas.height * zoomFactor;
-
-    // Draw the cropped image onto the zoomed canvas
-    ctx.drawImage(croppedCanvas, 0, 0, zoomedCanvas.width, zoomedCanvas.height);
-
-    // Set the zoomed image as the background of the container
-    imageContainer.style.backgroundImage = `url(${zoomedCanvas.toDataURL()})`;
-    imageContainer.style.backgroundSize = 'cover'; // Ensure the image covers the container
-    imageContainer.style.backgroundPosition = 'center'; // Center the image    
-    });
-});
 
 addToCartBtn.addEventListener('click', async () => {
     // Check if the user is logged in
@@ -858,41 +909,61 @@ if (imageId) {
     loadImage(imageId);
 }
 
-// Function to load the image from Firebase
-// Function to load the image from Firebase
 async function loadImage(imageId) {
     try {
+        console.log("Starting to load image");
+        showLoading();
         const imageRef = ref(database, `sharedImages/${imageId}`);
         const snapshot = await get(imageRef);
 
         if (snapshot.exists()) {
             const imageUrl = snapshot.val().url;
-
-            // Display the image as the background of the container
-            const imageContainer = document.getElementById("imageContainer");
+            console.log("Image URL retrieved:", imageUrl);
             imageContainer.style.backgroundImage = `url('${imageUrl}')`;
             imageContainer.style.backgroundSize = "cover";
             imageContainer.style.backgroundPosition = "center";
-            imageContainer.style.cursor = "pointer"; // Show pointer to indicate it's clickable
+            imageContainer.style.cursor = "pointer";
+            uploadText.style.display = "none";
+            updateHeadingText(true);
 
-            // Hide the upload text
-            const uploadText = document.getElementById("uploadText");
-            if (uploadText) uploadText.style.display = "none";
-
-            // Add click event to the container to redirect to the image URL
             imageContainer.addEventListener("click", () => {
-                window.open(imageUrl, "_blank"); // Open the image URL in a new tab
+                window.open(imageUrl, "_blank");
             });
-
-            console.log("Image loaded successfully:", imageUrl);
         } else {
-            console.log("Image not found.");
+            console.log("Image not found in database");
+            resetToUploadPrompt();
             alert("Image not found.");
         }
     } catch (error) {
         console.error("Error loading image:", error);
+        resetToUploadPrompt();
     }
 }
+
+// Initialize
+document.addEventListener('DOMContentLoaded', () => {
+    console.log("DOM fully loaded");
+    resetToUploadPrompt();
+    const imageId = new URLSearchParams(window.location.search).get("imageId");
+    if (imageId) {
+        console.log("Loading image with ID:", imageId);
+        loadImage(imageId);
+    }
+});
+
+// Check if Font Awesome is loaded
+function checkFontAwesome() {
+    if (typeof FontAwesome === 'undefined') {
+        console.warn("Font Awesome not loaded - loading spinner won't appear");
+        // Load Font Awesome dynamically if needed
+        const faScript = document.createElement('script');
+        faScript.src = 'https://kit.fontawesome.com/your-code.js';
+        faScript.crossOrigin = 'anonymous';
+        document.head.appendChild(faScript);
+    }
+}
+checkFontAwesome();
+
 
 </script>
 
