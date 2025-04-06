@@ -520,12 +520,7 @@ portraitContainer.addEventListener('click', () => {
     }
 });
 
-// Event Listeners
-imageContainer.addEventListener('click', () => {
-    if (!imageContainer.style.backgroundImage || imageContainer.style.backgroundImage === 'none') {
-        fileInput.click(); // Open file selector only if no image is present
-    }
-});
+
     const itemNameHeading = document.querySelector('.item-nam'); // Get the heading element
 
 // Function to update heading text
@@ -612,31 +607,6 @@ fileInput.addEventListener('change', (e) => {
 });
 
 
-cropConfirm.addEventListener('click', () => {
-    const croppedCanvas = cropper.getCroppedCanvas();
-    const croppedImageUrl = croppedCanvas.toDataURL();
-    imageContainer.style.backgroundImage = `url(${croppedImageUrl})`;
-    cropModal.style.display = 'none';
-    cropper.destroy();
-    buttonContainer.style.display = 'block';
-    uploadText.style.display = 'none';
-
-    // Convert the cropped canvas to a Blob
-    croppedCanvas.toBlob((blob) => {
-        uploadedImageBlob = blob;
-        
-        // Zoom the cropped image by 10%
-        const zoomFactor = 1.1;
-        const zoomedCanvas = document.createElement('canvas');
-        const ctx = zoomedCanvas.getContext('2d');
-        zoomedCanvas.width = croppedCanvas.width * zoomFactor;
-        zoomedCanvas.height = croppedCanvas.height * zoomFactor;
-        ctx.drawImage(croppedCanvas, 0, 0, zoomedCanvas.width, zoomedCanvas.height);
-        imageContainer.style.backgroundImage = `url(${zoomedCanvas.toDataURL()})`;
-        imageContainer.style.backgroundSize = 'cover';
-        imageContainer.style.backgroundPosition = 'center';
-    });
-});
 
 // Function to show loading state
 function showLoading() {
