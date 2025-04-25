@@ -114,7 +114,7 @@
 
   <script type="module">
     import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.13.1/firebase-app.js';
-    import { getAuth, createUserWithEmailAndPassword } from 'https://www.gstatic.com/firebasejs/10.13.1/firebase-auth.js';
+    import { getAuth, signInWithEmailAndPassword } from 'https://www.gstatic.com/firebasejs/10.13.1/firebase-auth.js';
     import { getDatabase, ref as dbRef, set } from 'https://www.gstatic.com/firebasejs/10.13.1/firebase-database.js';
 
     const firebaseConfig = {
@@ -178,7 +178,7 @@
       try {
         // Step 1: Create user with email and password
         console.log("Attempting to create user...");
-        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+        const userCredential = await signInWithEmailAndPassword(auth, email, password);
         const user = userCredential.user;
         console.log("User created:", user);
 
