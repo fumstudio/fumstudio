@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content=" Experience high-quality personalized products that reflect your unique style. Start personalizing your items today with fum.studio!
+">
+<title>Product Catalog</title>
+  <link rel="stylesheet" href="style.css
+    ">
+   <link rel="stylesheet" href="css/catalog.css">
+
+   <link rel= "Shortcut icon" type="x-icon" href= "https://i.postimg.cc/XqrhcVpD/20240702-095704.png"> 
+   
+
+      <link rel="stylesheet" href="css/Product.css
+    ">
+        <link href="https://fonts.google.com/share?selection.family=Jersey+25|Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+<link rel= "Shortcut icon" type="x-icon" href= "https://i.postimg.cc/XqrhcVpD/20240702-095704.png "> 
+
+
+  <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9RJSDSSVMM"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-9RJSDSSVMM');
+</script>
+  
+  <!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-MNW5B4W9');</script>
+<!-- End Google Tag Manager -->
+
+      <!-- link pages -->
+            <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+          <script>
+        $(function(){
+            $("#navbar").load("navbar.html");
+        });
+    </script>
+    <script>
+        $(function(){
+            $("#footer").load("footer.html");
+        });
+    </script>
+ <script>
+        $(function(){
+            $("#Whatsapp_button").load("whatsApp_button.html");
+        });
+    </script>
+
+</head>
+<body>
+
+<div class="container">
+
+
+    <!-- Nav -->
+    <nav class="main-nav">
+<h1 alt="Microsoft" class="logo">
+                <i class="gift fas fa-gift"></i>&nbsp; Fumstudio</h1>
+         <div id="navbar"></div>
+                      <!-- Advertisement Section -->
+      <a href="cart_page.html" id="cartLink">
+  <i class="fa fa-search" aria-hidden="true"></i>
+    </a>   
+    
+    <a href="cart_page.html" id="cartLink">
+    <div class="cart-container">
+        <i class="fas fa-shopping-cart cart-icon"></i>
+        <span id="totalItemCount" class="item-count">0</span>
+    </div>
+    </a>
+
+      <div class="menu-btn">
+ 
+    <i class="fas fa-bars fa-2x"></i>
+  </div>
+ </nav>       
+
+
+
+</div>
+  <div id="ad_jewellery"></div>
+<style>
+
+
+
+    .slider-container {
+        width: 100%;
+        position: relative;
+        overflow: hidden;
+        margin: 0 auto;
+        touch-action: pan-y;
+margin-top:60px;
+                margin-bottom:10px;
+
+    }
+    
+    .slider-wrapper {
+        width: 100%;
+        position: relative;
+        overflow: hidden;
+
+    }
+    
+    .slider {
+        display: flex;
+        height: 50vw; /* Responsive height based on viewport width */
+        max-height: 500px; /* Maximum height */
+        will-change: transform;
+    }
+    
+    .slide {
+        min-width: 100%;
+        flex-shrink: 0;
+        position: relative;
+                                        
+    }
+    
+    .slide img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        pointer-events: none;
+        user-select: none;
+
+    }
+    
+    .dots-container {
+        position: absolute;
+        bottom: 20px;
+        left: 0;
+        right: 0;
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        z-index: 10;
+    }
+    
+    .dot {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.5);
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+    
+    .dot.active {
+        background: white;
+    }
+    
+    .slider-transition {
+        transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+    
+    @media (max-width: 768px) {
+        .slider {
+            height: 60vw; /* Larger percentage on mobile */
+            max-height: 300px;
+        }
+    }
+</style>
+
+
+
+
+
+
+    
+    <div class="slider-container" id="sliderContainer">
+        <div class="slider" id="slider">
+            <div class="slide">
+                <img src="https://firebasestorage.googleapis.com/v0/b/myhost-a7ee9.appspot.com/o/images%2FScreenshot_2024-06-22_163245_600x.webp?alt=media&token=ca8efcfd-631e-4b80-9987-283676da301e" alt="Slide 1">
+            </div>
+            <div class="slide">
+                <img src="https://firebasestorage.googleapis.com/v0/b/myhost-a7ee9.appspot.com/o/images%2F20250321_221358%20(1).jpg?alt=media&token=fd226da0-55c9-4a4d-964a-0ffcd88245fe" alt="Slide 2">
+            </div>
+            <div class="slide">
+                <img src="https://firebasestorage.googleapis.com/v0/b/myhost-a7ee9.appspot.com/o/images%2FWhatsApp%20Image%202024-07-26%20at%203.26.07%20AM.jpeg?alt=media&token=32d244b1-a444-435f-8e25-1e53f0b6c2a7" alt="Slide 3">
+            </div>
+        </div>
+        
+        <div class="dots-container" id="dotsContainer"></div>
+    </div>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const slider = document.getElementById('slider');
+        const sliderContainer = document.getElementById('sliderContainer');
+        const slides = document.querySelectorAll('.slide');
+        const dotsContainer = document.getElementById('dotsContainer');
+        
+        let currentIndex = 0;
+        let slideCount = slides.length;
+        let autoSlideInterval;
+        let isDragging = false;
+        let startPos = 0;
+        let currentTranslate = 0;
+        let prevTranslate = 0;
+        let animationID;
+        let isPaused = false;
+        let sliderWidth = sliderContainer.offsetWidth;
+        
+        // Initialize slider
+        function initSlider() {
+            createDots();
+            setSliderWidth();
+            updateSliderPosition();
+            startAutoSlide();
+            setupEventListeners();
+            
+            // Handle window resize
+            window.addEventListener('resize', () => {
+                sliderWidth = sliderContainer.offsetWidth;
+                updateSliderPosition();
+            });
+        }
+        
+        function setSliderWidth() {
+            sliderWidth = sliderContainer.offsetWidth;
+            currentTranslate = currentIndex * -sliderWidth;
+            prevTranslate = currentTranslate;
+            
+            // Set width for each slide
+            slides.forEach(slide => {
+                slide.style.width = sliderWidth + 'px';
+            });
+        }
+        
+        function createDots() {
+            dotsContainer.innerHTML = '';
+            slides.forEach((_, index) => {
+                const dot = document.createElement('div');
+                dot.classList.add('dot');
+                if (index === currentIndex) dot.classList.add('active');
+                dot.dataset.index = index;
+                dotsContainer.appendChild(dot);
+            });
+        }
+        
+        function updateSliderPosition() {
+            slider.style.transform = `translateX(${currentIndex * -sliderWidth}px)`;
+            updateDots();
+        }
+        
+        function updateDots() {
+            const dots = document.querySelectorAll('.dot');
+            dots.forEach((dot, index) => {
+                dot.classList.toggle('active', index === currentIndex);
+            });
+        }
+        
+        function goToNextSlide() {
+            if (isPaused) return;
+            currentIndex = (currentIndex + 1) % slideCount;
+            slideTransition();
+            pauseAutoSlide(5000);
+        }
+        
+        function goToPrevSlide() {
+            if (isPaused) return;
+            currentIndex = (currentIndex - 1 + slideCount) % slideCount;
+            slideTransition();
+            pauseAutoSlide(5000);
+        }
+        
+        function goToSlide(index) {
+            if (isPaused) return;
+            currentIndex = index;
+            slideTransition();
+            pauseAutoSlide(5000);
+        }
+        
+        function slideTransition() {
+            slider.classList.add('slider-transition');
+            slider.style.transform = `translateX(${currentIndex * -sliderWidth}px)`;
+            updateDots();
+            
+            slider.addEventListener('transitionend', () => {
+                slider.classList.remove('slider-transition');
+            }, { once: true });
+        }
+        
+        function startAutoSlide() {
+            clearInterval(autoSlideInterval);
+            autoSlideInterval = setInterval(goToNextSlide, 2000);
+        }
+        
+        function pauseAutoSlide(duration = 3000) {
+            isPaused = true;
+            clearInterval(autoSlideInterval);
+            
+            if (duration > 0) {
+                setTimeout(() => {
+                    isPaused = false;
+                    startAutoSlide();
+                }, duration);
+            }
+        }
+        
+        function resumeAutoSlide() {
+            isPaused = false;
+            startAutoSlide();
+        }
+        
+        function handleDotClick(e) {
+            if (e.target.classList.contains('dot')) {
+                const index = parseInt(e.target.dataset.index);
+                if (index !== currentIndex) {
+                    goToSlide(index);
+                }
+            }
+        }
+        
+        function handleTap(e) {
+            if (!isDragging) {
+                pauseAutoSlide(3000);
+            }
+        }
+        
+        /* Improved touch and drag functions */
+        function getPositionX(event) {
+            return event.type.includes('mouse') ? 
+                event.clientX : 
+                event.touches[0].clientX;
+        }
+        
+        function dragStart(e) {
+            if (e.type === 'mousedown' && e.button !== 0) return;
+            
+            startPos = getPositionX(e);
+            isDragging = true;
+            slider.classList.remove('slider-transition');
+            animationID = requestAnimationFrame(animation);
+            pauseAutoSlide(0);
+            
+            slider.style.cursor = 'grabbing';
+            
+            // Prevent default for touch events
+            if (e.cancelable) {
+                e.preventDefault();
+                e.stopPropagation();
+            }
+        }
+        
+        function dragMove(e) {
+            if (isDragging) {
+                const currentPosition = getPositionX(e);
+                currentTranslate = prevTranslate + currentPosition - startPos;
+                
+                // Prevent image drag on mobile
+                if (e.cancelable) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                }
+            }
+        }
+        
+        function dragEnd() {
+            if (!isDragging) return;
+            
+            cancelAnimationFrame(animationID);
+            isDragging = false;
+            slider.style.cursor = '';
+            
+            const movedBy = currentTranslate - prevTranslate;
+            const threshold = sliderWidth * 0.1; // Lower threshold for better UX
+            
+            if (movedBy < -threshold && currentIndex < slideCount - 1) {
+                currentIndex += 1;
+            } else if (movedBy > threshold && currentIndex > 0) {
+                currentIndex -= 1;
+            }
+            
+            setPositionByIndex();
+            pauseAutoSlide(5000);
+        }
+        
+        function animation() {
+            slider.style.transform = `translateX(${currentTranslate}px)`;
+            animationID = requestAnimationFrame(animation);
+        }
+        
+        function setPositionByIndex() {
+            currentTranslate = currentIndex * -sliderWidth;
+            prevTranslate = currentTranslate;
+            slideTransition();
+        }
+        
+        function setupEventListeners() {
+            // Mouse events
+            sliderContainer.addEventListener('mousedown', dragStart);
+            window.addEventListener('mousemove', dragMove);
+            window.addEventListener('mouseup', dragEnd);
+            
+            // Touch events - use passive: false for better control
+            sliderContainer.addEventListener('touchstart', dragStart, { passive: false });
+            window.addEventListener('touchmove', dragMove, { passive: false });
+            window.addEventListener('touchend', dragEnd);
+            
+            // Click/tap to pause
+            sliderContainer.addEventListener('click', handleTap);
+            
+            // Dot events
+            dotsContainer.addEventListener('click', handleDotClick);
+            
+            // Pause on hover
+            sliderContainer.addEventListener('mouseenter', () => pauseAutoSlide(0));
+            sliderContainer.addEventListener('mouseleave', resumeAutoSlide);
+        }
+        
+        initSlider();
+    });
+</script>
+  <h2>Keep the best moments</h2>
+     </div>
+  </div>
+   <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #333;
+            color: #000000;
+     }
+        header {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            font-weight: bold;
+
+        }
+
+
+.gallery {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* Creates 3 equal columns */
+    gap: 20px; /* Space between grid items */
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 10px;
+    box-sizing: border-box;
+
+}
+.gallery-item {
+    display: flex;
+    flex-direction: column; /* Ensures the image and caption are stacked */
+    align-items: center; /* Centers the caption below the image */
+    width: 200px;
+    height: 200px; /* Allow height to adjust dynamically */
+    flex-shrink: 0;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    background-color: floralwhite;
+    scroll-snap-align: start;
+    text-align: center;
+                 margin-bottom: 40%; /* Space between image and text */ 
+}
+/* For small screens, switch to a grid layout */
+@media (max-width: 768px) {
+    .gallery {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* Creates 3 equal columns */
+    gap: 20px; /* Space between grid items */
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 10px;
+    box-sizing: border-box;
+    }
+}
+
+
+.gallery-item img {
+    width: 100%;
+    aspect-ratio: 1 / 1; /* Forces a 1:1 aspect ratio */
+    object-fit: cover;
+    transition: transform 0.3s ease;
+    border-radius: 10px;
+
+}
+
+        .gallery-item:hover img {
+            transform: scale(1.1); /* Zoom effect on hover */
+        }
+
+
+.caption {
+    position: relative; /* No absolute positioning */
+    bottom: auto;
+    left: auto;
+    font-size: 1.2rem;
+    font-weight: bold;
+
+
+    text-align: center;
+    margin-top: 10px; /* Space between image and text */
+               margin-bottom: 100%; /* Space between image and text */ 
+    color: #000000 ;
+
+}
+
+
+        .gallery-item:hover img {
+            transform: scale(1.1); /* Zoom effect on hover */
+        }
+
+
+
+
+
+        /* Media query for smaller screens */
+        @media (max-width: 600px) {
+            header {
+                font-size: 1.5rem;
+            }
+
+            .gallery {
+                gap: 10px; /* Reduce gap on small screens */
+            }
+
+            .gallery-item {
+                width: 100px; /* Smaller image size for small screens */
+                height: 100px; /* Keep images square */
+            }
+
+            .caption {
+                font-size: 12px;
+            }
+        }
+    </style>
+
+
+<div class="gallery">
+    <div class="gallery-item">
+        <a href="https://www.example.com/1">
+            <img src="https://firebasestorage.googleapis.com/v0/b/myhost-a7ee9.appspot.com/o/images%2FScreenshot_2024-06-22_163245_600x.webp?alt=media&token=ca8efcfd-631e-4b80-9987-283676da301e" alt="Luxury Image 1">
+        </a>
+        <div class="caption">New Double sided photo necklace</div>
+    </div>
+    <div class="gallery-item">
+        <a href="https://www.example.com/2">
+            <img src="https://live.staticflickr.com/65535/49221403106_136e32162d_b.jpg" alt=" Image 2">
+        </a>
+        <div class="caption">Moments</div>
+    </div>
+    <div class="gallery-item">
+        <a href="https://www.example.com/3">
+            <img src="https://www.vitacost.com/images/modules/FreeShipping_525x525.png" alt=" Image 3">
+        </a>
+        <div class="caption"><span style="color:green;">Free Delivery</span>
+        10-12 business Days 
+        </div>
+    </div>
+            <div class="gallery-item">
+        <a href="https://www.example.com/4">
+            <img src="https://firebasestorage.googleapis.com/v0/b/myhost-a7ee9.appspot.com/o/images%2Fdf9fb4bc-9517-43e1-b1f6-96ed69f436e3.jpg?alt=media&token=cce05e61-69ab-4099-a5e1-150f79730687" alt=" Image 6">
+        </a>
+        <div class="caption">Click here to test your image</div>
+    </div>
+    <div class="gallery-item">
+        <a href="https://www.example.com/4">
+            <img src="https://media.istockphoto.com/id/598912704/photo/woman-typing-phone-message-on-social-network-at-night.jpg?s=612x612&w=0&k=20&c=LXbWUEceGBZtw_ggiILO7GJECuEJxOC3JiNM3yAXcXI=" alt=" Image 4">
+        </a>
+        <div class="caption">Customize online,<span style="color:red;">step by step</span> </div>
+    </div>
+     <div class="gallery-item">
+        <a href="https://www.example.com/4">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/c/cd/Facebook_logo_%28square%29.png" alt=" Image 5">
+        </a>
+        <div class="caption">Check out our latest post!</div>
+    </div>
+
+</div>
+
+  
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+        }
+
+        .container {
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        .search input {
+            width: 300px;
+            padding: 8px;
+            margin: 10px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+
+        .catalog .item img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        .catalog .item:hover {
+            transform: scale(1.05);
+        }
+
+        /* Green color for free shipping */
+        .free-shipping {
+            color: green;
+            font-weight: bold;
+        }
+
+        /* Red color for original price */
+        .original-price {
+            color: red;
+            text-decoration: line-through;
+            font-weight: bold;
+        }
+
+        /* Flex container to align price and original price side by side */
+        .price-container {
+            display: flex;
+            gap:2px;
+            align-items: center;
+            margin-top: 10px;
+        }
+
+        .price-container p {
+            margin: 0;
+        }
+
+        @media (max-width: 768px) {
+            .catalog .item {
+                width: 45%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .catalog .item {
+                width: 45%;
+            }
+
+            .search input {
+                width: 80%;
+            }
+        }
+
+        /* Style for the link itself, remove default underline and color */
+        a.item-link {
+            text-decoration: none; /* Remove underline */
+            color: inherit; /* Use the inherited color, no change in text color */
+            display: block; /* Make the link behave like a block-level element */
+        }
+
+        /* Ensure the content inside the link is styled as needed */
+        .item-link .item-content {
+            display: block;
+            background-color: #fff;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        /* Hover effect for the item container */
+        .item-link:hover .item-content {
+            transform: scale(1.05); /* Scale the item up on hover */
+        }
+
+        /* Styling for the item image */
+        .item-link img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+        .pricing{  
+    color:#E58A52 ;
+              font-weight: bold;
+     }
+         .video-feature-box {
+        max-width: 600px;
+        margin: 0 auto;
+        
+        border-radius: 5px;
+        padding: 20px;
+        margin-top: -40px;
+        margin-bottom: 10px;
+    }
+    @media (min-width: 768px) {
+      .video-feature-box {
+        max-width: 1000px;
+    }
+        }
+
+    .video-feature-box h2 {
+        font-size: 24px;
+        margin-bottom: 10px;
+    }
+    .video-feature-box iframe {
+        width: 100%;
+        height: 200px;
+        border: none;
+        border-radius: 5px;
+    }
+        @media (min-width: 768px) {
+    .video-feature-box iframe  {
+      height: 500px;
+    }
+        }
+    .video-feature-box p {
+        font-size: 16px;
+    }
+    </style>
+<script type="module">
+    // Import Firebase modules
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-app.js";
+    import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-database.js";
+    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-auth.js";
+
+    // Firebase Configuration
+    const firebaseConfig = {
+        apiKey: "AIzaSyBDrzrgLslaJvnXbo1e90irCEtdcm9ZsCU",
+        authDomain: "logins-13661.firebaseapp.com",
+        databaseURL: "https://logins-13661-default-rtdb.firebaseio.com",
+        projectId: "logins-13661",
+        storageBucket: "logins-13661.appspot.com",
+        messagingSenderId: "451535349483",
+        appId: "1:451535349483:web:d3c9867fd2bffbbdca40ae",
+        measurementId: "G-DWP16WX2H7"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+    const auth = getAuth(app);
+
+    // Elements for catalog display
+    const catalogContainer = document.getElementById("catalog-container");
+
+    // Listen for changes in the database and update catalog
+    function loadCatalog() {
+        const catalogRef = ref(db, "catalog/");
+        onValue(catalogRef, (snapshot) => {
+            catalogContainer.innerHTML = ''; // Clear previous content
+            const catalogData = snapshot.val();
+            if (catalogData) {
+                Object.entries(catalogData).forEach(([key, item]) => {
+                    const itemElement = document.createElement("div");
+                    itemElement.classList.add("catalog-item", "item");
+                    itemElement.innerHTML = `
+<a href="${item.link}" target="_blank" class="item-link">
+            <img src="${item.image}" alt="${item.name}" width="100">
+            <h3>${item.name}</h3>
+            <p class="price-container">
+                      <span class="pricing price" data-price="${item.price}">ZAR ${item.price.toFixed(2)}</span>      
+                <span class="original-price price" data-price="${item.originalPrice}">
+                    ${item.originalPrice && !isNaN(parseFloat(item.originalPrice)) ? 'ZAR ' + parseFloat(item.originalPrice).toFixed(2) : ''}
+                </span>
+
+            </p>
+
+            <p>${item.details}</p>
+            ${item.freeShipping ? '<p class="free-shipping">Free Shipping</p>' : ''}
+        </a>`;
+                    catalogContainer.appendChild(itemElement);
+                });
+            }
+        });
+    }
+
+    // Check authentication state and load catalog
+    onAuthStateChanged(auth, (user) => {
+        if (user) {
+            console.log("User logged in:", user.email);
+        } else {
+            console.log("No user logged in.");
+        }
+        loadCatalog();
+    });
+
+    // Dynamically add the currency converter script if not already added
+    if (!document.querySelector('script[src="currency-converter.js"][type="module"]')) {
+        var script = document.createElement('script');
+        script.src = 'currency-converter.js';
+        script.type = 'module'; // Set the type to "module"
+        document.body.appendChild(script);
+    }
+</script>
+
+
+
+    
+    <!-- Search Input -->
+<br><br>
+<div class='video-feature-box' id='videoFeatureBox '>
+    <h2 style="margin-left:80px; background-color: navajowhite; border-radius: 8px; padding: 0px 10px; color: white;">How to make orders</h2>
+    <iframe width="560" height="315" src='https://www.youtube.com/embed/WdXXL4VpEeA' frameborder="0" allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture' allowfullscreen></iframe>
+      <p style="color: white; background-color: navajowhite; border-radius: 8px; padding: 0px 10px; ">Click the video to play</p>  
+</div>
+    <div class="catalog" id="catalog-container">
+        <!-- Catalog items will be displayed here -->
+    </div>
+
+
+    </div>
+    
+  </div>       
+  <div id="Whatsapp_button"></div>
+         <div id="footer"></div>
+
+<script type="module" src="js/cart.js"></script>
+  <script src="js/main.js"></script>
+ </body>
+</html>
