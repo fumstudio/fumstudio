@@ -755,6 +755,33 @@ margin-top:60px;
         font-size: 16px;
     }
     </style>
+
+
+
+    
+    <!-- Search Input -->
+<br><br>
+<div class='video-feature-box' id='videoFeatureBox '>
+    <h2 style="margin-left:80px; background-color: navajowhite; border-radius: 8px; padding: 0px 10px; color: white;">How to make orders</h2>
+    <iframe width="560" height="315" src='https://www.youtube.com/embed/WdXXL4VpEeA' frameborder="0" allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture' allowfullscreen></iframe>
+      <p style="color: white; background-color: navajowhite; border-radius: 8px; padding: 0px 10px; ">Click the video to play</p>  
+</div>
+  
+<div class="catalog" id="catalog-container">
+    <!-- Catalog items will be displayed here -->
+</div>
+
+<div id="loading-container" style="display: flex; justify-content: center; align-items: center; flex-direction: column; gap: 10px; padding: 20px;">
+    <div class="spinner" style="width: 40px; height: 40px; border: 4px solid rgba(0, 0, 0, 0.1); border-radius: 50%; border-top-color: #000; animation: spin 1s ease-in-out infinite;"></div>
+    <p>Loading catalog...</p>
+</div>
+
+<style>
+    @keyframes spin {
+        to { transform: rotate(360deg); }
+    }
+</style>
+
 <script type="module">
     // Import Firebase modules
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-app.js";
@@ -780,13 +807,17 @@ margin-top:60px;
 
     // Elements for catalog display
     const catalogContainer = document.getElementById("catalog-container");
+    const loadingContainer = document.getElementById("loading-container");
 
     // Listen for changes in the database and update catalog
     function loadCatalog() {
+        loadingContainer.style.display = 'flex'; // Show loading indicator
+        
         const catalogRef = ref(db, "catalog/");
         onValue(catalogRef, (snapshot) => {
             catalogContainer.innerHTML = ''; // Clear previous content
             const catalogData = snapshot.val();
+            
             if (catalogData) {
                 Object.entries(catalogData).forEach(([key, item]) => {
                     const itemElement = document.createElement("div");
@@ -800,15 +831,23 @@ margin-top:60px;
                 <span class="original-price price" data-price="${item.originalPrice}">
                     ${item.originalPrice && !isNaN(parseFloat(item.originalPrice)) ? 'ZAR ' + parseFloat(item.originalPrice).toFixed(2) : ''}
                 </span>
-
             </p>
-
             <p>${item.details}</p>
             ${item.freeShipping ? '<p class="free-shipping">Free Shipping</p>' : ''}
         </a>`;
                     catalogContainer.appendChild(itemElement);
                 });
+                
+                // Hide loading indicator when items are loaded
+                loadingContainer.style.display = 'none';
+            } else {
+                // If no data, keep loading indicator visible
+                loadingContainer.querySelector('p').textContent = 'No items found in catalog';
             }
+        }, (error) => {
+            // Handle errors
+            loadingContainer.querySelector('p').textContent = 'Error loading catalog';
+            console.error("Error loading catalog:", error);
         });
     }
 
@@ -830,22 +869,6 @@ margin-top:60px;
         document.body.appendChild(script);
     }
 </script>
-
-
-
-    
-    <!-- Search Input -->
-<br><br>
-<div class='video-feature-box' id='videoFeatureBox '>
-    <h2 style="margin-left:80px; background-color: navajowhite; border-radius: 8px; padding: 0px 10px; color: white;">How to make orders</h2>
-    <iframe width="560" height="315" src='https://www.youtube.com/embed/WdXXL4VpEeA' frameborder="0" allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture' allowfullscreen></iframe>
-      <p style="color: white; background-color: navajowhite; border-radius: 8px; padding: 0px 10px; ">Click the video to play</p>  
-</div>
-    <div class="catalog" id="catalog-container">
-        <!-- Catalog items will be displayed here -->
-    </div>
-
-
     </div>
     
   </div>       
