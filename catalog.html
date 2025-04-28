@@ -5,15 +5,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content=" Experience high-quality personalized products that reflect your unique style. Start personalizing your items today with fum.studio!
 ">
-<title>Product Catalog</title>
+<title>Product Catalog</title
   <link rel="stylesheet" href="style.css
     ">
-   <link rel="stylesheet" href="css/catalog.css">
-
    <link rel= "Shortcut icon" type="x-icon" href= "https://i.postimg.cc/XqrhcVpD/20240702-095704.png"> 
    
-
-      <link rel="stylesheet" href="css/Product.css
+      <link rel="stylesheet" href="css/catalog.css
+    ">
+          <link rel="stylesheet" href="css/currency.css
     ">
         <link href="https://fonts.google.com/share?selection.family=Jersey+25|Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900">
 
@@ -57,678 +56,359 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             $("#Whatsapp_button").load("whatsApp_button.html");
         });
     </script>
+      <script>
+        $(function(){
+            $("#ad_jewellery").load("ad1.html");
+        });
+    </script> 
 
-</head>
-<body>
-
-<div class="container">
-
-
-    <!-- Nav -->
-    <nav class="main-nav">
-<i class="gift fas fa-gift"></i>&nbsp;<h1 alt="Microsoft" class="logo">
- Fumstudio</h1>
-         <div id="navbar"></div>
-                      <!-- Advertisement Section -->
-      <a href="cart_page.html" id="cartLink">
-  <i class="fa fa-search" aria-hidden="true"></i>
-    </a>   
-    
-    <a href="cart_page.html" id="cartLink">
-    <div class="cart-container">
-        <i class="fas fa-shopping-cart cart-icon"></i>
-        <span id="totalItemCount" class="item-count">0</span>
-    </div>
-    </a>
-
-      <div class="menu-btn">
- 
-    <i class="fas fa-bars fa-2x"></i>
-  </div>
- </nav>       
-
-
-
-</div>
-  <div id="ad_jewellery"></div>
-<style>
-.container {
-  width: 100%;
-  max-width: 1100px;
-  margin: auto;
-z-index:2000;
-    background-color: #FFFFFF;
-}
-  
-.gift{
-  font-size: 30px;
-}
-
-
-/* Styles for small screens (mobile) */
-@media (max-width: 768px) {
-  .fa-search {
-    margin-right: 20px;
-    font-size: 18px; /* adjust font size if needed */
-  }
-}
-#footer {
-
-  margin-top:100px;
-  
-  
-  
-}
-
-    .slider-container {
-        width: 100%;
-        position: relative;
-        overflow: hidden;
-        margin: 0 auto;
-        touch-action: pan-y;
-margin-top:60px;
-                margin-bottom:10px;
-
-    }
-    
-    .slider-wrapper {
-        width: 100%;
-        position: relative;
-        overflow: hidden;
-
-    }
-    
-    .slider {
-        display: flex;
-        height: 50vw; /* Responsive height based on viewport width */
-        max-height: 500px; /* Maximum height */
-        will-change: transform;
-    }
-    
-    .slide {
-        min-width: 100%;
-        flex-shrink: 0;
-        position: relative;
-                                        
-    }
-    
-    .slide img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        display: block;
-        pointer-events: none;
-        user-select: none;
-
-    }
-    
-    .dots-container {
-        position: absolute;
-        bottom: 20px;
-        left: 0;
-        right: 0;
-        display: flex;
-        justify-content: center;
-        gap: 10px;
-        z-index: 10;
-    }
-    
-    .dot {
-        width: 12px;
-        height: 12px;
-        border-radius: 50%;
-        background: rgba(255, 255, 255, 0.5);
-        cursor: pointer;
-        transition: background-color 0.3s;
-    }
-    
-    .dot.active {
-        background: white;
-    }
-    
-    .slider-transition {
-        transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    }
-    
-    @media (max-width: 768px) {
-        .slider {
-            height: 60vw; /* Larger percentage on mobile */
-            max-height: 300px;
-        }
-    }
-</style>
-
-
-
-
-
-
-    
-    <div class="slider-container" id="sliderContainer">
-        <div class="slider" id="slider">
-            <div class="slide">
-                <img src="https://firebasestorage.googleapis.com/v0/b/myhost-a7ee9.appspot.com/o/images%2FScreenshot_2024-06-22_163245_600x.webp?alt=media&token=ca8efcfd-631e-4b80-9987-283676da301e" alt="Slide 1">
-            </div>
-            <div class="slide">
-                <img src="https://firebasestorage.googleapis.com/v0/b/myhost-a7ee9.appspot.com/o/images%2F20250321_221358%20(1).jpg?alt=media&token=fd226da0-55c9-4a4d-964a-0ffcd88245fe" alt="Slide 2">
-            </div>
-            <div class="slide">
-                <img src="https://firebasestorage.googleapis.com/v0/b/myhost-a7ee9.appspot.com/o/images%2FWhatsApp%20Image%202024-07-26%20at%203.26.07%20AM.jpeg?alt=media&token=32d244b1-a444-435f-8e25-1e53f0b6c2a7" alt="Slide 3">
-            </div>
-        </div>
-        
-        <div class="dots-container" id="dotsContainer"></div>
-    </div>
-
-
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const slider = document.getElementById('slider');
-        const sliderContainer = document.getElementById('sliderContainer');
-        const slides = document.querySelectorAll('.slide');
-        const dotsContainer = document.getElementById('dotsContainer');
-        
-        let currentIndex = 0;
-        let slideCount = slides.length;
-        let autoSlideInterval;
-        let isDragging = false;
-        let startPos = 0;
-        let currentTranslate = 0;
-        let prevTranslate = 0;
-        let animationID;
-        let isPaused = false;
-        let sliderWidth = sliderContainer.offsetWidth;
-        
-        // Initialize slider
-        function initSlider() {
-            createDots();
-            setSliderWidth();
-            updateSliderPosition();
-            startAutoSlide();
-            setupEventListeners();
-            
-            // Handle window resize
-            window.addEventListener('resize', () => {
-                sliderWidth = sliderContainer.offsetWidth;
-                updateSliderPosition();
-            });
-        }
-        
-        function setSliderWidth() {
-            sliderWidth = sliderContainer.offsetWidth;
-            currentTranslate = currentIndex * -sliderWidth;
-            prevTranslate = currentTranslate;
-            
-            // Set width for each slide
-            slides.forEach(slide => {
-                slide.style.width = sliderWidth + 'px';
-            });
-        }
-        
-        function createDots() {
-            dotsContainer.innerHTML = '';
-            slides.forEach((_, index) => {
-                const dot = document.createElement('div');
-                dot.classList.add('dot');
-                if (index === currentIndex) dot.classList.add('active');
-                dot.dataset.index = index;
-                dotsContainer.appendChild(dot);
-            });
-        }
-        
-        function updateSliderPosition() {
-            slider.style.transform = `translateX(${currentIndex * -sliderWidth}px)`;
-            updateDots();
-        }
-        
-        function updateDots() {
-            const dots = document.querySelectorAll('.dot');
-            dots.forEach((dot, index) => {
-                dot.classList.toggle('active', index === currentIndex);
-            });
-        }
-        
-        function goToNextSlide() {
-            if (isPaused) return;
-            currentIndex = (currentIndex + 1) % slideCount;
-            slideTransition();
-            pauseAutoSlide(5000);
-        }
-        
-        function goToPrevSlide() {
-            if (isPaused) return;
-            currentIndex = (currentIndex - 1 + slideCount) % slideCount;
-            slideTransition();
-            pauseAutoSlide(5000);
-        }
-        
-        function goToSlide(index) {
-            if (isPaused) return;
-            currentIndex = index;
-            slideTransition();
-            pauseAutoSlide(5000);
-        }
-        
-        function slideTransition() {
-            slider.classList.add('slider-transition');
-            slider.style.transform = `translateX(${currentIndex * -sliderWidth}px)`;
-            updateDots();
-            
-            slider.addEventListener('transitionend', () => {
-                slider.classList.remove('slider-transition');
-            }, { once: true });
-        }
-        
-        function startAutoSlide() {
-            clearInterval(autoSlideInterval);
-            autoSlideInterval = setInterval(goToNextSlide, 2000);
-        }
-        
-        function pauseAutoSlide(duration = 3000) {
-            isPaused = true;
-            clearInterval(autoSlideInterval);
-            
-            if (duration > 0) {
-                setTimeout(() => {
-                    isPaused = false;
-                    startAutoSlide();
-                }, duration);
-            }
-        }
-        
-        function resumeAutoSlide() {
-            isPaused = false;
-            startAutoSlide();
-        }
-        
-        function handleDotClick(e) {
-            if (e.target.classList.contains('dot')) {
-                const index = parseInt(e.target.dataset.index);
-                if (index !== currentIndex) {
-                    goToSlide(index);
-                }
-            }
-        }
-        
-        function handleTap(e) {
-            if (!isDragging) {
-                pauseAutoSlide(3000);
-            }
-        }
-        
-        /* Improved touch and drag functions */
-        function getPositionX(event) {
-            return event.type.includes('mouse') ? 
-                event.clientX : 
-                event.touches[0].clientX;
-        }
-        
-        function dragStart(e) {
-            if (e.type === 'mousedown' && e.button !== 0) return;
-            
-            startPos = getPositionX(e);
-            isDragging = true;
-            slider.classList.remove('slider-transition');
-            animationID = requestAnimationFrame(animation);
-            pauseAutoSlide(0);
-            
-            slider.style.cursor = 'grabbing';
-            
-            // Prevent default for touch events
-            if (e.cancelable) {
-                e.preventDefault();
-                e.stopPropagation();
-            }
-        }
-        
-        function dragMove(e) {
-            if (isDragging) {
-                const currentPosition = getPositionX(e);
-                currentTranslate = prevTranslate + currentPosition - startPos;
-                
-                // Prevent image drag on mobile
-                if (e.cancelable) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                }
-            }
-        }
-        
-        function dragEnd() {
-            if (!isDragging) return;
-            
-            cancelAnimationFrame(animationID);
-            isDragging = false;
-            slider.style.cursor = '';
-            
-            const movedBy = currentTranslate - prevTranslate;
-            const threshold = sliderWidth * 0.1; // Lower threshold for better UX
-            
-            if (movedBy < -threshold && currentIndex < slideCount - 1) {
-                currentIndex += 1;
-            } else if (movedBy > threshold && currentIndex > 0) {
-                currentIndex -= 1;
-            }
-            
-            setPositionByIndex();
-            pauseAutoSlide(5000);
-        }
-        
-        function animation() {
-            slider.style.transform = `translateX(${currentTranslate}px)`;
-            animationID = requestAnimationFrame(animation);
-        }
-        
-        function setPositionByIndex() {
-            currentTranslate = currentIndex * -sliderWidth;
-            prevTranslate = currentTranslate;
-            slideTransition();
-        }
-        
-        function setupEventListeners() {
-            // Mouse events
-            sliderContainer.addEventListener('mousedown', dragStart);
-            window.addEventListener('mousemove', dragMove);
-            window.addEventListener('mouseup', dragEnd);
-            
-            // Touch events - use passive: false for better control
-            sliderContainer.addEventListener('touchstart', dragStart, { passive: false });
-            window.addEventListener('touchmove', dragMove, { passive: false });
-            window.addEventListener('touchend', dragEnd);
-            
-            // Click/tap to pause
-            sliderContainer.addEventListener('click', handleTap);
-            
-            // Dot events
-            dotsContainer.addEventListener('click', handleDotClick);
-            
-            // Pause on hover
-            sliderContainer.addEventListener('mouseenter', () => pauseAutoSlide(0));
-            sliderContainer.addEventListener('mouseleave', resumeAutoSlide);
-        }
-        
-        initSlider();
-    });
+     <script>
+        $(function(){
+            $("#Jewellery_Necklace").load("Set_Jewellery_Necklace.html");
+        });
+    </script> 
+      <script>
+        $(function(){
+            $("#Coffee_Mug").load("Set_Coffee_Mug.html");
+        });
+    </script>
+        <script>
+        $(function(){
+            $("#Pillow_Case").load("Set_Pillow_Case.html");
+        });
 </script>
-  <h2>Keep the best moments</h2>
-     </div>
-  </div>
-   <style>
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background-color: #333;
-            color: #000000;
-     }
-        header {
-            font-size: 2rem;
-            margin-bottom: 20px;
-            text-transform: uppercase;
-            font-weight: bold;
+         <script>
+        $(function(){
+            $("#Set_Phone_Cases").load("Set_Phone_Cases_.html");
+        });
+    </script>
+   <script>
+        $(function(){
+            $("#Photo_Bracelet").load("Set_Photo_Bracelet.html");
+        });
+    </script>
+       <script>
+        $(function(){
+            $("#A3_Pesonalized_Calendar").load("Set_A3_Pesonalized_Calendar.html");
+        });
+    </script> 
+          <script>
+        $(function(){
+            $("#tote_bag").load("Set_tote_bag.html");
+        });
+</script>
+     <script>
+        $(function(){
+            $("#Set_Wood_key_chain").load("Set_Wood_key_chain.html");
+        });
+    </script> 
+          <script>
+        $(function(){
+            $("#white_T-shirt").load("Set_white_T-shirt.html");
+        });
+</script>
+     <script>
+        $(function(){
+            $("#Steel_flower_photo_locket").load("Set_Steel_flower_photo_locket.html");
+        });
+    </script>
+     <script>
+        $(function(){
+            $("#Steel_plated_photo_locket").load("Set_Steel_plated_photo_locket.html");
+        });
+    </script>
+     <script>
+        $(function(){
+            $("#Set_Steel_Necklace2").load("Set_Steel_Necklace2.html");
+        });
+    </script>   
+      <script>
+        $(function(){
+            $("#Steel_Necklace").load("Set_Steel_Necklace.html");
+        });
+    </script>
 
-        }
+     <script>
+        $(function(){
+            $("#Mini_Photo_Album").load("Set_Mini_Photo_Album.html");
+        });
+    </script>   
+         <script>
+        $(function(){
+            $("#digital_photo_print").load("Set_digital_photo_print.html");
+        });
+</script>
 
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        
+    }
+    
+    .container3 {
+        max-width: 1000px;
+width: 100%;
+        margin: 1px auto;
+        background:#fff;
+        border-radius: 5px;
 
-.gallery {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr); /* Creates 3 equal columns */
-    gap: 20px; /* Space between grid items */
-    max-width: 100%;
-    margin: 0 auto;
+        padding: 2px;
+        display:  flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        margin-top: 27px;
+    }
+      @media (min-width: 768px) {
+    .container3 {
+      margin-top: -75px;
+      margin-bottom: 90px;
+    }
+}   
+    .container2 {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        background-color: #FFFFFF;
+        overflow-x: auto;
+        white-space: nowrap;
+                   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+z-index: 2;
+    }
+    .product-filter {
+        display: inline-block;
+        padding: 10px 20px;
+        cursor: pointer;
+        color: #898989 ;
+        
+     
+    }
+    .selected {
+        text-decoration: underline;
+    }
+
+    h1 {
+        text-align: center;
+        color: #333;
+    }
+    
+.product {
+    width: 47%;
+    margin-bottom: 85px;
     padding: 10px;
-    box-sizing: border-box;
-
+    border: 1px solid  #FBEFEF;
+    border-radius: 7px;
+    margin-top: -75px;
+    
 }
-.gallery-item {
-    display: flex;
-    flex-direction: column; /* Ensures the image and caption are stacked */
-    align-items: center; /* Centers the caption below the image */
-    width: 200px;
-    height: 200px; /* Allow height to adjust dynamically */
-    flex-shrink: 0;
-    border-radius: 10px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-    background-color: floralwhite;
-    scroll-snap-align: start;
-    text-align: center;
-                 margin-bottom: 40%; /* Space between image and text */ 
-}
-/* For small screens, switch to a grid layout */
-@media (max-width: 768px) {
-    .gallery {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr); /* Creates 3 equal columns */
-    gap: 20px; /* Space between grid items */
-    max-width: 100%;
-    margin: 0 auto;
-    padding: 10px;
-    box-sizing: border-box;
+@media (min-width: 768px) {
+    .product {
+        width: 30%; /* Adjusted width for desktop screens */
+        margin-bottom: 100px; /* Adjusted margin for desktop screens */
+        padding: 20px; /* Increased padding for better spacing */
+        margin: 15px;
+        
+        
     }
 }
 
+    .product img {
+        max-width: 100%;
+        height: auto;
+        border-radius: 5px;
+    }
+    
+    .product h2 {
+        margin-top: 0px;
+        font-size: 1.2em;
+        color: #333;
+    }
+    
+    .product p {
+        color: ##04AF0E;
+    }
 
-.gallery-item img {
-    width: 100%;
-    aspect-ratio: 1 / 1; /* Forces a 1:1 aspect ratio */
-    object-fit: cover;
-    transition: transform 0.3s ease;
-    border-radius: 10px;
+    .product-info {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 1px;
+    }
+   
+
+    .price {
+        color: #333;
+        font-weight: bold;
+    }
+
+    .shipping {
+        color: #2ecc71; /* Green color for free shipping */
+    }
+
+    .customize-btn {
+        background-color: #3498db;
+        color: #fff;
+        padding: 5px 10px;
+        border: none;
+        border-radius: 3px;
+        cursor: pointer;
+    }
+    
+  .space {
+margin-top: 20px;
+    }
+    p.spacex {
+  margin-top: 5px;
+  color:#000000;
 
 }
 
-        .gallery-item:hover img {
-            transform: scale(1.1); /* Zoom effect on hover */
-        }
-
-
-.caption {
-    position: relative; /* No absolute positioning */
-    bottom: auto;
-    left: auto;
-    font-size: 1.2rem;
-    font-weight: bold;
-
-
-    text-align: center;
-    margin-top: 10px; /* Space between image and text */
-               margin-bottom: 100%; /* Space between image and text */ 
-    color: #000000 ;
-
-}
-
-
-        .gallery-item:hover img {
-            transform: scale(1.1); /* Zoom effect on hover */
-        }
-
-
-
-
-
-        /* Media query for smaller screens */
-        @media (max-width: 600px) {
-            header {
-                font-size: 1.5rem;
-            }
-
-            .gallery {
-                gap: 10px; /* Reduce gap on small screens */
-            }
-
-            .gallery-item {
-                width: 100px; /* Smaller image size for small screens */
-                height: 100px; /* Keep images square */
-            }
-
-            .caption {
-                font-size: 12px;
-            }
-        }
-    </style>
-
-
-<div class="gallery">
-    <div class="gallery-item">
-        <a href="https://www.example.com/1">
-            <img src="https://firebasestorage.googleapis.com/v0/b/myhost-a7ee9.appspot.com/o/images%2FScreenshot_2024-06-22_163245_600x.webp?alt=media&token=ca8efcfd-631e-4b80-9987-283676da301e" alt="Luxury Image 1">
-        </a>
-        <div class="caption">New Double sided photo necklace</div>
-    </div>
-    <div class="gallery-item">
-        <a href="https://www.example.com/2">
-            <img src="https://live.staticflickr.com/65535/49221403106_136e32162d_b.jpg" alt=" Image 2">
-        </a>
-        <div class="caption">Moments</div>
-    </div>
-    <div class="gallery-item">
-        <a href="https://www.example.com/3">
-            <img src="https://www.vitacost.com/images/modules/FreeShipping_525x525.png" alt=" Image 3">
-        </a>
-        <div class="caption"><span style="color:green;">Free Delivery</span>
-        10-12 business Days 
-        </div>
-    </div>
-            <div class="gallery-item">
-        <a href="https://www.example.com/4">
-            <img src="https://firebasestorage.googleapis.com/v0/b/myhost-a7ee9.appspot.com/o/images%2Fdf9fb4bc-9517-43e1-b1f6-96ed69f436e3.jpg?alt=media&token=cce05e61-69ab-4099-a5e1-150f79730687" alt=" Image 6">
-        </a>
-        <div class="caption">Click here to test your image</div>
-    </div>
-    <div class="gallery-item">
-        <a href="https://www.example.com/4">
-            <img src="https://media.istockphoto.com/id/598912704/photo/woman-typing-phone-message-on-social-network-at-night.jpg?s=612x612&w=0&k=20&c=LXbWUEceGBZtw_ggiILO7GJECuEJxOC3JiNM3yAXcXI=" alt=" Image 4">
-        </a>
-        <div class="caption">Customize online,<span style="color:red;">step by step</span> </div>
-    </div>
-     <div class="gallery-item">
-        <a href="https://www.example.com/4">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/c/cd/Facebook_logo_%28square%29.png" alt=" Image 5">
-        </a>
-        <div class="caption">Check out our latest post!</div>
-    </div>
-
-</div>
-
+  .centered {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 1px;
+   
+  }
   
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-        }
 
-        .container {
-            width: 100%;
-            margin: 0 auto;
-        }
+.label-with-margin {
+    margin-top: 60px;
+}
+    .fixed-container {
+      position: fixed;
+    }
+        
+    
+.Black{
+  color: #0E0E0E;
+}
+  /*feature box*/
+  /*feature box*/
+/* Style for the feature box container */
+/* Style for the feature box container */
+/* Style for the feature box container */
+@media only screen and (max-width: 767px) {
+    .feature-box {
+        display: block; /* Show the feature box on devices with screen width less than or equal to 767px (typical for mobile devices) */
+    }
+}
+.feature-boxes-container {
+    overflow-x: auto; /* Enable horizontal scrolling */
+    white-space: nowrap; /* Prevent text wrapping */
+margin-top: 80px;
+margin-bottom: 20px;
+}
 
-        h1 {
-            text-align: center;
-        }
+/* Style for the feature box */
+.feature-box {
+    display: inline-block;
+    margin-right: 5px; /* Add space between feature boxes */
+    vertical-align: top; /* Align images at the top */
+}
 
-        .search input {
-            width: 300px;
-            padding: 8px;
-            margin: 10px;
-            display: block;
-            margin-left: auto;
-            margin-right: auto;
-        }
+.feature-box img {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    max-width: 90px;
+    height: auto;
+    
+}
+/* Media query for desktop screens */
+@media only screen and (min-width: 1024px) {
+    .feature-box {
+        display: inline-block; /* Reset display for desktop screens */
+        margin-right: 5px; /* Reset margin for desktop screens */
+    }
+
+    .feature-box img {
+        max-width: 150px; /* Reset max-width for desktop screens */
+    }
+}
+.feature-box a {
+    display: block; /* Make the link fill the container */
+}
+
+.feature-box h6 {
+    margin-top: 10px;
+    
+    text-align: center; /* Center the text */
+}
+/* Media query for desktop screens */
+@media screen and (min-width: 768px) {
+    .feature-box img {
+        width: 120%; /* Adjust the width for desktop screens */
+
+    }
+}
+@media screen and (min-width: 768px) {
+/* Adjust the width for desktop screens */
+.feature-box {
+    margin-right: 0px;
+  
+}
+ }
 
 
-        .catalog .item img {
-            width: 100%;
-            height: 150px;
-            object-fit: cover;
-            border-radius: 8px;
-        }
+.feature-box a {
+    text-decoration: none;
+    color:  #333;
+}
 
-        .catalog .item:hover {
-            transform: scale(1.05);
-        }
 
-        /* Green color for free shipping */
-        .free-shipping {
-            color: green;
-            font-weight: bold;
-        }
+.feature-box p {
+    margin: 0;
+}
+.section-p1{
+ padding: 40px 15px;
+}
 
-        /* Red color for original price */
-        .original-price {
-            color: red;
-            text-decoration: line-through;
-            font-weight: bold;
-        }
+.necklace{
+  color:#FF0606;
+}
 
-        /* Flex container to align price and original price side by side */
-        .price-container {
-            display: flex;
-            gap:2px;
-            align-items: center;
-            margin-top: 10px;
-        }
 
-        .price-container p {
-            margin: 0;
-        }
+.fab {
+    margin-right: 10px;
+    text-decoration: none; /* Remove underline from the icon */
+}
 
-        @media (max-width: 768px) {
-            .catalog .item {
-                width: 45%;
-            }
-        }
+.whatsapp-icon span {
+    text-decoration: none; /* Remove underline from the text */
+}
+      .ads {
+        text-align: center;
+        background-color: #A5A8CD;
+        padding: 10px;
+        margin: 10px 0;
+        border-radius: 10px;
+    }
 
-        @media (max-width: 480px) {
-            .catalog .item {
-                width: 45%;
-            }
+    .ads a {
+        text-decoration: none;
+        color: #FFFFFF;
+    }
+@media only screen and (max-width: 767px) and (-webkit-min-device-pixel-ratio: 0) {
+    .ads {
+        text-align: left;
+        margin-right: 80px; /* Move the element 10px to the left */
+    }
+}
 
-            .search input {
-                width: 80%;
-            }
-        }
-
-        /* Style for the link itself, remove default underline and color */
-        a.item-link {
-            text-decoration: none; /* Remove underline */
-            color: inherit; /* Use the inherited color, no change in text color */
-            display: block; /* Make the link behave like a block-level element */
-        }
-
-        /* Ensure the content inside the link is styled as needed */
-        .item-link .item-content {
-            display: block;
-            background-color: #fff;
-            padding: 15px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease;
-        }
-
-        /* Hover effect for the item container */
-        .item-link:hover .item-content {
-            transform: scale(1.05); /* Scale the item up on hover */
-        }
-
-        /* Styling for the item image */
-        .item-link img {
-            width: 100%;
-            height: 150px;
-            object-fit: cover;
-            border-radius: 8px;
-        }
-        .pricing{  
-    color:#E58A52 ;
-              font-weight: bold;
-     }
-         .video-feature-box {
+.green{
+  color: green;
+}
+    .video-feature-box {
         max-width: 600px;
         margin: 0 auto;
         
         border-radius: 5px;
         padding: 20px;
-        margin-top: -40px;
-        margin-bottom: 10px;
+        margin-top: -70px;
+        margin-bottom: 50px;
     }
     @media (min-width: 768px) {
       .video-feature-box {
@@ -754,128 +434,551 @@ margin-top:60px;
     .video-feature-box p {
         font-size: 16px;
     }
-    </style>
-
-
-
-    
-    <!-- Search Input -->
-<br><br>
-<div class='video-feature-box' id='videoFeatureBox '>
-    <h2 style="margin-left:80px; background-color: navajowhite; border-radius: 8px; padding: 0px 10px; color: white;">How to make orders</h2>
-    <iframe width="560" height="315" src='https://www.youtube.com/embed/WdXXL4VpEeA' frameborder="0" allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture' allowfullscreen></iframe>
-      <p style="color: white; background-color: navajowhite; border-radius: 8px; padding: 0px 10px; ">Click the video to play</p>  
-</div>
-  
-<div class="catalog" id="catalog-container">
-    <!-- Catalog items will be displayed here -->
-</div>
-
-<div id="loading-container" style="display: flex; justify-content: center; align-items: center; flex-direction: column; gap: 10px; padding: 20px;">
-    <div class="spinner" style="width: 40px; height: 40px; border: 4px solid rgba(0, 0, 0, 0.1); border-radius: 50%; border-top-color: #000; animation: spin 1s ease-in-out infinite;"></div>
-    <p>Loading catalog...</p>
-</div>
-
-<style>
-    @keyframes spin {
-        to { transform: rotate(360deg); }
-    }
-</style>
-
-<script type="module">
-    // Import Firebase modules
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-app.js";
-    import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-database.js";
-    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-auth.js";
-
-    // Firebase Configuration
-    const firebaseConfig = {
-        apiKey: "AIzaSyBDrzrgLslaJvnXbo1e90irCEtdcm9ZsCU",
-        authDomain: "logins-13661.firebaseapp.com",
-        databaseURL: "https://logins-13661-default-rtdb.firebaseio.com",
-        projectId: "logins-13661",
-        storageBucket: "logins-13661.appspot.com",
-        messagingSenderId: "451535349483",
-        appId: "1:451535349483:web:d3c9867fd2bffbbdca40ae",
-        measurementId: "G-DWP16WX2H7"
-    };
-
-    // Initialize Firebase
-    const app = initializeApp(firebaseConfig);
-    const db = getDatabase(app);
-    const auth = getAuth(app);
-
-    // Elements for catalog display
-    const catalogContainer = document.getElementById("catalog-container");
-    const loadingContainer = document.getElementById("loading-container");
-
-    // Listen for changes in the database and update catalog
-    function loadCatalog() {
-        loadingContainer.style.display = 'flex'; // Show loading indicator
+        .container4 {
+        width: 100%;
+        overflow: auto;
+        white-space: nowrap;
+        margin-top: -78px;
+        margin-bottom: 55px;
+z-index: 1;
         
-        const catalogRef = ref(db, "catalog/");
-        onValue(catalogRef, (snapshot) => {
-            catalogContainer.innerHTML = ''; // Clear previous content
-            const catalogData = snapshot.val();
-            
-            if (catalogData) {
-                Object.entries(catalogData).forEach(([key, item]) => {
-                    const itemElement = document.createElement("div");
-                    itemElement.classList.add("catalog-item", "item");
-                    itemElement.innerHTML = `
-<a href="${item.link}" target="_blank" class="item-link">
-            <img src="${item.image}" alt="${item.name}" width="100">
-            <h3>${item.name}</h3>
-            <p class="price-container">
-                      <span class="pricing price" data-price="${item.price}">ZAR ${item.price.toFixed(2)}</span>      
-                <span class="original-price price" data-price="${item.originalPrice}">
-                    ${item.originalPrice && !isNaN(parseFloat(item.originalPrice)) ? 'ZAR ' + parseFloat(item.originalPrice).toFixed(2) : ''}
-                </span>
-            </p>
-            <p>${item.details}</p>
-            ${item.freeShipping ? '<p class="free-shipping">Free Shipping</p>' : ''}
-        </a>`;
-                    catalogContainer.appendChild(itemElement);
-                });
-                
-                // Hide loading indicator when items are loaded
-                loadingContainer.style.display = 'none';
-            } else {
-                // If no data, keep loading indicator visible
-                loadingContainer.querySelector('p').textContent = 'No items found in catalog';
-            }
-        }, (error) => {
-            // Handle errors
-            loadingContainer.querySelector('p').textContent = 'Error loading catalog';
-            console.error("Error loading catalog:", error);
-        });
     }
-
-    // Check authentication state and load catalog
-    onAuthStateChanged(auth, (user) => {
-        if (user) {
-            console.log("User logged in:", user.email);
-        } else {
-            console.log("No user logged in.");
+    
+        .video-wrapper2 {
+            overflow-x: auto;
+            white-space: nowrap;
+            margin: 10px;
+            margin-top: -5px;
+            margin-bottom: 60px;
         }
-        loadCatalog();
+        @media (min-width: 768px) {
+      .video-wrapper2 {
+        margin-bottom: 90px;
+    }
+        }
+
+        .video-container2 {
+            display: inline-block;
+            width: 240px; /* Adjust the width of the video container as needed */
+            height: 426px; /* 16:9 aspect ratio for portrait orientation */
+            margin-right: 10px; /* Add space between videos */
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+          
+        }
+
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 10px;
+        }
+ 
+.vid {
+  margin-right: 200px;
+              margin-top: -50px;
+}
+.image-box {
+    position: relative;
+    display: inline-block;
+    width: 230px;
+    margin-right: 1px;
+    text-align: center;
+    border: 1px solid #EFEFF2;
+    border-radius: 5px;
+    padding: 10px;
+    max-width: 100%;
+    margin-left: 8px;
+}
+        @media (min-width: 768px) {
+      .image-box {
+        margin-bottom: 30px;
+    }
+        }
+
+
+.image-box img {
+    display: block;
+    width: 100%;
+    border-radius: 5px;
+}
+.discount-badge {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: #ff0000;
+    color: #fff;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.details {
+    margin-top: 10px;
+}
+
+    .buy-button {
+        display: block;
+        margin-top: 10px;
+        background-color: #25D366;
+        color: #fff;
+        padding: 5px 10px;
+        border: none;
+        border-radius: 5px;
+        text-decoration: none;
+    }
+.discount-badge {
+    position: absolute;
+    background-color: #ff0000;
+    color: #fff;
+    padding: 5px;
+    border-radius: 5px;
+
+}
+
+</style>
+</head>
+<body>
+  <div class="menu-btn">
+    <i class="fas fa-bars fa-2x"></i>
+  </div>
+
+<div class="container">
+
+    <!-- Nav -->
+    <nav class="main-nav">
+<h1 alt="Microsoft" class="logo">
+                <i class="gift fas fa-gift"></i>&nbsp;Fum.studio</h1>
+
+                      <!-- Advertisement Section -->
+         
+          
+
+
+<select id="currencySelect">
+  <option value="USD">USD</option>
+  <option value="EUR">EUR</option>
+  <option value="ZAR">ZAR</option>
+</select>        
+<script>
+const currencySelect = document.getElementById('currencySelect');
+let storedCurrency = localStorage.getItem('selectedCurrency');
+
+if (storedCurrency) {
+  currencySelect.value = storedCurrency;
+}
+
+currencySelect.addEventListener('change', function() {
+  const selectedCurrency = currencySelect.value;
+  
+  if (selectedCurrency !== storedCurrency) {
+    storedCurrency = selectedCurrency;
+    localStorage.setItem('selectedCurrency', selectedCurrency);
+    location.reload();
+  }
+});
+
+window.addEventListener('beforeunload', function(event) {
+  const selectedCurrency = currencySelect.value;
+  localStorage.setItem('selectedCurrency', selectedCurrency);
+});
+</script>
+
+         <div id="navbar"></div>
+</div>
+  <div id="ad_jewellery"></div>
+
+<div class='container2'>
+
+ <div class="label-with-margin">
+   
+ <label>
+ <div class='product-filter-container'>
+ <span class='product-filter' data-filter='all'>All</span>
+  <span class='product-filter' data-filter='deals'>Deals</span>
+  <span class='product-filter' data-filter='bracelets'>Bracelet</span>
+  <span class='product-filter' data-filter='Bag'>Bags</span>
+  <span class='product-filter' data-filter='cup'>Cups</span>
+   <span class='product-filter' data-filter='keyholder'>Keyholder</span>
+  <span class='product-filter' data-filter='necklace'>Necklace</span>
+ <span class='product-filter' data-filter='Pillow'>Pillow</span>
+  <span class='product-filter' data-filter='Phone_cases'>Phone_cases</span>
+   <span class='product-filter' data-filter='Calendar'>Calendar</span>
+  <span class='product-filter' data-filter='videos'>Videos</span>
+ <!-- Add more product filters here -->
+ </div>
+ </div>
+</div>
+</div>
+
+<!-- Feature-box -->
+<section id="product2" class='section-p1'>
+    <div class="feature-boxes-container">
+        <div class="feature-box" data-filter='deals'>
+            <a href="Shipping_info.html">
+                <img src="https://cdn-icons-png.freepik.com/512/6021/6021175.png" alt="Feature 1 Image"/>
+                <h6>Fill address,<br>
+                <span class="green">Free shipping</span></h6>
+            </a>
+        </div>
+          <div class="feature-box" data-filter='deals'>
+            <a href="Personalized.html">
+                <img src="https://store-images.s-microsoft.com/image/apps.8453.13655054093851568.4a371b72-2ce8-4bdb-9d83-be49894d3fa0.7f3687b9-847d-4f86-bb5c-c73259e2b38e" alt= "WhatsApp"/>
+            <h6>Select product<br>, upload photos<span class="green"><br>on WhatsApp</span><br> & details</h6>
+            </a>
+        </div>
+        
+          <div class="feature-box" data-filter='deals'>
+ 
+        <a href="About.html">
+       <img src="https://iili.io/dTGlAKl.jpg" alt="Feature 1 Image"/>
+     <h6>About <br> <span>Fum.studio</span></h6>
+            </a>
+        </div>
+
+
+         <div class="feature-box" data-filter='deals'>
+ 
+        <a href="https://www.facebook.com/profile.php?id=100083349526468">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/c/cd/Facebook_logo_%28square%29.png" alt="Feature 2 Image" />
+            <h6>Check out <br>the latest post!</h6>
+            <p></p>
+        </a>
+    </div>
+ </section>
+<script>
+
+document.addEventListener('DOMContentLoaded', function(){
+    const productFilters = document.querySelectorAll('.product-filter');
+    const products = document.querySelectorAll('.feature-box');
+    let lastSelectedFilter = localStorage.getItem('selectedFilter');
+
+    // Click event listener for each filter
+    productFilters.forEach(filter => {
+        filter.addEventListener('click', () => {
+            const filterValue = filter.getAttribute('data-filter');
+
+            // Loop through products to show/hide based on filter value
+            products.forEach(product => {
+                const category = product.getAttribute('data-filter');
+                if (filterValue === 'all' || category === filterValue) {
+                    product.style.display = 'block';
+                } else {
+                    product.style.display = 'none';
+                }
+            });
+
+            // Save selected filter in localStorage
+            localStorage.setItem('selectedFilter', filterValue);
+
+            // Add/remove 'selected' class for styling
+            productFilters.forEach(item => {
+                item.classList.remove('selected');
+            });
+            filter.classList.add('selected');
+        });
     });
 
-    // Dynamically add the currency converter script if not already added
-    if (!document.querySelector('script[src="currency-converter.js"][type="module"]')) {
-        var script = document.createElement('script');
-        script.src = 'currency-converter.js';
-        script.type = 'module'; // Set the type to "module"
-        document.body.appendChild(script);
-    }
+    // Restore last selected filter on page load
+    productFilters.forEach(filter => {
+        if (filter.getAttribute('data-filter') === lastSelectedFilter) {
+            filter.click();
+        }
+    });
+});
 </script>
+
+<div class='video-feature-box' id='videoFeatureBox' style='display: none;'>
+    <h2>How to make orders</h2>
+    <iframe width="560" height="315" src='https://www.youtube.com/embed/WdXXL4VpEeA' frameborder="0" allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture' allowfullscreen></iframe>
+      <p style="color: gray;">Click the video to play</p>  
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function(){
+const products = document.querySelectorAll('.feature-bx');
+    const videoFeatureBox = document.getElementById('videoFeatureBox');
+    let lastSelectedFilter = localStorage.getItem('selectedFilter');
+
+    // Click event listener for each filter
+    productFilters.forEach(filter => {
+        filter.addEventListener('click', () => {
+            const filterValue = filter.getAttribute('data-filter');
+
+            if (filterValue === 'videos' || filterValue === 'all') {
+                // Show video content
+                videoFeatureBox.style.display = 'block';
+                products.forEach(product => {
+                    product.style.display = 'block';
+                });
+            } else {
+                // Show product items
+                videoFeatureBox.style.display = 'none';
+                products.forEach(product => {
+                    const category = product.getAttribute('data-filter');
+                    if (category === filterValue) {
+                        product.style.display = 'block';
+                    } else {
+                        product.style.display = 'none';
+                    }
+                });
+            }
+
+            // Save selected filter in localStorage
+            localStorage.setItem('selectedFilter', filterValue);
+
+            // Add/remove 'selected' class for styling
+            productFilters.forEach(item => {
+                item.classList.remove('selected');
+            });
+            filter.classList.add('selected');
+        });
+    });
+
+    // Restore last selected filter on page load
+    productFilters.forEach(filter => {
+        if (filter.getAttribute('data-filter') === lastSelectedFilter) {
+            filter.click();
+        }
+    });
+});
+</script>
+
+<div class="centered">
+    
+<div class="container3">
+ <div class="product" data-category='Pillow'>
+  <div id="Pillow_Case"></div>
+</div>
+ 
+ 
+    <div class="product" data-category='cup'>
+      <div id="Coffee_Mug"></div>
+</div>
+ 
+  <div class="product" data-category="necklace">
+<div id="Jewellery_Necklace"></div>
+    </div></a>
+    
+ <div class="product" data-category='Phone_cases'>
+   <div id="Set_Phone_Cases"></div>
+</div>
+ 
+  
+     <div class="product" data-category='bracelets'>
+   <div id="Photo_Bracelet"></div> 
+  
+</div>
+  <div class="product" data-category='Calendar'>
+
+   <div id="A3_Pesonalized_Calendar"></div> 
+</div>
+  <div class="product" data-category='Calendar'>
+   <div id="digital_photo_print"></div>
+</div>
+
+     <div class="product" data-category='necklace'>
+      <div id="Steel_flower_photo_locket"></div>
+     </div> 
+          <div class="product" data-category='necklace'>
+         <div id="Steel_plated_photo_locket"></div></div>
+       <div class="product" data-category='necklace'>
+   <div id="Set_Steel_Necklace2"></div></div>
+        <div class="product" data-category='necklace'>
+      <div id="Steel_Necklace"></div></div>
+          <div class="product" data-category='keyholder'>
+   <div id="Mini_Photo_Album"></div></div>    
+<div class="container4">
+              <a href="#">
+    <div class="image-box" data-filter="deal1">
+        <span class="discount-badge">25% off</span>
+        <img src="https://i.postimg.cc/sxVsZ2Ry/Whats-App-Image-2024-07-23-at-6-40-28-AM.jpg" alt="Image 1">
+        <div class="details">
+          <p> Buy 2 jewelry necklaces <br>to complete your outfit.<p>
+
+<h2 class="price del" data-price="419.99">
+    ZAR R419.99
+</h2>
+  
+<p class="price" data-price="299.99">
+    ZAR 299.99
+</p>
+</a>
+        </div>
+    </div>
+              <a href="Photo_bracelet_&amp;_steel_necklace.html">
+    <div class="image-box" data-filter="deal1">
+        <span class="discount-badge">26% off</span>
+        <img src="https://iili.io/dEMaKrB.jpg" alt="Image 1">
+        <div class="details">
+          <p> Photo Set<br>to make the heartfelt gift ❤️.<p>
+
+<h2 class="price del" data-price="304.99">
+    ZAR R304.99
+</h2>
+  
+<p class="price" data-price="229.99">
+    ZAR 229.99
+</p>
+</a>
+        </div>
+    </div>
+               <a href="Photo_bracelet_&amp;_steel_necklace.html">
+    <div class="image-box" data-filter="deal1">
+        <span class="discount-badge">25% off</span>
+        <img src="https://iili.io/dEXx03F.jpg" alt="Image 1">
+        <div class="details">
+Get 2 photo bracelets <br>one for you, one for a loved one!<p>
+
+<h2 class="price del" data-price="319.99">
+    ZAR R319.99
+</h2>
+  
+<p class="price" data-price="239.99">
+    ZAR 239.99
+</p>
+</a>
+        </div>
+    </div>
+    <!-- Add more image boxes as needed -->
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const productFilters = document.querySelectorAll('.product-filter');
+  const products = document.querySelectorAll('.feature-box, .image-box');
+  
+  let lastSelectedFilter = localStorage.getItem('selectedFilter');
+
+  productFilters.forEach(filter => {
+    filter.addEventListener('click', () => {
+      const filterValue = filter.getAttribute('data-filter');
+
+      products.forEach(product => {
+        const category = product.getAttribute('data-filter');
+
+        if (filterValue === 'all') {
+          product.style.display = '';
+        } else if (filterValue === 'deals' && product.classList.contains('image-box')) {
+          product.style.display = '';
+        } else if (category === filterValue) {
+          product.style.display = '';
+        } else {
+          product.style.display = 'none';
+        }
+      });
+
+      productFilters.forEach(item => {
+        item.classList.remove('selected');
+      });
+      filter.classList.add('selected');
+      
+      localStorage.setItem('selectedFilter', filterValue);
+    });
+
+    if (filter.getAttribute('data-filter') === lastSelectedFilter) {
+      filter.click();
+    }
+  });
+
+  if (lastSelectedFilter) {
+    const selectedFilter = document.querySelector(`.product-filter[data-filter="${lastSelectedFilter}"]`);
+    if (selectedFilter) {
+      selectedFilter.click();
+    }
+  } else {
+    const allFilter = document.querySelector('.product-filter[data-filter="all"]');
+    if (allFilter) {
+      allFilter.click();
+    }
+  }
+});
+</script>
+
+<!-- catalog <continue--><div class="centered">
+<div class="container3">
+<div class="product" data-category='Bag'>
+  <div id="tote_bag"></div>
+  
+</div>
+
+   <div class="product" data-category="keyholder">
+  <div id="Set_Wood_key_chain"></div>
+    </div>
+    
+
+
+        </div></a></div></div></div>
+        
+        
+               <div class="video-containero"> 
+      <h1 class="vid">Videos</h1>
+      </div>
+
+   <!-- YouTube shorts  -->
+    <div class="video-wrapper2">
+
+        <div class="video-container2">
+            <iframe src="https://www.youtube.com/embed/PlTRCoxsiVs?si" frameborder="0" allowfullscreen></iframe>
+        </div>
+      <div class="video-container2">
+            <iframe src="https://www.youtube.com/embed/O9wjIRGRXj8?si" frameborder="0" allowfullscreen></iframe>
+        </div>
+        <!-- Add more video containers here for additional videos -->
+    </div>
+
+
+</div></div></div>
+      <!-- Follow -->
+
     </div>
     
   </div>       
   <div id="Whatsapp_button"></div>
          <div id="footer"></div>
+<script>
+    const productFilters = document.querySelectorAll('.product-filter');
+    const products = document.querySelectorAll('.product');
 
-<script type="module" src="js/cart.js"></script>
+    productFilters.forEach(filter => {
+        filter.addEventListener('click', () => {
+            const filterValue = filter.getAttribute('data-filter');
+
+            products.forEach(product => {
+                const category = product.getAttribute('data-category');
+
+                if (filterValue === 'all' || category === filterValue) {
+                    product.style.display = 'block';
+                } else {
+                    product.style.display = 'none';
+                }
+            });
+
+            // Remove 'selected' class from all filters
+            productFilters.forEach(item => {
+                item.classList.remove('selected');
+            });
+
+            // Add 'selected' class to the clicked filter
+            filter.classList.add('selected');
+
+            // Store the selected filter in localStorage
+            localStorage.setItem('selectedFilter', filterValue);
+        });
+    });
+
+    // Get the last selected filter from localStorage
+    const lastSelectedFilter = localStorage.getItem('selectedFilter');
+    if (lastSelectedFilter) {
+        const selectedFilter = document.querySelector(`.product-filter[data-filter="${lastSelectedFilter}"]`);
+        if (selectedFilter) {
+            selectedFilter.click();
+        }
+    } else {
+        // Trigger click event on the "All" filter by default
+        const allFilter = document.querySelector('.product-filter[data-filter="all"]');
+        allFilter.click();
+    }
+</script>
+
   <script src="js/main.js"></script>
  </body>
 </html>
