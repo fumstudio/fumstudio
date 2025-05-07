@@ -89,8 +89,80 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 h2 {
   color: black;
 }
-  
+  body {
+  font-family: 'Playfair Display', serif;
+  background-color: #f8f5f0;
+  color: #3b3b3b;
+  margin: 0;
+  padding: 0;
+}
+
+.search-container {
+  display: flex;
+  justify-content: center;
+  padding: 2rem 1rem;
+  background: #fff;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+#searchInput {
+  width: 100%;
+  max-width: 400px;
+  padding: 12px 16px;
+  border: 1px solid #d6cfc7;
+  border-radius: 12px;
+  font-size: 16px;
+  outline: none;
+  transition: 0.3s ease;
+}
+
+#searchInput:focus {
+  border-color: #bfa57a;
+  box-shadow: 0 0 0 2px #eadac6;
+}
+
+.luxury-main {
+  max-width: 800px;
+  margin: 3rem auto;
+  padding: 0 1rem;
+}
+
+section {
+  background: #fff;
+  border-radius: 20px;
+  padding: 2rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
+  border-left: 6px solid #bfa57a;
+}
+
+h2 {
+  font-family: 'Playfair Display', serif;
+  color: #bfa57a;
+  font-size: 1.75rem;
+  margin-bottom: 1rem;
+}
+
+h3 {
+  margin-top: 1rem;
+  color: #7a6453;
+}
+
+p {
+  line-height: 1.7;
+  margin-bottom: 0.75rem;
+}
+
+a {
+  color: #bfa57a;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
 </style>
+  
 <body>
 
 <!-- partial:index.partial.html -->
@@ -123,65 +195,62 @@ Help center </h1>
   <input type="text" id="searchInput" placeholder="Search...">
 </div>
 
-<main>
+<main class="luxury-main">
 
-  <section id="How to order">
+  <section>
     <h2>How to order?</h2>
-<h5>Step 1:</h5> Click the product you want to personalize.<br>
-<h5>Step 2:</h5> Use the tools topersonalize. Click "Submit" and the message.
-
-<br>
-<h5>Step 3:</h5> Discuss the product on WhatsApp.
-<br>
-<h5>Step 4:</h5> Send pictures after chatting with the agent.
-<br>
-
-<h5>Step 5:</h5> Fill in your address in the link the agent will send you.
-<h5>Step 6:</h5> Confirm your order and make payments.</p>
-<br>
-</div>
+    <p><strong>Step 1:</strong> Click the product you want to personalize.</p>
+    <p><strong>Step 2:</strong> Use the tools to personalize. Click "Submit" and send the message.</p>
+    <p><strong>Step 3:</strong> Discuss the product on WhatsApp.</p>
+    <p><strong>Step 4:</strong> Send pictures after chatting with the agent.</p>
+    <p><strong>Step 5:</strong> Fill in your address in the link the agent will send you.</p>
+    <p><strong>Step 6:</strong> Confirm your order and make payments.</p>
   </section>
 
+  <section>
+    <h2>How to pay?</h2>
+    <p>Finalize your order with an agent to confirm details. You can pay via bank transfer or e-wallet. The agent will provide the details. After payment, send proof of payment.</p>
+  </section>
 
+  <section>
+    <h2>How to track my package?</h2>
+    <p>The agent will send your tracking number via WhatsApp. Go to the website menu, select "Track", paste the number, and click "Track". A new number is provided with each order.</p>
+  </section>
 
-  <section id="How to pay">
-    <h2>How to pay ?</h2>
-       <p>To pay for your order, you need to finalize it with one of our agents to make sure everything is correct. You can pay using a bank transfer or an e-wallet. The agent will give you the details. After you pay, please send us proof of payment.</p>
-</section>
-  <section id="How to track my package">
-    <h2>How to track my package ?</h2>
-       <p>To track your package, once your order is verified, the agent will send you the tracking number via WhatsApp. Copy the tracking number and navigate to the website menu. Select 'Track,' paste your tracking number, and click 'Track.' Remember to stay updated with your tracking number, as a new one will be provided every time you place an order.</p>
-</section>
+  <section>
+    <h2>What is the estimated delivery time?</h2>
+    <p>Free delivery takes 8-12 business days; paid delivery takes 3-9 days. Once verified, your order will be shipped and you’ll receive a tracking number.</p>
+  </section>
 
-  <section id="What is the estimated delivery time for orders"><h2>What is the estimated delivery time for orders?</h2>
-       <p>For free delivery, the shipping time is typically 8-12 business days. If you opt for paid delivery, the shipping time is usually 3-9 business days. Your item will be shipped once your order is verified. The agent will then send you the order number so you can track your package.</p>
-</section>
-  <section id="My package haven't arrived "><h2>Has your package not arrived within the estimated delivery time?</h2>
-       <p>Don't worry, we're here to assist you in locating your package. Please verify that your address is correct and up to date. If you made a mistake, kindly update it. Ensure that your phone is nearby to receive any delivery calls.</p>
-</section>
-  <section id="Returns and exchanges are not supported. "><h2>Why Returns and exchanges are not supported ?</h2>
-       <p>Personalized items are made just for you. Prior to shipping, you may request pictures from an agent for verification purposes.</p>
-</section>
-<section id="Returns and exchanges are not supported. "><h2>Is my package safe ?</h2>
-       <p>We offer safe delivery to all cities across South Africa. All our prints are securely packaged with love and care.</p>
-</section>
-<section id="Where are we located"><h2>Where are we located?</h2>
-       <p>    <h3>Contact ?</h3>
-    <p>
-      <strong>Located:</strong><br>South Africa, Kwa-Zulu Natal, Empangeni 3880
-    </p>
-    <p>
-      <strong>Phone:</strong><br><a href="tel: 07728662309">+27 72 866 2309</a>
-    </p>
-    <p>
-      <strong>Hours:</strong><br>08:00 -17:00 Mon-Sat
-      </p>
-    </div>
-</p>
-</section>
-  <section id=" I don't find answers">
-  <p>If you encounter any other issues, feel free to start a chat with us now, thank you for your understanding.</p>
-  </main>
+  <section>
+    <h2>My package hasn't arrived</h2>
+    <p>We’re here to help. Please check your address is correct and your phone is available to receive delivery calls. Update details if needed.</p>
+  </section>
+
+  <section>
+    <h2>Why are returns and exchanges not supported?</h2>
+    <p>Personalized items are made uniquely for you. You can request verification pictures before shipping.</p>
+  </section>
+
+  <section>
+    <h2>Is my package safe?</h2>
+    <p>We deliver safely across South Africa. Each package is securely wrapped with care.</p>
+  </section>
+
+  <section>
+    <h2>Where are we located?</h2>
+    <p><strong>Location:</strong> South Africa, Kwa-Zulu Natal, Empangeni 3880</p>
+    <p><strong>Phone:</strong> <a href="tel:+27728662309">+27 72 866 2309</a></p>
+    <p><strong>Hours:</strong> 08:00 - 17:00 Mon–Sat</p>
+  </section>
+
+  <section>
+    <h2>Need more help?</h2>
+    <p>If you still need assistance, feel free to start a chat with us. Thank you for your understanding.</p>
+  </section>
+
+</main>
+
  <div id="Whatsapp_button"></div>
 
   <script src="js/main.js"></script>
