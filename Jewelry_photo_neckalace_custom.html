@@ -1061,7 +1061,7 @@ shareBtn.addEventListener('click', async () => {
         });
 
         const imageId = Date.now().toString();
-        const shareableLink = `${window.location.origin}/Jewelry_photo_neckalace_custom.html.html?imageId=${imageId}`;
+        const shareableLink = `${window.location.origin}/Jewelry_photo_neckalace_custom.html?imageId=${imageId}`;
         await set(ref(database, 'sharedImages/' + imageId), {
             url: uploadedImageUrl,
             shareableLink: shareableLink
