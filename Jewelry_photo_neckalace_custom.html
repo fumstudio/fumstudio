@@ -8,18 +8,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-                  body {
-
-            background-color: #FFFFFF;
-        }
-   html, body {
-  width: 100%;
-  height: 100%;
-  margin: 0;
-  padding: 0;
-  overflow-x: hidden;
-}
-     
+ 
         .scene {
             width: 300px;
             height: 400px;
@@ -1074,7 +1063,7 @@ shareBtn.addEventListener('click', async () => {
         });
 
         // Redirect to WhatsApp with a pre-filled message
-        const whatsappNumber = "0659860276"; // Replace with your WhatsApp number
+        const whatsappNumber = "+27 72 866 2309"; // Replace with your WhatsApp number
         const message = `Check out this item: ${shareableLink}`;
         const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
         window.open(whatsappUrl, "_self");
